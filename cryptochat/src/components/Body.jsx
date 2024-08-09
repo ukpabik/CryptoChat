@@ -27,24 +27,27 @@ function Body(){
   })
   return(
     <body>
-      <div class = "chatarea">
-        <div id = "output" class = "outputbox">
+      <div class = "container">
+        <div class = "chatarea">
+          <div id = "output" class = "outputbox">
+            
+          </div>
+
+          <div class = "input">
+            <div class = "inputbox">
+              <textarea id = "resize-textbox" class = "inputbox-text" placeholder = "Type something...">
+
+              </textarea>
+              <button class = "enterbutton">
+                <img src = {sendImage} alt = "d" />
+              </button>
+            </div>
+          </div>
+          
           
         </div>
-
-        <div class = "input">
-          <div class = "inputbox">
-            <textarea id = "resize-textbox" class = "inputbox-text" placeholder = "Type something...">
-
-            </textarea>
-            <button class = "enterbutton">
-              <img src = {sendImage} alt = "d" />
-            </button>
-          </div>
-        </div>
-        
-        
       </div>
+      
       
 
 
