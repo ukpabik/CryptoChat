@@ -8,9 +8,9 @@ function App() {
     //Fragment element holds all of the components
     <>
       <Header />
-      <Body>
+        <Body>
         
-      </Body>
+        </Body>
       <Footer />
     </>
     

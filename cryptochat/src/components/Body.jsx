@@ -3,27 +3,32 @@ import sendImage from "../assets/sendicon.png"
 
 
 function Body(){
+  //RESIZING THE OUTPUT BOX
+  const outputbox = document.getElementById('output');
+  const textarea = document.getElementById("resize-textbox");
+  
 
+
+  // ADD EVENT LISTENER FOR INPUT BOX TO RESIZE IT
   document.addEventListener('input', function(event){
-    const textarea = document.getElementById("resize-textbox");
     
-    textarea.style.height = 'auto';
+    
 
-  // Get the scroll height of the textarea
+  // Gets the scroll height
   const scrollHeight = textarea.scrollHeight;
 
-  // Get the computed max-height and min-height
+  // Gets the max height
   const computedStyle = getComputedStyle(textarea);
   const maxHeight = parseInt(computedStyle.maxHeight);
 
-  // Set the height, ensuring it respects max-height
+  // Sets the height based on the maxHeight
   textarea.style.height = Math.min(scrollHeight, maxHeight) + 'px';
-
+  outputbox.style.height = 500 + 'px';
   })
   return(
     <body>
       <div class = "chatarea">
-        <div class = "outputbox">
+        <div id = "output" class = "outputbox">
           
         </div>
 

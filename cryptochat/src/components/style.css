@@ -1,3 +1,7 @@
+body{
+  overflow-x: hidden;
+}
+
 .border {
   border: 2px solid black;
 }
@@ -29,24 +33,35 @@
 
 .chatarea{
   display:flex;
-  width: 40vw;
+  flex-direction:column;
+  width: 80vw;
+  max-height: 30rem;
+  border: 2px solid pink;
+  
+  padding: 0 5vw;
   
 }
+.outputbox{
+  border: 2px solid brown;
+  height: 30rem;
+}
+
 .inputbox{
-  
+  max-height: 8rem;
   display:flex;
   position:relative;
   width:100%;
-  background-color:rgb(144, 164, 194);
+  background-color:rgb(46, 46, 46);
   border: 2px solid black;
 }
 
 .inputbox-text{
+  flex: 1;
   width: calc(100% - 2rem);
   height: auto;
   font-size:0.9rem;
-  color:black;
-  background-color:rgb(144, 164, 194);
+  color:white;
+  background-color:rgb(46, 46, 46);
   border-radius:0.3rem;
   border:none;
   resize:none;
@@ -57,7 +72,7 @@
 }
 
 .inputbox-text::placeholder{
-  color:rgba(27, 27, 27, 0.349);
+  color:rgba(255, 255, 255, 0.349);
 }
 
 textarea{
