@@ -30,10 +30,10 @@ function Navbar(){
             </button>
             {dropdownOpen && (
               <div class = "dropdown-content">
-                <a href = "">f</a>
-                <a href = "">f</a>
-                <a href = "">f</a>
-                <a href = ""></a>
+                <a href = "">Talk To CryptoGPT</a>
+                <a href = "/signin">Sign In</a>
+                <a href = "">About</a>
+                <a href = "">Contact Us</a>
               </div>
             )}  
           </div>
