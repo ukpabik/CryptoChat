@@ -1,0 +1,120 @@
+.border {
+  border: 2px solid black;
+}
+
+.flexbox{
+  display:flex;
+  background-color:wheat;
+  height:6rem;
+  justify-content:space-between;
+  align-items:center;
+  flex-wrap:wrap;
+}
+
+.flex-item{
+  text-align:center;
+  font-size:0.9rem;
+  padding: 1rem;
+}
+
+.header{
+  font-size:2.5rem;
+  color:dimgray
+}
+
+.text{
+  font-size: 1.2rem;
+  color:dimgray;
+}
+
+.chatarea{
+  display:flex;
+  width: 40vw;
+  
+}
+.inputbox{
+  
+  display:flex;
+  position:relative;
+  width:100%;
+  background-color:rgb(144, 164, 194);
+  border: 2px solid black;
+}
+
+.inputbox-text{
+  width: calc(100% - 2rem);
+  height: auto;
+  font-size:0.9rem;
+  color:black;
+  background-color:rgb(144, 164, 194);
+  border-radius:0.3rem;
+  border:none;
+  resize:none;
+  padding: 0.5rem;
+  padding-right: 0.2rem;
+  line-height: 1.8rem;
+  box-sizing: border-box;
+}
+
+.inputbox-text::placeholder{
+  color:rgba(27, 27, 27, 0.349);
+}
+
+textarea{
+  max-height: 8rem;
+  max-width: 90%;
+  overflow: auto;
+}
+
+textarea::-webkit-scrollbar{
+  background-color:transparent;
+}
+textarea::-webkit-scrollbar-thumb{
+  border-radius: 100px;
+	box-shadow: 3px 0px 12px 4px rgba(128, 128, 128, 0.274);
+	background-color: rgba(0, 0, 0, 0.81);
+}
+
+.inputbox-text:focus{
+  outline:none;
+}
+
+.enterbutton{
+  position:absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  padding: 0;
+  border: none;
+  border-radius: 0.3rem;
+  cursor: pointer;
+}
+
+.enterbutton img{
+  display:block;
+  width: 1.5rem;
+  height: auto;
+  padding: 0 0.5rem;
+  z-index:10;
+}
+
+.enterbutton:hover{
+  
+}
+.enterbutton:focus{
+  outline: none;
+}
+
+
+a{
+  text-decoration:none;
+  color:black;
+}
+
+a:hover{
+  color:dimgray
+}
+a:active{
+  color:steelblue
+}
