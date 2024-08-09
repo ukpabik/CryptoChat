@@ -2,7 +2,7 @@ import './style.css';
 import sendImage from "../assets/sendicon.png"
 
 
-function Body(){
+function HomepageBody(){
   
 
 
@@ -67,4 +67,4 @@ function Body(){
 
 //IN CRYPTO LIST DIV, USE CRYPTO API TO RETURN TOP 100 CRYPTOS AS A LIST
 
-export default Body;
+export default HomepageBody;

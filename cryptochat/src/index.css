@@ -3,7 +3,25 @@ body{
   overflow-x: hidden;
   display: flex;
   flex-direction: column;
-  height: 76vh;
-  max-height: 76vh;
+  margin: 0;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+main {
+  flex: 1;
+}
+
+footer {
+  text-align: center;
   
 }

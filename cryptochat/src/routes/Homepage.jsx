@@ -1,4 +1,4 @@
-import Body from '../components/HomepageBody.jsx'
+import HomepageBody from '../components/HomepageBody.jsx'
 
 
 function Homepage() {
@@ -8,9 +8,9 @@ function Homepage() {
     //Fragment element holds all of the components
     <>
       
-      <Body>
+      <HomepageBody>
       
-      </Body>
+      </HomepageBody>
       
     </>
     
