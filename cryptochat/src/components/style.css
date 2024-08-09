@@ -34,18 +34,20 @@ body{
 .chatarea{
   display:flex;
   flex-direction:column;
-  width: 80vw;
+  width: 50vw;
   max-height: 30rem;
   border: 2px solid pink;
   
-  padding: 0 5vw;
   
 }
 .outputbox{
   border: 2px solid brown;
   height: 30rem;
 }
-
+.input{
+  display:flex;
+  justify-content:center;
+}
 .inputbox{
   max-height: 8rem;
   display:flex;
@@ -53,6 +55,7 @@ body{
   width:100%;
   background-color:rgb(46, 46, 46);
   border: 2px solid black;
+  
 }
 
 .inputbox-text{

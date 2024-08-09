@@ -32,14 +32,17 @@ function Body(){
           
         </div>
 
-        <div class = "inputbox">
-          <textarea id = "resize-textbox" class = "inputbox-text" placeholder = "Type something...">
+        <div class = "input">
+          <div class = "inputbox">
+            <textarea id = "resize-textbox" class = "inputbox-text" placeholder = "Type something...">
 
-          </textarea>
-          <button class = "enterbutton">
-            <img src = {sendImage} alt = "d" />
-          </button>
+            </textarea>
+            <button class = "enterbutton">
+              <img src = {sendImage} alt = "d" />
+            </button>
+          </div>
         </div>
+        
         
       </div>
       
