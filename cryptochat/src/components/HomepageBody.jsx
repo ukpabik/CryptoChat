@@ -26,6 +26,8 @@ function Body(){
     // Sets the height based on the maxHeight
     textarea.style.height = Math.min(scrollHeight, maxHeight) + 'px';
   })
+
+  
   return(
     
     <body>
