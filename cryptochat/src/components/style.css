@@ -1,6 +1,16 @@
 body{
   overflow-x: hidden;
   background-color:#0000001c
+  
+}
+
+.homepage-body{
+  display: flex;
+  flex: 10;
+  align-items: stretch;
+  background-color:black;
+  
+  
 }
 
 .border {
@@ -44,18 +54,30 @@ body{
   display:flex;
   flex-direction:column;
   width: 50vw;
-  max-height: 100rem;
-  border: 2px solid pink;
+  height: 100%;
   overflow:hidden;
+  background-image: linear-gradient(to right, rgb(0, 0, 0), rgb(59, 59, 59))
   
 }
 .outputbox{
-  border: 2px solid brown;
-  height: 30rem;
+  height: 100%;
+  max-height: 42rem;
   overflow-y: auto;
   overflow-x: hidden;
-  text-wrap: balance;
+  background-color:rgba(46, 46, 46, 0.637);
+  border: 1px solid rgba(0, 0, 0, 0.329);
+  border-bottom: none;
 }
+
+.outputbox::-webkit-scrollbar{
+  background-color:transparent;
+}
+.outputbox::-webkit-scrollbar-thumb{
+  border-radius: 100px;
+	box-shadow: 3px 0px 12px 4px rgba(128, 128, 128, 0.274);
+	background-color: rgba(0, 0, 0, 0.81);
+}
+
 .input{
   display:flex;
   justify-content:center;
@@ -65,8 +87,8 @@ body{
   display:flex;
   position:relative;
   width:100%;
-  background-color:rgb(46, 46, 46);
-  border: 2px solid black;
+  background-color:rgba(46, 46, 46, 0.637);
+  border: 1px solid rgba(0, 0, 0, 0.329);
   
 }
 
@@ -75,8 +97,8 @@ body{
   width: calc(100% - 2rem);
   height: auto;
   font-size:0.9rem;
-  color:white;
-  background-color:rgb(46, 46, 46);
+  color:black;
+  background-color:transparent;
   border-radius:0.3rem;
   border:none;
   resize:none;
@@ -108,6 +130,16 @@ textarea::-webkit-scrollbar-thumb{
 .inputbox-text:focus{
   outline:none;
 }
+
+.listDiv{
+  border: 1px solid black;
+  margin-left: -1.5rem;
+  margin-right: 1rem;
+  display: flex;
+  flex-direction:column;
+  margin-top: 1rem;
+}
+
 
 .enterbutton{
   position:absolute;
@@ -188,23 +220,28 @@ textarea::-webkit-scrollbar-thumb{
 }
 
 .listElement{
-  list-style-type:none;
-  margin:0;
-  text-wrap: wrap;
-  padding-right:1rem;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+  word-wrap: break-word; 
+  max-width: 100%; 
+  padding-right: 1.5rem;
+  color: white;
+  line-height: 1.5rem;
+  margin-left: 1rem;
 }
 
-
-.flexbody{
+.login-flexbody{
   display: flex;
   flex-direction:column;
-  background-color:rgba(0, 0, 0, 0.63);
-  margin: 15% 15%;
+  background-color:black;
   height: 25rem;
   justify-content:center;
   align-items:center;
-
   border-radius: 10%;
+  margin: auto;
+  width: 25rem;
 }
 
 .login-box{
@@ -215,6 +252,7 @@ textarea::-webkit-scrollbar-thumb{
   width: 75%;
   height: 75%;
   border-radius: 10%;
+  max-width: 25rem;
 }
 .login-form{
   display: flex;
@@ -302,12 +340,17 @@ input:focus{
   }
 }
 
+
 footer, header{
   background-image: linear-gradient(to right, rgba(0, 0, 0, 0.897), gray)
 }
 
+
+
+
 .footer-item{
   color:white;
+  box-sizing: border-box;
 }
 
 .footer-item a{
@@ -315,4 +358,11 @@ footer, header{
 }
 .footer-item a:hover{
   color:black;
+}
+
+
+
+
+ul{
+  list-style-type: none;
 }

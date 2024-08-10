@@ -16,6 +16,8 @@ function HomepageBody(){
   const inputRef = useRef(null);
   const buttonRef = useRef(null);
   const outputRef = useRef(null);
+  const outputBoxRef = useRef(null);
+  
 
 
   useEffect( () => {
@@ -41,7 +43,12 @@ function HomepageBody(){
         inputbox.value = ''
       }
     }
-
+    
+    const getCurrentTime = (currentTime) => {
+      return currentTime.getDate() + "/" + (currentTime.getMonth() + 1)
+        + "/" + currentTime.getFullYear() + " - " + currentTime.getHours() + ":"
+          + currentTime.getMinutes() + " "
+    }
     
 
     
@@ -51,13 +58,33 @@ function HomepageBody(){
 
     //HANDLING MESSAGES ON SITE BY MAKING NEW LIST ELEMENTS
     socket.on('message', (msg, serverOffset) => {
-      const username = 'CoolGuy123'; //PLACEHOLDER FOR USERNAME LOGIC
-      const outputbox = outputRef.current;
-      const newMessage = document.createElement('li');
-      newMessage.className = "listElement";
-      newMessage.textContent = {username} + ': ' + msg;
-      outputbox.appendChild(newMessage);
+      const currentTime = new Date();
+      const time = getCurrentTime(currentTime);
 
+
+      //CREATES A NEW 
+
+      const username = 'CoolGuy123'; //PLACEHOLDER FOR USERNAME LOGIC
+      const outputList = outputRef.current;
+      const outputBox = outputBoxRef.current;
+
+      const newMessageBox = document.createElement('div');
+      const newMessage = document.createElement('li');
+      const messageTitle = document.createElement('li');
+
+      newMessageBox.className = "listDiv";
+      newMessage.className = "listElement";
+      messageTitle.className = "listElementName"
+
+      newMessage.textContent = msg;
+      messageTitle.textContent = username + " | " + time;
+
+      newMessageBox.appendChild(messageTitle);
+      newMessageBox.appendChild(newMessage);
+      outputList.appendChild(newMessageBox);
+
+      outputBox.scrollTop = outputBox.scrollHeight;
+      
       //FOR RECOVERY OF MESSAGES
       socket.auth.serverOffset = serverOffset;
     })
@@ -95,37 +122,39 @@ function HomepageBody(){
   return(
     
     <body>
+      <div class = "homepage-body">
+
       
-      <div class = "chatarea">
-        <div id = "output" class = "outputbox">
-          <ul ref = {outputRef}>
+        <div class = "chatarea">
+          <div ref = {outputBoxRef} id = "output" class = "outputbox">
+            <ul ref = {outputRef}>
 
-          </ul>
-        </div>
-
-        <div class = "input">
-          <div class = "inputbox">
-            <textarea ref = {inputRef} id = "resize-textbox" class = "inputbox-text" placeholder = "Type something...">
-
-            </textarea>
-            <button ref = {buttonRef} id = "sendbutton" class = "enterbutton">
-              <img src = {sendImage} alt = "send-image" />
-            </button>
+            </ul>
           </div>
+
+          <div class = "input">
+            <div class = "inputbox">
+              <textarea ref = {inputRef} id = "resize-textbox" class = "inputbox-text" placeholder = "Type something...">
+
+              </textarea>
+              <button ref = {buttonRef} id = "sendbutton" class = "enterbutton">
+                <img src = {sendImage} alt = "send-image" />
+              </button>
+            </div>
+          </div>
+          
+          
         </div>
-        
-        
+
+
+        <div class = "crypto-list">
+          
+        </div>
+      
+      
+      
+
       </div>
-
-
-      <div class = "crypto-list">
-        
-      </div>
-      
-      
-      
-
-
     </body>
   )
 }

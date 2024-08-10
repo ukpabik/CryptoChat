@@ -1,7 +1,7 @@
 function SignInBody(){
   return(
     <body>
-      <div class = "flexbody">
+      <div class = "login-flexbody">
         <div class = "login-box">
 
           <form action = "" method = "get" class = "login-form">

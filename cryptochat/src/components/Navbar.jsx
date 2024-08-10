@@ -18,7 +18,7 @@ function Navbar(){
     
     <header>
       
-      <nav class = "flexbox">
+      <nav class = "flexbox header-div">
         <div class = "flex-item"><a class = "header" href = "/">CryptoChat</a></div>
         <form className="flex-item search-container">
           <input type="text" className="search-bar" placeholder="Search..." />
