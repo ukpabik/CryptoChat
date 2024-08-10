@@ -109,7 +109,7 @@ function HomepageBody(){
 
             </textarea>
             <button ref = {buttonRef} id = "sendbutton" class = "enterbutton">
-              <img src = {sendImage} alt = "d" />
+              <img src = {sendImage} alt = "send-image" />
             </button>
           </div>
         </div>

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import dropdownIcon from '../assets/menuicon.png'
 import './style.css'
 
 
@@ -19,17 +20,18 @@ function Navbar(){
       
       <nav class = "flexbox">
         <div class = "flex-item"><a class = "header" href = "/">CryptoChat</a></div>
-        <div className="flex-item search-container">
+        <form className="flex-item search-container">
           <input type="text" className="search-bar" placeholder="Search..." />
-        </div>
+        </form>
 
         <div class = "flex-item">
           <div class = "dropdown">
             <button class = "dropbutton" onClick = {toggleDropdown}>
-              Menu
+              <img class = "dropdown-icon" src = {dropdownIcon} alt = "dropdown-icon" />
             </button>
             {dropdownOpen && (
               <div class = "dropdown-content">
+                <input id = "dropdown-search" type="text" placeholder="Search..." />
                 <a href = "">Talk To CryptoGPT</a>
                 <a href = "/signin">Sign In</a>
                 <a href = "">About</a>

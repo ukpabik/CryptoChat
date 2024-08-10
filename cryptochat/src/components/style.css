@@ -1,18 +1,20 @@
 body{
   overflow-x: hidden;
+  background-color:#0000001c
 }
 
 .border {
   border: 2px solid black;
 }
 
+
 .flexbox{
   display:flex;
-  background-color:wheat;
   height:6rem;
   justify-content:space-between;
   align-items:center;
-  flex-wrap:wrap;
+  flex-wrap:nowrap;
+  
 }
 
 .flex-item{
@@ -20,6 +22,11 @@ body{
   font-size:0.9rem;
   padding: 1rem;
   margin: 0 0.5rem;
+}
+
+.search-container{
+  flex-grow: 1;
+  text-align: center;
 }
 
 .header{
@@ -129,24 +136,23 @@ textarea::-webkit-scrollbar-thumb{
   outline: none;
 }
 
-.search-container{
-  flex-grow: 1;
-  text-align: center;
-}
-
 .dropdown {
   position: relative;
   display: inline-block;
+  
 }
 
 .dropdown-content {
+  
   display: block;
   position: absolute;
   right: 0;
   background-color: #f9f9f9;
-  min-width: 10rem;
+  width: 7rem;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
+  margin-top: 0.3rem;
+  background-color:rgba(247, 247, 247, 1);
 }
 
 .dropdown-content a {
@@ -155,6 +161,30 @@ textarea::-webkit-scrollbar-thumb{
   margin-top: 0.5rem;
   text-decoration: none;
   display: block;
+}
+.dropbutton{
+  color:black;
+
+  padding: 1rem;
+  min-width: 7rem;
+  min-height: 4rem;
+  max-width: 7rem;
+  max-height: 4rem;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  
+  border:none;
+  background-color: transparent;
+}
+.dropbutton:hover{
+  cursor: pointer;
+  background-color:rgba(247, 247, 247, 0.11);
+}
+.dropbutton:active{
+
+}
+
+.dropdown-icon{
+  width: 40%;
 }
 
 .listElement{
@@ -168,46 +198,58 @@ textarea::-webkit-scrollbar-thumb{
 .flexbody{
   display: flex;
   flex-direction:column;
+  background-color:rgba(0, 0, 0, 0.63);
   margin: 15% 15%;
-  background-color:black;
   height: 25rem;
   justify-content:center;
   align-items:center;
+
+  border-radius: 10%;
 }
 
 .login-box{
   display: flex;
   align-items:center;
   justify-content: center;
-  background-color:white;
+  background-color:rgba(255, 255, 255, 0.651);
   width: 75%;
   height: 75%;
+  border-radius: 10%;
 }
 .login-form{
   display: flex;
+  flex-direction: column;
   width: 90%;
   justify-content: space-evenly;
   align-items: center;
+  max-width: 300px;
 }
 .login-field{
-  
+  display: flex;
+  flex-direction: column;
+  font-style: italic;
 }
 
 .login-username{
   border: 1px solid black;
   background-color:gray;
   display: block;
+  margin-bottom: 1rem;
+  box-shadow: 4px 2px 4px rgba(0, 0, 0, 0.26);
 }
 
 .submit-button{
   border: 1px solid black;
+  padding: 0.5rem;
+  border-radius: 15%;
+  box-shadow: 4px 2px 4px rgba(0, 0, 0, 0.26);
 }
 
-.login-button:hover{
+.submit-button:hover{
   cursor: pointer;
   background-color:rgb(182, 182, 182);
 }
-.login-button:active{
+.submit-button:active{
   cursor: pointer;
   background-color:rgb(134, 133, 133);
 }
@@ -223,4 +265,54 @@ a:hover{
 }
 a:active{
   color:steelblue
+}
+
+#dropdown-search{
+  display:none;
+  color:rgba(0, 0, 0, 0.753);
+  border:none;
+  padding: 0.5rem;
+  max-width: 6rem;
+  
+}
+
+.search-bar{
+  border-radius: 10px;
+  border: none;
+  background-color: transparent;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.527);
+  min-width: 9rem;
+  width: 65%;
+  padding: 0.5rem 1rem;
+  color:white;
+  font-size: 1.1rem;
+}
+
+input:focus{
+  outline: none;
+}
+
+
+@media (max-width: 650px){
+  #dropdown-search{
+    display: block;
+  }
+  .search-bar{
+    display:none;
+  }
+}
+
+footer, header{
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0.897), gray)
+}
+
+.footer-item{
+  color:white;
+}
+
+.footer-item a{
+  color: white;
+}
+.footer-item a:hover{
+  color:black;
 }
