@@ -1,4 +1,4 @@
-
+import SignInBody from '../components/SignInBody.jsx'
 
 function SignIn() {
 
@@ -6,9 +6,7 @@ function SignIn() {
   return(
     //Fragment element holds all of the components
     <>
-      
-      
-      
+      <SignInBody />
     </>
     
   )

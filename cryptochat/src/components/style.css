@@ -45,6 +45,9 @@ body{
 .outputbox{
   border: 2px solid brown;
   height: 30rem;
+  overflow-y: auto;
+  overflow-x: hidden;
+  text-wrap: balance;
 }
 .input{
   display:flex;
@@ -152,6 +155,13 @@ textarea::-webkit-scrollbar-thumb{
   margin-top: 0.5rem;
   text-decoration: none;
   display: block;
+}
+
+.listElement{
+  list-style-type:none;
+  margin:0;
+  text-wrap: wrap;
+  padding-right:1rem;
 }
 
 
