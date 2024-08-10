@@ -105,7 +105,7 @@ app.post('/register', async (req, res) => {
     //HASH THE PASSWORD
     const hashedPassword = bcrypt.hashSync(password, 10);
     await usersdb.run('INSERT INTO users (username, password) VALUES (?, ?)', [username, hashedPassword]);
-    res.status(201).json({ message: 'User registered successfully' });
+    res.status(200).json({ message: 'User registered successfully' });
   } 
   catch (error) {
     if (error.code === 'SQLITE_CONSTRAINT') {
@@ -120,7 +120,7 @@ app.post('/signin', async (req, res) => {
   const { username, password } = req.body;
 
   if (!username || !password) {
-    return res.status(400).json({ message: 'Username and password are required' });
+    return res.status(402).json({ message: 'Username and password are required' });
   }
 
   try {
