@@ -281,6 +281,7 @@ textarea::-webkit-scrollbar-thumb{
   padding: 0.5rem;
   border-radius: 15%;
   box-shadow: 4px 2px 4px rgba(0, 0, 0, 0.26);
+  margin-right: 3px;
 }
 
 .submit-button:hover{
@@ -290,6 +291,10 @@ textarea::-webkit-scrollbar-thumb{
 .submit-button:active{
   cursor: pointer;
   background-color:rgb(134, 133, 133);
+}
+
+.submit-button-div{
+  background-color:black;
 }
 
 

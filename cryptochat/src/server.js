@@ -1,5 +1,7 @@
 import express from 'express'
 import cors from 'cors'
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
 import { createServer } from 'node:http'
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
@@ -7,13 +9,26 @@ import { Server } from "socket.io"
 import sqlite3 from 'sqlite3'
 import { open } from 'sqlite';
 
+
+
+
+
+
 // OPEN THE DATABASE
 
-const db = await open({
+const messagedb = await open({
   filename: 'messages.db',
   driver: sqlite3.Database
 
 })
+
+
+//DATABASE FOR SAVING USERS
+const usersdb = await open({
+  filename: 'users.db',
+  driver: sqlite3.Database
+});
+
 
 /**
  * CREATE THE TABLE OF MESSAGES USING SQLITE AS A DATABASE
@@ -22,7 +37,7 @@ const db = await open({
  */
 
 
-await db.exec(`
+await messagedb.exec(`
   CREATE TABLE IF NOT EXISTS messages (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     content TEXT
@@ -30,6 +45,16 @@ await db.exec(`
   
   `)
 
+/**
+ * HOLDS ALL USERNAMES AND PASSWORDS (HASHED) OF ALL USERS ON SITE
+ */
+await usersdb.exec(`
+  CREATE TABLE IF NOT EXISTS users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    username TEXT UNIQUE,
+    password TEXT
+  );
+  `);
 
 
 
@@ -37,6 +62,8 @@ await db.exec(`
 
 const app = express()
 const server = createServer(app)
+
+//GET AND POST REQUESTS FOR SOCKET IO SERVER
 const io = new Server(server, {
   
   cors: {
@@ -55,11 +82,68 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 
 app.use(cors())
 
+//FOR LOGIN and REGISTERING
+app.use(express.json())
+
 
 app.get('/', (req, res) => {
   res.sendFile(join(__dirname, 'index.html'));
 });
 
+
+//REGISTER POST REQUEST
+app.post('/register', async (req, res) => {
+  const { username, password } = req.body;
+
+  if (!username || !password) {
+    
+    return res.status(400).json({ message: 'Username and password are required' });
+  }
+
+  try {
+
+    //HASH THE PASSWORD
+    const hashedPassword = bcrypt.hashSync(password, 10);
+    await usersdb.run('INSERT INTO users (username, password) VALUES (?, ?)', [username, hashedPassword]);
+    res.status(201).json({ message: 'User registered successfully' });
+  } 
+  catch (error) {
+    if (error.code === 'SQLITE_CONSTRAINT') {
+      return res.status(400).json({ message: 'Username already exists' });
+    }
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+//LOGIN POST REQUEST
+app.post('/signin', async (req, res) => {
+  const { username, password } = req.body;
+
+  if (!username || !password) {
+    return res.status(400).json({ message: 'Username and password are required' });
+  }
+
+  try {
+    const user = await usersdb.get('SELECT * FROM users WHERE username = ?', [username]);
+    if (user && bcrypt.compareSync(password, user.password)) {
+      const token = jwt.sign({ username: user.username }, 'your_jwt_secret', { expiresIn: '1h' });
+      res.json({ token });
+    } 
+    else {
+      res.status(401).json({ message: 'Invalid username or password' });
+    }
+  } 
+  catch (error) {
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+
+
+
+
+
+// SOCKETS FOR CHAT ROOM
 io.on('connection', async (socket) => {
   console.log('a user connected')
 
@@ -71,7 +155,7 @@ io.on('connection', async (socket) => {
   socket.on('message', async (msg) => {
     let result;
     try{
-      result = await db.run('INSERT INTO messages (content) VALUES (?)', msg)
+      result = await messagedb.run('INSERT INTO messages (content) VALUES (?)', msg)
     }
     catch(e){
       return;
@@ -84,7 +168,7 @@ io.on('connection', async (socket) => {
     //IF CANT RECOVER THE CONNECTION STATE
 
     try{
-      await db.each('SELECT id, content FROM messages WHERE id > ?', 
+      await messagedb.each('SELECT id, content FROM messages WHERE id > ?', 
         [socket.handshake.auth.serverOffset || 0],
         (_err, row) => {
           socket.emit('message', row.content, row.id)
@@ -100,6 +184,7 @@ io.on('connection', async (socket) => {
     console.log('user disconnected');
   });
 })
+
 
 
 
