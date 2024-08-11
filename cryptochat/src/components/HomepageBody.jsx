@@ -15,6 +15,8 @@ import axios from 'axios'
 
 
 function HomepageBody(){
+
+
   const { isLoggedIn, username } = useContext(AuthContext)
   const [cryptoData, setCryptoData] = useState([])
   const inputRef = useRef(null);
@@ -169,7 +171,6 @@ function HomepageBody(){
 
   
   return(
-    
     <body>
       <div class = "homepage-body">
 
@@ -195,21 +196,29 @@ function HomepageBody(){
           
         </div>
 
-
+        <div class = "cryptoLabel">
+          <span class = "cryptoLabelRank">#</span>
+          <span class = "cryptoLabelName">Name</span>
+          <span class = "cryptoLabelPrice">Price</span>
+          <span class = "cryptoLabelChange">24h</span>
+        </div>
         <div class = "crypto-list-container">
+          
           <div ref = {cryptoRef} class = "crypto-list">
-
-          {cryptoData.length > 0 ? cryptoData.map((crypto) => (
-            <div key={crypto.id} class="cryptoListElement">
-              <span class = "cryptoRank"></span>
-            <img src={crypto.logo} alt={`${crypto.name} logo`} class="cryptoIcon" />
-              <li class="cryptoTitle">
-                <span class="nameSpan">{crypto.name}</span>
-                <span class="priceSpan">${crypto.price.toFixed(2)}</span>
-              </li>
-            </div>
-          )) : <p>Loading...</p>}
-
+              
+          
+              {cryptoData.length > 0 ? cryptoData.map((crypto, count) => (
+                <div key={crypto.id} class="cryptoListElement">
+                  <span class = "cryptoRank">{`${1 + count++} `}</span>
+                <img src={crypto.logo} alt={`${crypto.name} logo`} class="cryptoIcon" />
+                  <li class="cryptoTitle">
+                    <span class="nameSpan">{crypto.name}</span>
+                    <span class="priceSpan">${crypto.price.toFixed(2)}</span>
+                    <span class="changeSpan">1%</span>
+                  </li>
+                </div>
+              )) : <p>Loading...</p>}
+            
           </div>
         </div>
       

@@ -9,7 +9,7 @@ body{
   flex: 10;
   align-items: stretch;
   background-color:black;
-  
+  position: relative;
   
 }
 
@@ -391,6 +391,7 @@ footer, header{
 }
 
 .crypto-list-container {
+  position: relative;
   display: flex;
   flex-direction: column;
   max-width: 50vw;
@@ -398,8 +399,10 @@ footer, header{
   overflow: auto;
   background-color: rgba(46, 46, 46, 0.637); 
   border: 1px solid rgba(0, 0, 0, 0.329); 
-  max-height: 50rem;
-  
+  max-height: 48rem;
+  margin-top: 2rem;
+  box-shadow: 3px 0px 12px 4px rgba(0, 0, 0, 0.651);
+  color: white;
 }
 
 .crypto-list-container::-webkit-scrollbar {
@@ -413,7 +416,7 @@ footer, header{
 }
 .cryptoListElement{
   display: flex;
-  background-color: white;
+  background-color: transparent;
   height: 4rem;
   margin-bottom: 10px;
   align-items: center;
@@ -422,16 +425,71 @@ footer, header{
 
 .cryptoTitle{
   list-style-type:none;
+  margin-top: 0;
 }
+
+.cryptoLabel {
+  display: flex;
+  position: absolute;
+  top: 0;
+  left: 49.999%;
+  height: 2rem;
+  width: 50vw;
+  background-color: rgba(46, 46, 46, 0.637); 
+  color: rgb(196, 196, 196);
+  z-index: 10;
+  box-shadow: 3px 0px 12px 4px rgba(0, 0, 0, 0.651);
+  align-items:center;
+  
+}
+
+.cryptoLabelRank{
+  position: absolute;
+  margin-left: 0.8rem;
+}
+.cryptoLabelName{
+  position: absolute;
+  margin-left: 6.5rem;
+}
+.cryptoLabelPrice{
+  position: absolute;
+  margin-left: 16.5rem;
+}
+.cryptoLabelChange{
+  position: absolute;
+  margin-left: 24.5rem;
+}
+
+
 
 .cryptoIcon{
-  height: 3rem;
-  margin-left: 0.5rem;
+  height: 2rem;
+  position: absolute;
+  margin-left: 3rem;
+  margin-top: 1rem;
 }
 
 
-.nameSpan{
+
+.cryptoRank{
   margin-left: 10px;
+  position: absolute;
+  margin-top: 1rem;
+  color: rgb(150, 149, 149);
+}
+
+.nameSpan{
+  position: absolute;
+  margin-left: 6.5rem;
+}
+
+.priceSpan{
+  position: absolute;
+  margin-left: 16.5rem;
+}
+.changeSpan{
+  position: absolute;
+  margin-left: 24.5rem;
 }
 
 ul{

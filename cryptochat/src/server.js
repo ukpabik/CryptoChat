@@ -132,7 +132,7 @@ app.get('/cryptodata', async (req, res) => {
     const combinedData = latestResponse.data.data.map(crypto => {
       return {
         id: crypto.id,
-        name: crypto.name,
+        name: crypto.symbol,
         price: crypto.quote.USD.price,
         logo: infoResponse.data.data[crypto.id].logo
       };
