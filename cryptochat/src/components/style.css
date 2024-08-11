@@ -232,6 +232,12 @@ textarea::-webkit-scrollbar-thumb{
   margin-left: 1rem;
 }
 
+.listElementName{
+  color:rgba(206, 201, 201, 0.877);
+  font-weight:bold;
+  font-family:Arial, Helvetica, sans-serif;
+}
+
 .login-flexbody{
   display: flex;
   flex-direction:column;

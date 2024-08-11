@@ -36,6 +36,7 @@ function HomepageBody(){
 
     
     
+    //SENDS MESSAGE GLOBALLY
     const sendMessage = () => {
       const inputbox = inputRef.current;
       if (inputbox.value){
@@ -45,10 +46,26 @@ function HomepageBody(){
       }
     }
     
+    //RETURNS CURRENT TIME
     const getCurrentTime = (currentTime) => {
+      let minutes = ''; 
+      if (currentTime.getMinutes() < 10) {
+        minutes = '0' + currentTime.getMinutes();
+      } 
+      else {
+        minutes = currentTime.getMinutes(); 
+      }
+      let hours = '';
+
+      if (currentTime.getHours() > 12){
+        hours = currentTime.getHours() - 12;
+      }
+      else{
+        hours = currentTime.getHours();
+      }
       return currentTime.getDate() + "/" + (currentTime.getMonth() + 1)
-        + "/" + currentTime.getFullYear() + " - " + currentTime.getHours() + ":"
-          + currentTime.getMinutes() + ":" + currentTime.getSeconds()
+        + "/" + currentTime.getFullYear() + " | " + hours + ":"
+          + minutes
     }
     
 
@@ -63,8 +80,10 @@ function HomepageBody(){
       const time = getCurrentTime(currentTime);
 
 
+
+      //EXTRACTS CONTENT OF MESSAGE AND THE USER FROM THE MSG
       const {content, user} = msg;
-      const name = user //PLACEHOLDER FOR USERNAME LOGIC
+      const name = user 
       const outputList = outputRef.current;
       const outputBox = outputBoxRef.current;
 
@@ -77,7 +96,21 @@ function HomepageBody(){
       messageTitle.className = "listElementName"
 
       newMessage.textContent = content;
-      messageTitle.textContent = `${name || 'unknown'} | ${time}`;
+      
+
+      
+      const nameSpan = document.createElement('span');
+      nameSpan.textContent = name || 'unknown';
+      nameSpan.style.fontSize = '16px'; 
+
+      
+      const timeSpan = document.createElement('span');
+      timeSpan.textContent = ` | ${time}`;
+      timeSpan.style.fontSize = '12px'; 
+
+      
+      messageTitle.appendChild(nameSpan);
+      messageTitle.appendChild(timeSpan);
 
       newMessageBox.appendChild(messageTitle);
       newMessageBox.appendChild(newMessage);
