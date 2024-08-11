@@ -134,7 +134,8 @@ app.get('/cryptodata', async (req, res) => {
         id: crypto.id,
         name: crypto.symbol,
         price: crypto.quote.USD.price,
-        logo: infoResponse.data.data[crypto.id].logo
+        logo: infoResponse.data.data[crypto.id].logo,
+        percent_change_24h: crypto.quote.USD.percent_change_24h
       };
     });
 

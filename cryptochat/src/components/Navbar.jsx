@@ -29,7 +29,7 @@ function Navbar(){
     <header>
       
       <nav class = "flexbox header-div">
-        <div class = "flex-item"><a class = "header" href = "/">CryptoChat</a></div>
+        <div class = "flex-item headerTitle"><a class = "header" href = "/">CryptoChat</a></div>
         <form className="flex-item search-container">
           <input type="text" className="search-bar" placeholder="Search..." />
         </form>
@@ -39,24 +39,18 @@ function Navbar(){
             <button class = "dropbutton" onClick = {toggleDropdown}>
               <img class = "dropdown-icon" src = {dropdownIcon} alt = "dropdown-icon" />
             </button>
-            {dropdownOpen && (
-              <div class = "dropdown-content">
-                <input id = "dropdown-search" type="text" placeholder="Search..." />
-                <a href = "#">Talk To CryptoGPT</a>
-
-                {isLoggedIn ? (
-                  <>
-                  <a onClick = {logout} href = "/signin">Log Out</a>
-                  </>
-
-                ) : (
-                  <a href = "/signin">Sign In</a>
-                )}
-                
-                <a href = "#">About</a>
-                <a href = "#">Contact Us</a>
-              </div>
-            )}  
+            <div className={`dropdown-content ${dropdownOpen ? 'open' : ''}`}>
+              <input id="dropdown-search" type="text" placeholder="Search..." />
+              {isLoggedIn ? (
+                <>
+                  <a onClick={logout} href="/signin">Log Out</a>
+                </>
+              ) : (
+                <a href="/signin">Sign In</a>
+              )}
+              <a href="#">About</a>
+              <a href="#">Contact Us</a>
+            </div>
           </div>
         </div>
       </nav>

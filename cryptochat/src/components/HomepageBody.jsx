@@ -212,9 +212,9 @@ function HomepageBody(){
                   <span class = "cryptoRank">{`${1 + count++} `}</span>
                 <img src={crypto.logo} alt={`${crypto.name} logo`} class="cryptoIcon" />
                   <li class="cryptoTitle">
-                    <span class="nameSpan">{crypto.name}</span>
+                    <span class="nameSpan"><a class = "cryptoURL">{crypto.name}</a></span>
                     <span class="priceSpan">${crypto.price.toFixed(2)}</span>
-                    <span class="changeSpan">1%</span>
+                    <span class="changeSpan">{crypto.percent_change_24h.toFixed(2)}%</span>
                   </li>
                 </div>
               )) : <p>Loading...</p>}

@@ -1,3 +1,7 @@
+
+
+
+
 body{
   overflow-x: hidden;
   background-color:#0000001c
@@ -41,8 +45,24 @@ body{
 
 .header{
   font-size:2.5rem;
-  color:dimgray
+  color:dimgray;
+  
 }
+
+
+.headerTitle{
+  transition-duration: 2.5s;
+  transform: rotate(0deg);
+}
+.headerTitle:hover{
+  transition-duration: 2s;
+  transform: rotate(-360deg);
+}
+
+
+
+
+
 
 .text{
   font-size: 1.2rem;
@@ -98,7 +118,7 @@ body{
   width: calc(100% - 2rem);
   height: auto;
   font-size:0.9rem;
-  color:black;
+  color:white;
   background-color:transparent;
   border-radius:0.3rem;
   border:none;
@@ -175,25 +195,47 @@ textarea::-webkit-scrollbar-thumb{
 }
 
 .dropdown-content {
-  
+  border-radius: 1rem;
   display: block;
   position: absolute;
   right: 0;
   background-color: #f9f9f9;
   width: 7rem;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
+  z-index: 150;
   margin-top: 0.3rem;
   background-color:rgba(247, 247, 247, 1);
+  opacity: 0;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  pointer-events: none;
+  
 }
+.dropdown-content.open {
+  opacity: 1;
+  
+  pointer-events: auto; 
+}
+
 
 .dropdown-content a {
   color: black;
   padding: 0.5rem 1rem;
-  margin-top: 0.5rem;
+  margin: 0.5rem 0;
   text-decoration: none;
   display: block;
+  transition-duration: 0.3s;
 }
+.dropdown-content a:hover {
+  transition-duration: 0.3s;
+  color: gray;
+  font-weight:bold;
+  font-size: 1rem;
+}
+
+
+
+
+
 .dropbutton{
   color:black;
 
@@ -203,16 +245,22 @@ textarea::-webkit-scrollbar-thumb{
   max-width: 7rem;
   max-height: 4rem;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  border-radius: 1rem;
   
   border:none;
   background-color: transparent;
+
+  transition-duration: 0.5s;
 }
 .dropbutton:hover{
   cursor: pointer;
+
+  transition-duration: 0.5s;
   background-color:rgba(247, 247, 247, 0.11);
 }
 .dropbutton:active{
-
+  transition-duration: 0.1s;
+  background-color:rgba(54, 54, 54, 0.514);
 }
 
 .dropdown-icon{
@@ -314,12 +362,7 @@ a{
   color:black;
 }
 
-a:hover{
-  color:dimgray
-}
-a:active{
-  color:steelblue
-}
+
 
 #dropdown-search{
   display:none;
@@ -483,6 +526,11 @@ footer, header{
   margin-left: 6.5rem;
 }
 
+.nameSpan:hover{
+  transition-duration: 0.3s;
+  transform: translate(2px, 2px);
+}
+
 .priceSpan{
   position: absolute;
   margin-left: 16.5rem;
@@ -490,6 +538,21 @@ footer, header{
 .changeSpan{
   position: absolute;
   margin-left: 24.5rem;
+}
+
+.cryptoURL{
+  color: white;
+  font-weight:bold;
+}
+
+.cryptoURL:hover{
+  text-decoration: underline;
+  cursor: pointer;
+  color:rgb(130, 130, 221);
+}
+
+.cryptoURL:active{
+  color: white;
 }
 
 ul{
