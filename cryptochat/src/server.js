@@ -2,13 +2,14 @@ import express from 'express'
 import cors from 'cors'
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import 'dotenv/config'
+import axios from 'axios';
 import { createServer } from 'node:http'
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 import { Server } from "socket.io"
 import sqlite3 from 'sqlite3'
 import { open } from 'sqlite';
-
 
 
 
@@ -88,6 +89,32 @@ app.use(express.json())
 app.get('/', (req, res) => {
   res.sendFile(join(__dirname, 'index.html'));
 });
+
+
+// FETCHING CRYPTO DATA USING AXIOS
+app.get('/crypto-data', async (req, res) => {
+  try {
+    const response = await axios.get('https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest', {
+      headers: {
+        'X-CMC_PRO_API_KEY': `${process.env.API_KEY}`
+      }
+    });
+    res.json(response.data);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching crypto data' });
+  }
+});
+
+
+
+
+
+
+
+
+
+
+
 
 
 //REGISTER POST REQUEST

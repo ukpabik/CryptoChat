@@ -1,9 +1,10 @@
 import './style.css';
 import sendImage from "../assets/sendicon.png"
-import { React, useEffect, useRef, useContext } from 'react';
+import { React, useEffect, useRef, useContext, useState } from 'react';
 import io from 'socket.io-client'
 import { AuthContext } from '../Auth';
-import axios from 'axios';
+import axios from 'axios'
+
 
 
 
@@ -15,6 +16,7 @@ import axios from 'axios';
 
 function HomepageBody(){
   const { isLoggedIn, username } = useContext(AuthContext)
+  const [cryptoData, setCryptoData] = useState([])
   const inputRef = useRef(null);
   const buttonRef = useRef(null);
   const outputRef = useRef(null);
@@ -23,6 +25,9 @@ function HomepageBody(){
 
 
   useEffect( () => {
+
+
+    
     //CONNECT TO SERVER FIRST
     const socket = io('http://localhost:3000', {
       auth: {
@@ -68,6 +73,7 @@ function HomepageBody(){
         inputbox.value = ''
       }
     }
+    
     
   
     
@@ -128,9 +134,25 @@ function HomepageBody(){
       socket.disconnect();
       sendbutton.removeEventListener('click', sendMessage)
     }
+
+
+
+    
   }, [])
 
-  
+  useEffect(() => {
+    //FETCH CRYPTO DATA
+    const fetchCryptoData = async () => {
+      try {
+        const response = await axios.get('http://localhost:3000/crypto-data');
+        setCryptoData(response.data.data); 
+      } catch (error) {
+        console.error('Error fetching crypto data:', error);
+      }
+    };
+
+    fetchCryptoData();
+  }, []);
 
 
     // ADD EVENT LISTENER FOR INPUT BOX TO RESIZE IT
@@ -154,29 +176,7 @@ function HomepageBody(){
   })
 
 
-  //FETCHING DATA USING AXIOS FOR CRYPTO LIST
-
-  let config = {
-    method: 'get',
-    maxBodyLength: Infinity,
-    url: 'https://rest.coinapi.io/v1/assets/apikey-EE3811B4-D305-4E83-8754-0A10FCA44A8A',
-    headers: {
-      'Accept': 'text/plain'
-    }
-  }
-  axios.request(config)
-  .then((response) => {
-    const extractedData = response.data.map(row => {
-      return {
-        name: row.name,
-        asset_id: row.asset_id
-      }
-    })
-    console.log(extractedData)
-  })
-  .catch((error) => {
-    console.log(error);
-  });
+  
 
 
 
@@ -213,7 +213,7 @@ function HomepageBody(){
 
         <div class = "crypto-list-container">
           <div id = "list-of-cryptos" class = "crypto-list">
-
+            
           </div>
         </div>
       
