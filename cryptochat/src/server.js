@@ -40,10 +40,10 @@ const usersdb = await open({
 await messagedb.exec(`
   CREATE TABLE IF NOT EXISTS messages (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    content TEXT
+    content TEXT,
+    user TEXT
   );
-  
-  `)
+`);
 
 /**
  * HOLDS ALL USERNAMES AND PASSWORDS (HASHED) OF ALL USERS ON SITE
@@ -153,30 +153,32 @@ io.on('connection', async (socket) => {
    * when a user disconnects.
    */
   socket.on('message', async (msg) => {
+    const {content, user} = msg;
+
     let result;
     try{
-      result = await messagedb.run('INSERT INTO messages (content) VALUES (?)', msg)
+      result = await messagedb.run('INSERT INTO messages (content, user) VALUES (?, ?)', [content, user]);
     }
     catch(e){
       return;
     }
 
-    io.emit('message', msg, result.lastID)
+    io.emit('message', {content, user}, result.lastID)
   })
 
   if (!socket.recovered){
     //IF CANT RECOVER THE CONNECTION STATE
 
     try{
-      await messagedb.each('SELECT id, content FROM messages WHERE id > ?', 
+      await messagedb.each('SELECT id, content, user FROM messages WHERE id > ?', 
         [socket.handshake.auth.serverOffset || 0],
         (_err, row) => {
-          socket.emit('message', row.content, row.id)
+          socket.emit('message', { content: row.content, user: row.user }, row.id);
         }
       )
     }
     catch (e){
-
+      console.error(e);
     }
   }
 

@@ -39,7 +39,7 @@ function HomepageBody(){
     const sendMessage = () => {
       const inputbox = inputRef.current;
       if (inputbox.value){
-        socket.emit('message', inputbox.value);
+        socket.emit('message', { content: inputbox.value, user: username });
         console.log('Message sent')
         inputbox.value = ''
       }
@@ -63,8 +63,8 @@ function HomepageBody(){
       const time = getCurrentTime(currentTime);
 
 
-
-      const user = username //PLACEHOLDER FOR USERNAME LOGIC
+      const {content, user} = msg;
+      const name = user //PLACEHOLDER FOR USERNAME LOGIC
       const outputList = outputRef.current;
       const outputBox = outputBoxRef.current;
 
@@ -76,8 +76,8 @@ function HomepageBody(){
       newMessage.className = "listElement";
       messageTitle.className = "listElementName"
 
-      newMessage.textContent = msg;
-      messageTitle.textContent = user + " | " + time;
+      newMessage.textContent = content;
+      messageTitle.textContent = `${name || 'unknown'} | ${time}`;
 
       newMessageBox.appendChild(messageTitle);
       newMessageBox.appendChild(newMessage);
