@@ -12,8 +12,6 @@ import { open } from 'sqlite';
 
 
 
-
-
 // OPEN THE DATABASE
 
 const messagedb = await open({
@@ -41,7 +39,8 @@ await messagedb.exec(`
   CREATE TABLE IF NOT EXISTS messages (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     content TEXT,
-    user TEXT
+    user TEXT,
+    timeSent TEXT
   );
 `);
 
@@ -153,27 +152,26 @@ io.on('connection', async (socket) => {
    * when a user disconnects.
    */
   socket.on('message', async (msg) => {
-    const {content, user} = msg;
-
+    const {content, user, timeSent } = msg;
     let result;
     try{
-      result = await messagedb.run('INSERT INTO messages (content, user) VALUES (?, ?)', [content, user]);
+      result = await messagedb.run('INSERT INTO messages (content, user, timeSent) VALUES (?, ?, ?)', [content, user, timeSent]);
     }
     catch(e){
       return;
     }
 
-    io.emit('message', {content, user}, result.lastID)
+    io.emit('message', {content, user, timeSent}, result.lastID)
   })
 
   if (!socket.recovered){
     //IF CANT RECOVER THE CONNECTION STATE
 
     try{
-      await messagedb.each('SELECT id, content, user FROM messages WHERE id > ?', 
+      await messagedb.each('SELECT id, content, user, timeSent FROM messages WHERE id > ?', 
         [socket.handshake.auth.serverOffset || 0],
         (_err, row) => {
-          socket.emit('message', { content: row.content, user: row.user }, row.id);
+          socket.emit('message', { content: row.content, user: row.user, timeSent: row.timeSent}, row.id);
         }
       )
     }

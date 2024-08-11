@@ -132,12 +132,11 @@ textarea::-webkit-scrollbar-thumb{
 }
 
 .listDiv{
-  border: 1px solid black;
   margin-left: -1.5rem;
   margin-right: 1rem;
   display: flex;
   flex-direction:column;
-  margin-top: 1rem;
+  margin-top: 2rem;
 }
 
 

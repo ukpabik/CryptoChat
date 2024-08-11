@@ -3,6 +3,7 @@ import sendImage from "../assets/sendicon.png"
 import { React, useEffect, useRef, useContext } from 'react';
 import io from 'socket.io-client'
 import { AuthContext } from '../Auth';
+import axios from 'axios';
 
 
 
@@ -34,20 +35,9 @@ function HomepageBody(){
       console.log('Connected to server')
     })
 
-    
-    
-    //SENDS MESSAGE GLOBALLY
-    const sendMessage = () => {
-      const inputbox = inputRef.current;
-      if (inputbox.value){
-        socket.emit('message', { content: inputbox.value, user: username });
-        console.log('Message sent')
-        inputbox.value = ''
-      }
-    }
-    
     //RETURNS CURRENT TIME
-    const getCurrentTime = (currentTime) => {
+    const getCurrentTime = () => {
+      const currentTime = new Date()
       let minutes = ''; 
       if (currentTime.getMinutes() < 10) {
         minutes = '0' + currentTime.getMinutes();
@@ -55,18 +45,31 @@ function HomepageBody(){
       else {
         minutes = currentTime.getMinutes(); 
       }
-      let hours = '';
-
-      if (currentTime.getHours() > 12){
-        hours = currentTime.getHours() - 12;
+      let hours = currentTime.getHours();
+      let period = '';
+      
+      if (hours >= 12){
+        period = 'PM';
       }
       else{
-        hours = currentTime.getHours();
+        period = 'AM';
       }
-      return currentTime.getDate() + "/" + (currentTime.getMonth() + 1)
-        + "/" + currentTime.getFullYear() + " | " + hours + ":"
-          + minutes
+      hours = hours % 12 || 12;
+      return `${currentTime.getDate()}/${currentTime.getMonth() + 1}/${currentTime.getFullYear()}  ${hours}:${minutes} ${period}`
     }
+    
+    //SENDS MESSAGE GLOBALLY
+    const sendMessage = () => {
+      const inputbox = inputRef.current;
+      if (inputbox.value){
+        socket.emit('message', { content: inputbox.value, user: username, timeSent: getCurrentTime()});
+        console.log('Message sent')
+
+        inputbox.value = ''
+      }
+    }
+    
+  
     
 
     
@@ -76,14 +79,12 @@ function HomepageBody(){
 
     //HANDLING MESSAGES ON SITE BY MAKING NEW LIST ELEMENTS
     socket.on('message', (msg, serverOffset) => {
-      const currentTime = new Date();
-      const time = getCurrentTime(currentTime);
 
-
+      
 
       //EXTRACTS CONTENT OF MESSAGE AND THE USER FROM THE MSG
-      const {content, user} = msg;
-      const name = user 
+      const { content, user, timeSent } = msg;
+      const name = user;
       const outputList = outputRef.current;
       const outputBox = outputBoxRef.current;
 
@@ -105,8 +106,9 @@ function HomepageBody(){
 
       
       const timeSpan = document.createElement('span');
-      timeSpan.textContent = ` | ${time}`;
-      timeSpan.style.fontSize = '12px'; 
+      timeSpan.textContent = `  ${timeSent}`;
+      timeSpan.style.fontSize = '12px';
+      
 
       
       messageTitle.appendChild(nameSpan);
@@ -151,6 +153,35 @@ function HomepageBody(){
   }
   })
 
+
+  //FETCHING DATA USING AXIOS FOR CRYPTO LIST
+
+  let config = {
+    method: 'get',
+    maxBodyLength: Infinity,
+    url: 'https://rest.coinapi.io/v1/assets/apikey-EE3811B4-D305-4E83-8754-0A10FCA44A8A',
+    headers: {
+      'Accept': 'text/plain'
+    }
+  }
+  axios.request(config)
+  .then((response) => {
+    const extractedData = response.data.map(row => {
+      return {
+        name: row.name,
+        asset_id: row.asset_id
+      }
+    })
+    console.log(extractedData)
+  })
+  .catch((error) => {
+    console.log(error);
+  });
+
+
+
+
+
   
   return(
     
@@ -180,8 +211,10 @@ function HomepageBody(){
         </div>
 
 
-        <div class = "crypto-list">
-          
+        <div class = "crypto-list-container">
+          <div id = "list-of-cryptos" class = "crypto-list">
+
+          </div>
         </div>
       
       
