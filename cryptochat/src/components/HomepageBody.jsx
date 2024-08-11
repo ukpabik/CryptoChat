@@ -21,6 +21,7 @@ function HomepageBody(){
   const buttonRef = useRef(null);
   const outputRef = useRef(null);
   const outputBoxRef = useRef(null);
+  const cryptoRef = useRef(null);
   
 
 
@@ -144,7 +145,8 @@ function HomepageBody(){
     //FETCH CRYPTO DATA
     const fetchCryptoData = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/crypto-data');
+        const response = await axios.get('http://localhost:3000/cryptodata');
+        
         setCryptoData(response.data.data); 
       } catch (error) {
         console.error('Error fetching crypto data:', error);
@@ -155,25 +157,7 @@ function HomepageBody(){
   }, []);
 
 
-    // ADD EVENT LISTENER FOR INPUT BOX TO RESIZE IT
-  document.addEventListener('input', function(event){
-    const textarea = event.target;
-
-  if (textarea && textarea.scrollHeight) {
-    // RESET THE HEIGHT TO SHRINK THE BOX
-    textarea.style.height = 'auto';
-
-    
-    const scrollHeight = textarea.scrollHeight;
-
-    
-    const computedStyle = getComputedStyle(textarea);
-    const maxHeight = parseInt(computedStyle.maxHeight);
-
-    
-    textarea.style.height = Math.min(scrollHeight, maxHeight) + 'px';
-  }
-  })
+  
 
 
   
@@ -212,8 +196,17 @@ function HomepageBody(){
 
 
         <div class = "crypto-list-container">
-          <div id = "list-of-cryptos" class = "crypto-list">
-            
+          <div ref = {cryptoRef} class = "crypto-list">
+
+          {cryptoData.length > 0 ? cryptoData.map((crypto) => (
+            <div key={crypto.id} className="cryptoListElement">
+              <li className="cryptoTitle">
+                <span className="nameSpan">{crypto.name}</span>
+                <span className="priceSpan">{crypto.quote.USD.price.toFixed(2)}</span>
+              </li>
+            </div>
+          )) : <p>Loading...</p>}
+
           </div>
         </div>
       

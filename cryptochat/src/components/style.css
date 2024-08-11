@@ -84,6 +84,7 @@ body{
 }
 .inputbox{
   max-height: 8rem;
+  height: 8rem;
   display:flex;
   position:relative;
   width:100%;
@@ -389,7 +390,43 @@ footer, header{
   bottom: 0;
 }
 
+.crypto-list-container {
+  display: flex;
+  flex-direction: column;
+  max-width: 50vw;
+  width: 50vw;
+  overflow: auto;
+  background-color: rgba(46, 46, 46, 0.637); 
+  border: 1px solid rgba(0, 0, 0, 0.329); 
+  max-height: 50rem;
+  
+}
 
+.crypto-list-container::-webkit-scrollbar {
+  background-color: transparent;
+}
+
+.crypto-list-container::-webkit-scrollbar-thumb {
+  border-radius: 100px;
+  box-shadow: 3px 0px 12px 4px rgba(128, 128, 128, 0.274);
+  background-color: rgba(0, 0, 0, 0.81);
+}
+.cryptoListElement{
+  display: flex;
+  background-color: white;
+  height: 4rem;
+  margin-bottom: 10px;
+  align-items: center;
+  
+}
+
+.cryptoTitle{
+  margin-left: 10px;
+}
+
+.nameSpan{
+  margin-left: 10px;
+}
 
 ul{
   list-style-type: none;

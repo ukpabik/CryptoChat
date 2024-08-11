@@ -13,6 +13,15 @@ import { open } from 'sqlite';
 
 
 
+//CACHING THE DATA TO NOT REQUEST FROM API EVERY REFRESH
+let cryptoCache = {
+  data: null,
+  timestamp: null
+}
+
+//DATA WITHIN THE CACHE DISAPPEARS AFTER AN HOUR
+const CACHE_EXPIRATION_TIME = 60 * 60 * 1000;
+
 // OPEN THE DATABASE
 
 const messagedb = await open({
@@ -88,17 +97,32 @@ app.use(express.json())
 
 app.get('/', (req, res) => {
   res.sendFile(join(__dirname, 'index.html'));
+  
 });
 
 
 // FETCHING CRYPTO DATA USING AXIOS
-app.get('/crypto-data', async (req, res) => {
+app.get('/cryptodata', async (req, res) => {
+  const currentTime = new Date().getTime();
+  
+  //RETURN THE DATA WITHIN THE CACHE IF IT HASNT EXPIRED
+  if (cryptoCache.data && (currentTime - cryptoCache.timestamp < CACHE_EXPIRATION_TIME)) {
+    return res.json(cryptoCache.data);
+  }
+
+
   try {
     const response = await axios.get('https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest', {
       headers: {
         'X-CMC_PRO_API_KEY': `${process.env.API_KEY}`
       }
     });
+
+    //SETTING THE DATA WITHIN THE CACHE TO THE DATA RETRIEVED FROM API
+    cryptoCache = {
+      data: response.data,
+      timestamp: currentTime
+    }
     res.json(response.data);
   } catch (error) {
     res.status(500).json({ message: 'Error fetching crypto data' });
