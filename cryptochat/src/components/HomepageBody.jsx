@@ -1,7 +1,8 @@
 import './style.css';
 import sendImage from "../assets/sendicon.png"
-import { React, useEffect, useRef } from 'react';
+import { React, useEffect, useRef, useContext } from 'react';
 import io from 'socket.io-client'
+import { AuthContext } from '../Auth';
 
 
 
@@ -12,7 +13,7 @@ import io from 'socket.io-client'
 
 
 function HomepageBody(){
-
+  const { isLoggedIn, username } = useContext(AuthContext)
   const inputRef = useRef(null);
   const buttonRef = useRef(null);
   const outputRef = useRef(null);
@@ -47,7 +48,7 @@ function HomepageBody(){
     const getCurrentTime = (currentTime) => {
       return currentTime.getDate() + "/" + (currentTime.getMonth() + 1)
         + "/" + currentTime.getFullYear() + " - " + currentTime.getHours() + ":"
-          + currentTime.getMinutes() + " "
+          + currentTime.getMinutes() + ":" + currentTime.getSeconds()
     }
     
 
@@ -62,9 +63,8 @@ function HomepageBody(){
       const time = getCurrentTime(currentTime);
 
 
-      //CREATES A NEW 
 
-      const username = 'CoolGuy123'; //PLACEHOLDER FOR USERNAME LOGIC
+      const user = username //PLACEHOLDER FOR USERNAME LOGIC
       const outputList = outputRef.current;
       const outputBox = outputBoxRef.current;
 
@@ -77,7 +77,7 @@ function HomepageBody(){
       messageTitle.className = "listElementName"
 
       newMessage.textContent = msg;
-      messageTitle.textContent = username + " | " + time;
+      messageTitle.textContent = user + " | " + time;
 
       newMessageBox.appendChild(messageTitle);
       newMessageBox.appendChild(newMessage);

@@ -1,9 +1,14 @@
-import React, { useState } from 'react';
+import React, { useContext, useState} from 'react';
+import { AuthContext } from '../Auth';
 import dropdownIcon from '../assets/menuicon.png'
 import './style.css'
 
 
 function Navbar(){
+
+  //FOR TRACKING LOGINS AND LOGOUTS
+  const { isLoggedIn, logout } = useContext(AuthContext)
+
 
   //FOR DROPDOWN MENU USE USESTATE
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -11,6 +16,11 @@ function Navbar(){
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
   };
+
+  // const handleLogout = () => {
+  //   sessionStorage.removeItem('username');
+  //   sessionStorage.removeItem('token');
+  // };
 
 
 
@@ -33,7 +43,16 @@ function Navbar(){
               <div class = "dropdown-content">
                 <input id = "dropdown-search" type="text" placeholder="Search..." />
                 <a href = "#">Talk To CryptoGPT</a>
-                <a href = "/signin">Sign In</a>
+
+                {isLoggedIn ? (
+                  <>
+                  <a onClick = {logout} href = "/signin">Log Out</a>
+                  </>
+
+                ) : (
+                  <a href = "/signin">Sign In</a>
+                )}
+                
                 <a href = "#">About</a>
                 <a href = "#">Contact Us</a>
               </div>

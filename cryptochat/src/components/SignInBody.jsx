@@ -1,9 +1,19 @@
 import axios from 'axios';
-import {React, useRef} from 'react'
+import {React, useRef, useState, useContext} from 'react'
+import { AuthContext } from '../Auth';
+import { useNavigate } from 'react-router-dom';
 
 function SignInBody() {
+  const { isLoggedIn, login } = useContext(AuthContext)
   const errorMessageRef = useRef(null)
   const successMessageRef = useRef(null)
+
+
+  //FOR REDIRECTING USERS
+  const navigate = useNavigate();
+
+
+
   // ASYNC FUNCTION FOR HANDLING LOGIN
   const handleLogin = async (e) => {
     // PREVENTS DEFAULT FORM SUBMISSION
@@ -28,7 +38,6 @@ function SignInBody() {
         errorMessage.style.display = "none";
         successMessage.style.display = "block";
         const data = response.data;
-
         if (action === 'register') {
           successMessage.textContent = 'Successfully Registered';
         } 
@@ -36,6 +45,12 @@ function SignInBody() {
           successMessage.textContent = 'Successfully Logged In';
           console.log("Token: ", data.token);
         }
+
+        login(username, data.token)
+        sessionStorage.setItem('username', username);
+        sessionStorage.setItem('token', data.token);
+
+        navigate('/')
       }
     } 
     catch (error) {
