@@ -147,8 +147,9 @@ function HomepageBody(){
       try {
         const response = await axios.get('http://localhost:3000/cryptodata');
         
-        setCryptoData(response.data.data); 
-      } catch (error) {
+        setCryptoData(response.data); 
+      } 
+      catch (error) {
         console.error('Error fetching crypto data:', error);
       }
     };
@@ -199,10 +200,12 @@ function HomepageBody(){
           <div ref = {cryptoRef} class = "crypto-list">
 
           {cryptoData.length > 0 ? cryptoData.map((crypto) => (
-            <div key={crypto.id} className="cryptoListElement">
-              <li className="cryptoTitle">
-                <span className="nameSpan">{crypto.name}</span>
-                <span className="priceSpan">{crypto.quote.USD.price.toFixed(2)}</span>
+            <div key={crypto.id} class="cryptoListElement">
+              <span class = "cryptoRank"></span>
+            <img src={crypto.logo} alt={`${crypto.name} logo`} class="cryptoIcon" />
+              <li class="cryptoTitle">
+                <span class="nameSpan">{crypto.name}</span>
+                <span class="priceSpan">${crypto.price.toFixed(2)}</span>
               </li>
             </div>
           )) : <p>Loading...</p>}

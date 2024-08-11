@@ -104,28 +104,50 @@ app.get('/', (req, res) => {
 // FETCHING CRYPTO DATA USING AXIOS
 app.get('/cryptodata', async (req, res) => {
   const currentTime = new Date().getTime();
-  
-  //RETURN THE DATA WITHIN THE CACHE IF IT HASNT EXPIRED
+
+  //CHECK IF THE CACHE IS NOT NULL
   if (cryptoCache.data && (currentTime - cryptoCache.timestamp < CACHE_EXPIRATION_TIME)) {
     return res.json(cryptoCache.data);
   }
 
-
   try {
-    const response = await axios.get('https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest', {
+    //FETCH THE LATEST TOP 100 CRYPTOS
+    const latestResponse = await axios.get('https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest', {
       headers: {
         'X-CMC_PRO_API_KEY': `${process.env.API_KEY}`
       }
     });
 
-    //SETTING THE DATA WITHIN THE CACHE TO THE DATA RETRIEVED FROM API
+    //EXTRACT THE IDS FROM THE LATEST TOP 100 CRYPTOS
+    const cryptoIds = latestResponse.data.data.map(crypto => crypto.id).join(',');
+
+    //FETCH THE ICONS
+    const infoResponse = await axios.get(`https://pro-api.coinmarketcap.com/v1/cryptocurrency/info?id=${cryptoIds}`, {
+      headers: {
+        'X-CMC_PRO_API_KEY': `${process.env.API_KEY}`
+      }
+    });
+
+    //GATHER ALL OF THE DATA INTO ONE VARIABLE
+    const combinedData = latestResponse.data.data.map(crypto => {
+      return {
+        id: crypto.id,
+        name: crypto.name,
+        price: crypto.quote.USD.price,
+        logo: infoResponse.data.data[crypto.id].logo
+      };
+    });
+
+    //UPDATE THE CACHE
     cryptoCache = {
-      data: response.data,
+      data: combinedData,
       timestamp: currentTime
-    }
-    res.json(response.data);
+    };
+
+    //RESPOND WITH THE NEW DATA
+    res.json(combinedData);
   } catch (error) {
-    res.status(500).json({ message: 'Error fetching crypto data' });
+    console.error('Error fetching crypto data:', error.message);
   }
 });
 

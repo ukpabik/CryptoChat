@@ -421,8 +421,14 @@ footer, header{
 }
 
 .cryptoTitle{
-  margin-left: 10px;
+  list-style-type:none;
 }
+
+.cryptoIcon{
+  height: 3rem;
+  margin-left: 0.5rem;
+}
+
 
 .nameSpan{
   margin-left: 10px;
