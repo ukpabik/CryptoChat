@@ -49,7 +49,7 @@ let cryptoCache = {
   timestamp: null
 }
 
-//DATA WITHIN THE CACHE DISAPPEARS AFTER 2 MINUTES
+//DATA WITHIN THE CACHE DISAPPEARS AFTER 5 MINUTES
 const CACHE_EXPIRATION_TIME = 5 * 60 * 1000;
 
 // OPEN THE DATABASE
@@ -113,7 +113,7 @@ const server = createServer(app)
 const io = new Server(server, {
   
   cors: {
-    origin: "http://localhost:5173",
+    origin: `${process.env.FRONTEND_URL}`,
     methods: ["GET", "POST"]
   },
 
@@ -126,7 +126,10 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 
 
 
-app.use(cors())
+app.use(cors({
+  origin: process.env.FRONTEND_URL,
+  methods: ["GET", "POST"],
+}));
 
 //FOR LOGIN and REGISTERING
 app.use(express.json())
