@@ -135,6 +135,10 @@ app.use(cors({
 app.use(express.json())
 
 
+//SERVING STATIC FILES FROM REACT
+app.use(express.static(join(__dirname, 'client', 'dist')));
+
+
 app.get('/', (req, res) => {
   res.sendFile(join(__dirname, 'index.html'));
   
@@ -267,7 +271,10 @@ app.post('/signin', async (req, res) => {
 });
 
 
-
+// FOR ALL NON API ROUTES
+app.get('*', (req, res) => {
+  res.sendFile(join(__dirname, 'client', 'dist', 'index.html'));
+});
 
 
 
@@ -318,5 +325,5 @@ io.on('connection', async (socket) => {
 
 
 server.listen(port, () => {
-  
+  console.log(`Server running on port ${port}`);
 })
