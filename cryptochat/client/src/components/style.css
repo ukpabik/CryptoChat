@@ -8,6 +8,7 @@ body{
   
 }
 
+
 .homepage-body{
   display: flex;
   flex: 10;
@@ -39,6 +40,7 @@ body{
 }
 
 .search-container{
+  display: flex;
   flex-grow: 1;
   text-align: center;
 }
@@ -49,6 +51,58 @@ body{
   
 }
 
+.header-div{
+  position: relative;
+}
+
+
+.ai-chatbox{
+  position: absolute;
+  display: flex;
+  background-color: rgb(44, 43, 43);
+  color: rgba(177, 177, 177, 0.877);
+  z-index: 1000;
+  top:125%;
+  left: 25%;
+  min-width: 50vw;
+  max-width: 50vw;
+
+  max-height: 40rem;
+  word-wrap: break-word; 
+  overflow: auto;
+  padding: 1.5rem;
+  box-shadow: 3px 0px 8px 3px rgba(128, 128, 128, 0.274);
+  border-radius: 15px;
+}
+
+.newChatText{
+  list-style:none;
+  display:inline-block;
+  color: rgba(255, 255, 255, 0.808);
+  margin-bottom: 1rem;
+  
+}
+.newChatTitle{
+  font-weight:bold;
+  font-style:italic;
+  font-size: 1.1rem;
+}
+
+
+
+
+
+
+
+.ai-chatbox::-webkit-scrollbar {
+  background-color: transparent;
+}
+
+.ai-chatbox::-webkit-scrollbar-thumb {
+  border-radius: 100px;
+  box-shadow: 3px 0px 12px 4px rgba(128, 128, 128, 0.274);
+  background-color: rgba(0, 0, 0, 0.81);
+}
 
 .headerTitle{
   transition-duration: 2.5s;
@@ -393,9 +447,6 @@ input:focus{
 @media (max-width: 650px){
   #dropdown-search{
     display: block;
-  }
-  .search-bar{
-    display:none;
   }
 }
 

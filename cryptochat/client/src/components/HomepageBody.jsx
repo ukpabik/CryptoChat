@@ -32,7 +32,7 @@ function HomepageBody(){
 
     
     //CONNECT TO SERVER FIRST
-    const socket = io('http://localhost:3000', {
+    const socket = io(`${import.meta.env.VITE_API_URL}`, {
       auth: {
         serverOffset: 0
       },
@@ -110,7 +110,7 @@ function HomepageBody(){
 
       
       const nameSpan = document.createElement('span');
-      nameSpan.textContent = name || 'unknown';
+      nameSpan.textContent = name || 'Guest';
       nameSpan.style.fontSize = '16px'; 
 
       
@@ -147,7 +147,7 @@ function HomepageBody(){
     //FETCH CRYPTO DATA
     const fetchCryptoData = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/cryptodata');
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/cryptodata`);
         
         setCryptoData(response.data); 
       } 
@@ -160,6 +160,7 @@ function HomepageBody(){
   }, []);
 
 
+  
   
 
 

@@ -10,6 +10,27 @@ import { dirname, join } from 'node:path';
 import { Server } from "socket.io"
 import sqlite3 from 'sqlite3'
 import { open } from 'sqlite';
+import { GoogleGenerativeAI } from '@google/generative-ai';
+
+
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+
+const model = genAI.getGenerativeModel({ 
+  model: "gemini-1.5-flash",
+  systemInstruction: "You are a comprehensive cryptocurrency expert with unparalleled knowledge in the field." +  
+  "You offer not only real-time and historical data but also provide in-depth analysis, technical insights," +  
+  "and strategic advice on all aspects of cryptocurrencies. You can access and interpret the latest market data," + 
+  " news, trends, and on-chain analytics. You are adept at explaining complex crypto concepts in simple, easy-to-understand" + 
+  " terms for beginners, while also providing advanced, detailed explanations for experienced traders and investors. You can" + 
+  " analyze market sentiment, assess potential risks and opportunities, and offer predictions based on current trends and historical patterns. " + 
+  "You are also able to provide information on emerging technologies in the crypto space, regulatory changes, and the broader impact of cryptocurrencies" + 
+  " on global markets. You present your responses in a clear, concise, and professional manner, tailored to the specific needs of the user, whether they are" + 
+  " seeking general information, in-depth analysis, or actionable trading strategies. You remain up-to-date with the rapidly evolving crypto landscape, ensuring" + 
+  " that all advice and data are current and accurate. Furthermore, you respect the user’s privacy and operate with the highest standards of integrity and trustworthiness. " + 
+  "Make your message layout readable, as in not using markdown text. I only want text, as what I am using can't deal with markdown code. WHATEVER YOU DO, DO NOT USE MARKDOWN CODE EVER. ONLY EMOJIS ARE ACCEPTABLE. DO NOT USE MARKDOWN CODE, I FORBID YOU."
+
+
+});
 
 
 
@@ -19,8 +40,8 @@ let cryptoCache = {
   timestamp: null
 }
 
-//DATA WITHIN THE CACHE DISAPPEARS AFTER AN HOUR
-const CACHE_EXPIRATION_TIME = 60 * 60 * 1000;
+//DATA WITHIN THE CACHE DISAPPEARS AFTER 2 MINUTES
+const CACHE_EXPIRATION_TIME = 5 * 60 * 1000;
 
 // OPEN THE DATABASE
 
@@ -84,7 +105,7 @@ const io = new Server(server, {
   connectionStateRecovery: {}
 
 })
-const port = 3000
+const port = process.env.SERVER_PORT
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 
@@ -114,7 +135,7 @@ app.get('/cryptodata', async (req, res) => {
     //FETCH THE LATEST TOP 100 CRYPTOS
     const latestResponse = await axios.get('https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest', {
       headers: {
-        'X-CMC_PRO_API_KEY': `${process.env.API_KEY}`
+        'X-CMC_PRO_API_KEY': `${process.env.COINMARKET_API_KEY}`
       }
     });
 
@@ -124,7 +145,7 @@ app.get('/cryptodata', async (req, res) => {
     //FETCH THE ICONS
     const infoResponse = await axios.get(`https://pro-api.coinmarketcap.com/v1/cryptocurrency/info?id=${cryptoIds}`, {
       headers: {
-        'X-CMC_PRO_API_KEY': `${process.env.API_KEY}`
+        'X-CMC_PRO_API_KEY': `${process.env.COINMARKET_API_KEY}`
       }
     });
 
@@ -154,8 +175,23 @@ app.get('/cryptodata', async (req, res) => {
 
 
 
+//REQUESTS FOR GEMINI API
+app.post('/ai', async (req, res) => {
+  try{
+    const { body } = req.body;
+    
+    const prompt = body;
+    const result = await model.generateContent(prompt);
+    const response = result.response;
+    const text = response.text();
 
+    res.status(200).json({ data: text });
 
+  }
+  catch(error){
+    res.status(400).json({ message: 'Invalid response.' });
+  }
+})
 
 
 
@@ -199,7 +235,7 @@ app.post('/signin', async (req, res) => {
   try {
     const user = await usersdb.get('SELECT * FROM users WHERE username = ?', [username]);
     if (user && bcrypt.compareSync(password, user.password)) {
-      const token = jwt.sign({ username: user.username }, 'your_jwt_secret', { expiresIn: '1h' });
+      const token = jwt.sign({ username: user.username }, `${process.env.JWT_SECRET}`, { expiresIn: '1h' });
       res.json({ token });
     } 
     else {
@@ -263,5 +299,5 @@ io.on('connection', async (socket) => {
 
 
 server.listen(port, () => {
-  console.log(`Listening on port ${port}`)
+  
 })

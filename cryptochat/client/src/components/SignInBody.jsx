@@ -22,14 +22,13 @@ function SignInBody() {
     // RETRIEVE VALUES OF USERNAME AND PASSWORD
     const username = e.target.username.value;
     const password = e.target.password.value;
-    console.log(username);
 
     const action = e.nativeEvent.submitter.name;
     const errorMessage = errorMessageRef.current;
     const successMessage = successMessageRef.current;
     try {
       // Use axios to make the POST request
-      const response = await axios.post(`http://localhost:3000/${action}`, {
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/${action}`, {
         username,
         password
       });

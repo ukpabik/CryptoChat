@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@google/generative-ai": "^0.16.0",
     "axios": "^1.7.3",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
@@ -19,6 +20,7 @@
     "nodemon": "^3.1.4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-markdown": "^9.0.1",
     "react-router-dom": "^6.26.0",
     "socket.io": "^4.7.5",
     "socket.io-client": "^4.7.5",

@@ -1,4 +1,4 @@
-import SignInBody from '../components/SignInBody.jsx'
+import SignInBody from '../components/SignInBody.jsx';
 
 function SignIn() {
 
