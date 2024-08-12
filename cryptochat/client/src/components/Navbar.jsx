@@ -3,6 +3,7 @@ import { AuthContext } from '../Auth';
 import dropdownIcon from '../assets/menuicon.png'
 import './style.css'
 import axios from 'axios'
+import { marked } from 'marked';
 
 
 function Navbar(){
@@ -50,10 +51,13 @@ function Navbar(){
         .then((response) => {
           setInputValue('');
 
+          //CONVERT FROM MARKDOWN CODE
+          const htmlContent = marked(response.data.data);
+
           //ADD RESPONSE TO HISTORY
           setChatHistory((prevHistory) => [
             ...prevHistory,
-            { type: 'CryptoAI: ', text: response.data.data },
+            { type: 'CryptoAI: ', html: htmlContent },
           ]);
         })
         .catch((error) => {
@@ -80,7 +84,7 @@ function Navbar(){
         newChatText.className = 'newChatText';
         newChatTitle.className = 'newChatTitle';
 
-        newChatText.textContent = chat.text;
+        newChatText.innerHTML = chat.html || chat.text;
         newChatTitle.textContent = chat.type;
 
         newChat.appendChild(newChatTitle);
