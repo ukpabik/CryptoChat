@@ -555,6 +555,14 @@ footer, header{
   color: white;
 }
 
+.green{
+  color:green;
+}
+.red{
+  color: red;
+}
+
+
 ul{
   list-style-type: none;
 }
