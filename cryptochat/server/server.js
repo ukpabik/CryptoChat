@@ -121,7 +121,7 @@ const io = new Server(server, {
   connectionStateRecovery: {}
 
 })
-const port = process.env.SERVER_PORT
+const port = process.env.PORT || 3000;
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 
