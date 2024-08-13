@@ -28,7 +28,32 @@ pool.connect()
   .then(() => console.log('Connected to PostgreSQL'))
   .catch(err => console.error('Error connecting to PostgreSQL:', err));
 
-
+  (async () => {
+    try {
+      // Create the users table
+      await pool.query(`
+        CREATE TABLE IF NOT EXISTS users (
+          id SERIAL PRIMARY KEY,
+          username VARCHAR(100) UNIQUE NOT NULL,
+          password VARCHAR(100) NOT NULL
+        )
+      `);
+  
+      // Create the messages table
+      await pool.query(`
+        CREATE TABLE IF NOT EXISTS messages (
+          id SERIAL PRIMARY KEY,
+          content TEXT NOT NULL,
+          username VARCHAR(100) NOT NULL,
+          timesent TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+      `);
+  
+      console.log("Tables created successfully.");
+    } catch (error) {
+      console.error("Error creating tables:", error);
+    }
+  })();
 
 
 
