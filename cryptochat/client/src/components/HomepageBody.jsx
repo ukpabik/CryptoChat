@@ -176,14 +176,14 @@ function HomepageBody(){
         const response = await axios.get(`${import.meta.env.VITE_API_URL}/messages`);
         const fetchedMessages = response.data.rows;
   
-        // Temporarily store fetched messages in a variable
+        
         const formattedMessages = fetchedMessages.map(message => ({
           content: message.content || 'No content',
           username: message.username || 'Guest',
           timeSent: message.timesent || 'No time'
         }));
   
-        // Set state only after formatting messages
+        
         setMessages(formattedMessages);
       } catch (error) {
         console.error('Error fetching messages:', error);
@@ -194,13 +194,13 @@ function HomepageBody(){
   }, []);
   
   useEffect(() => {
-    // Clear the list before printing to avoid duplicates
+    
     outputRef.current.innerHTML = '';
   
     messages.forEach((message) => {
       printMessage(message.content, message.username, message.timeSent);
     });
-  }, [messages]); // Dependency on messages ensures it only runs after messages are set
+  }, [messages]);
 
   
 
