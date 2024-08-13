@@ -1,27 +1,50 @@
-body{
-  overflow: auto;
-  overflow-x: hidden;
-  display: flex;
+#root{
+  height: 100vh;
+  width: 100vw;
+  display:flex;
   flex-direction: column;
-  margin: 0;
+  background-color:rgba(0, 0, 0, 0.123);
 }
 
-html, body {
-  height: 100%;
-  margin: 0;
-}
-
-#root {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-}
-
-main {
-  flex: 1;
-}
-
-footer {
-  text-align: center;
+#root footer{
+  margin-top: auto;
+  height: 50%;
   
+}
+
+html, body, #root {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+
+*::-webkit-scrollbar {
+  background-color: rgba(46, 46, 46, 0.637); 
+}
+
+*::-webkit-scrollbar-thumb {
+  border-radius: 100px;
+  box-shadow: 3px 0px 12px 4px rgba(80, 80, 80, 0.137);
+  background-color: rgba(0, 0, 0, 0.87);
+}
+
+
+*::-webkit-scrollbar-corner {
+  background-color: rgba(46, 46, 46, 0.829); 
+  opacity: 1%;
+  
+}
+
+*::-webkit-scrollbar-track {
+  background-color: rgba(7, 7, 7, 0.637); 
+}
+
+@media (min-width: 720px){
+  #root footer{
+    max-height: 9rem;
+  }
 }

@@ -156,53 +156,53 @@ function Navbar(){
   return(
     
     <header>
-      
-      <nav class = "flexbox header-div">
-        <div class = "flex-item headerTitle"><a class = "header" href = "/">CryptoChat</a></div>
-        <form onSubmit={(e) => e.preventDefault()} className="flex-item search-container">
-          <input 
-            value={inputValue}
-            ref={inputRef}
-            onFocus={openChatMenu} 
-            onChange= {handleInputChange}  
-            onKeyDown = {handleKeyPress} 
-            type="text" 
-            className="search-bar" 
-            placeholder="Type to CryptoAI..." 
-            required 
-          />
-        </form>
-        {chatMenuOpen && currentlyChatting ? 
-          <div ref = {aiRef} class="ai-chatbox">
-            <div ref = {aiOutputRef} class = "ai-chatbox-output">
+      <div class = "header-container">
+        <nav class = "flexbox header-div">
+          <div class = "flex-item headerTitle"><a class = "header" href = "/">CryptoChat</a></div>
+          <form onSubmit={(e) => e.preventDefault()} className="flex-item search-container">
+            <input 
+              value={inputValue}
+              ref={inputRef}
+              onFocus={openChatMenu} 
+              onChange= {handleInputChange}  
+              onKeyDown = {handleKeyPress} 
+              type="text" 
+              className="search-bar" 
+              placeholder="Type to CryptoAI..." 
+              required 
+            />
+          </form>
+          {chatMenuOpen && currentlyChatting ? 
+            <div ref = {aiRef} class="ai-chatbox">
+              <div ref = {aiOutputRef} class = "ai-chatbox-output">
 
+              </div>
+            </div>
+            :
+            <div>
+              
+            </div>
+          }
+
+
+          <div class = "flex-item dropdown-container">
+            <div class = "dropdown" ref = {dropdownRef}>
+              <button class = "dropbutton" onClick = {toggleDropdown}>
+                <img class = "dropdown-icon" src = {dropdownIcon} alt = "dropdown-icon" />
+              </button>
+              <div className={`dropdown-content ${dropdownOpen ? 'open' : ''}`}>
+                {isLoggedIn ? (
+                  <a onClick={logout} href="/signin">Log Out</a>
+                ) : (
+                  <a href="/signin">Sign In</a>
+                )}
+                <a href="#">About</a>
+                <a href="#">Contact Us</a>
+              </div>
             </div>
           </div>
-          :
-          <div>
-            
-          </div>
-        }
-
-
-        <div class = "flex-item">
-          <div class = "dropdown" ref = {dropdownRef}>
-            <button class = "dropbutton" onClick = {toggleDropdown}>
-              <img class = "dropdown-icon" src = {dropdownIcon} alt = "dropdown-icon" />
-            </button>
-            <div className={`dropdown-content ${dropdownOpen ? 'open' : ''}`}>
-              {isLoggedIn ? (
-                <a onClick={logout} href="/signin">Log Out</a>
-              ) : (
-                <a href="/signin">Sign In</a>
-              )}
-              <a href="#">About</a>
-              <a href="#">Contact Us</a>
-            </div>
-          </div>
-        </div>
-      </nav>
-      
+        </nav>
+      </div>
     </header>
     
   )

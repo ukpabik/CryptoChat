@@ -68,7 +68,7 @@ function SignInBody() {
   }
 
   return (
-    <body>
+    <div class = "login-container">
       <div className="login-flexbody">
         <div className="login-box">
 
@@ -93,7 +93,7 @@ function SignInBody() {
 
         </div>
       </div>
-    </body>
+    </div>
   )
 }
 

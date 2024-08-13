@@ -172,68 +172,67 @@ function HomepageBody(){
 
   
   return(
-    <body>
+    <div>
       <div class = "homepage-body">
+        <div class = "content-container">
 
+        
       
-        <div class = "chatarea">
-          <div ref = {outputBoxRef} id = "output" class = "outputbox">
-            <ul ref = {outputRef}>
+          <div class = "chatarea">
+            <div ref = {outputBoxRef} id = "output" class = "outputbox">
+              <ul ref = {outputRef}>
 
-            </ul>
-          </div>
-
-          <div class = "input">
-            <div class = "inputbox">
-              <textarea ref = {inputRef} id = "resize-textbox" class = "inputbox-text" placeholder = "Type something...">
-
-              </textarea>
-              <button ref = {buttonRef} id = "sendbutton" class = "enterbutton">
-                <img src = {sendImage} alt = "send-image" />
-              </button>
+              </ul>
             </div>
-          </div>
-          
-          
-        </div>
 
-        <div class = "cryptoLabel">
-          <span class = "cryptoLabelRank">#</span>
-          <span class = "cryptoLabelName">Name</span>
-          <span class = "cryptoLabelPrice">Price</span>
-          <span class = "cryptoLabelChange">24h</span>
-        </div>
-        <div class = "crypto-list-container">
-          
-          <div ref = {cryptoRef} class = "crypto-list">
-              
-          
-              {cryptoData.length > 0 ? cryptoData.map((crypto, count) => (
-                <div key={crypto.id} class="cryptoListElement">
-                  <span class = "cryptoRank">{`${1 + count++} `}</span>
-                <img src={crypto.logo} alt={`${crypto.name} logo`} class="cryptoIcon" />
-                  <li class="cryptoTitle">
-                    <span class="nameSpan"><a class = "cryptoURL">{crypto.name}</a></span>
-                    <span class="priceSpan">${crypto.price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
-                    {crypto.percent_change_24h > 0 ? 
-                      <span class="changeSpan green">{crypto.percent_change_24h.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}%</span>
-                      :
-                      <span class="changeSpan red">{crypto.percent_change_24h.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}%</span>
-                  
-                    }
-                    
-                  </li>
-                </div>
-              )) : <p>Loading...</p>}
+            <div class = "input">
+              <div class = "inputbox">
+                <textarea ref = {inputRef} id = "resize-textbox" class = "inputbox-text" placeholder = "Type something...">
+
+                </textarea>
+                <button ref = {buttonRef} id = "sendbutton" class = "enterbutton">
+                  <img src = {sendImage} alt = "send-image" />
+                </button>
+              </div>
+            </div>
+            
             
           </div>
+
+          
+          <div class="crypto-list-container">
+            <div class="scrollable-content">
+              <div class="cryptoLabel">
+                <span class="cryptoLabelRank">#</span>
+                <span class="cryptoLabelName">Name</span>
+                <span class="cryptoLabelPrice">Price</span>
+                <span class="cryptoLabelChange">24h</span>
+              </div>
+              <div ref={cryptoRef} class="crypto-list">
+                {cryptoData.length > 0 ? cryptoData.map((crypto, count) => (
+                  <div key={crypto.id} class="cryptoListElement">
+                    <span class="cryptoRank">{`${1 + count++} `}</span>
+                    <img src={crypto.logo} alt={`${crypto.name} logo`} class="cryptoIcon" />
+                    <li class="cryptoTitle">
+                      <span class="nameSpan"><a class="cryptoURL">{crypto.name}</a></span>
+                      <span class="priceSpan">${crypto.price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                      {crypto.percent_change_24h > 0 ? 
+                        <span class="changeSpan green">{crypto.percent_change_24h.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}%</span>
+                        :
+                        <span class="changeSpan red">{crypto.percent_change_24h.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}%</span>
+                      }
+                    </li>
+                  </div>
+                )) : <p>Loading...</p>}
+              </div>
+            </div>
+          </div>
         </div>
-      
       
       
 
       </div>
-    </body>
+    </div>
   )
 }
 
