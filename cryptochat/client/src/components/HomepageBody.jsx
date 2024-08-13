@@ -19,6 +19,7 @@ function HomepageBody(){
 
   const { isLoggedIn, username } = useContext(AuthContext)
   const [cryptoData, setCryptoData] = useState([])
+  const [messages, setMessages] = useState([])
   const inputRef = useRef(null);
   const buttonRef = useRef(null);
   const outputRef = useRef(null);
@@ -29,11 +30,16 @@ function HomepageBody(){
 
   useEffect( () => {
 
+    
+
+
+
 
     
     //CONNECT TO SERVER FIRST
     const socket = io(`${import.meta.env.VITE_API_URL}`, {
       auth: {
+        username: username || 'Guest',
         serverOffset: 0
       },
       
@@ -93,43 +99,7 @@ function HomepageBody(){
 
       //EXTRACTS CONTENT OF MESSAGE AND THE USER FROM THE MSG
       const { content, user, timeSent } = msg;
-      const name = user;
-      const outputList = outputRef.current;
-      const outputBox = outputBoxRef.current;
-
-      const newMessageBox = document.createElement('div');
-      const newMessage = document.createElement('li');
-      const messageTitle = document.createElement('li');
-
-      newMessageBox.className = "listDiv";
-      newMessage.className = "listElement";
-      messageTitle.className = "listElementName"
-
-      newMessage.textContent = content;
-      
-
-      
-      const nameSpan = document.createElement('span');
-      nameSpan.textContent = name || 'Guest';
-      nameSpan.style.fontSize = '16px'; 
-
-      
-      const timeSpan = document.createElement('span');
-      timeSpan.textContent = `  ${timeSent}`;
-      timeSpan.style.fontSize = '12px';
-      
-
-      
-      messageTitle.appendChild(nameSpan);
-      messageTitle.appendChild(timeSpan);
-
-      newMessageBox.appendChild(messageTitle);
-      newMessageBox.appendChild(newMessage);
-      outputList.appendChild(newMessageBox);
-
-      outputBox.scrollTop = outputBox.scrollHeight;
-      
-      //FOR RECOVERY OF MESSAGES
+      printMessage(content, user, timeSent)
       socket.auth.serverOffset = serverOffset;
     })
 
@@ -141,7 +111,7 @@ function HomepageBody(){
 
 
     
-  }, [])
+  }, [username])
 
   useEffect(() => {
     //FETCH CRYPTO DATA
@@ -159,6 +129,80 @@ function HomepageBody(){
     fetchCryptoData();
   }, []);
 
+  const printMessage = (content, username, timeSent) => {
+    if (username || timeSent){
+      const outputList = outputRef.current;
+      const outputBox = outputBoxRef.current;
+      const newMessageBox = document.createElement('div');
+      const newMessage = document.createElement('li');
+      const messageTitle = document.createElement('li');
+  
+      newMessageBox.className = "listDiv";
+      newMessage.className = "listElement";
+      messageTitle.className = "listElementName"
+  
+      newMessage.textContent = content;
+      
+  
+      
+      const nameSpan = document.createElement('span');
+      nameSpan.textContent = username || 'Guest';
+      nameSpan.style.fontSize = '16px'; 
+  
+      
+      const timeSpan = document.createElement('span');
+      timeSpan.textContent = `  ${timeSent}`;
+      timeSpan.style.fontSize = '12px';
+      
+  
+      
+      messageTitle.appendChild(nameSpan);
+      messageTitle.appendChild(timeSpan);
+  
+      newMessageBox.appendChild(messageTitle);
+      newMessageBox.appendChild(newMessage);
+      outputList.appendChild(newMessageBox);
+  
+      outputBox.scrollTop = outputBox.scrollHeight;
+    }
+    
+    
+  }
+
+  
+  useEffect(() => {
+    const fetchMessages = async () => {
+      try {
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/messages`);
+        const fetchedMessages = response.data.rows;
+  
+        // Temporarily store fetched messages in a variable
+        const formattedMessages = fetchedMessages.map(message => ({
+          content: message.content || 'No content',
+          username: message.username || 'Guest',
+          timeSent: message.timesent || 'No time'
+        }));
+  
+        // Set state only after formatting messages
+        setMessages(formattedMessages);
+      } catch (error) {
+        console.error('Error fetching messages:', error);
+      }
+    };
+  
+    fetchMessages();
+  }, []);
+  
+  useEffect(() => {
+    // Clear the list before printing to avoid duplicates
+    outputRef.current.innerHTML = '';
+  
+    messages.forEach((message) => {
+      printMessage(message.content, message.username, message.timeSent);
+    });
+  }, [messages]); // Dependency on messages ensures it only runs after messages are set
+
+  
 
   
   

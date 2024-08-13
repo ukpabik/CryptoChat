@@ -1,4 +1,4 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useState, useEffect } from 'react';
 
 export const AuthContext = createContext();
 
@@ -30,6 +30,21 @@ export const Auth = ({ children }) => {
     sessionStorage.removeItem('token');
 
   };
+
+  useEffect(() => {
+    // GET THE SESSION DATA
+    const savedUsername = sessionStorage.getItem('username');
+    const savedToken = sessionStorage.getItem('token');
+
+    //LOGGING BACK IN IF THE TOKEN IS STILL FOUND IN SESSION STORAGE
+    if (savedUsername && savedToken) {
+      login(savedUsername, savedToken);
+    } 
+    else {
+      
+      console.log('User not logged in');
+    }
+  }, [login]);
 
   return (
     <AuthContext.Provider value={{ isLoggedIn, username, login, logout }}>

@@ -26,6 +26,7 @@ function App() {
       window.removeEventListener('resize', handleResize);
     };
   }, []);
+  
 
   return (
     <Router>

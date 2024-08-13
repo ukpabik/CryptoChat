@@ -11,11 +11,22 @@ import { Server } from "socket.io"
 import sqlite3 from 'sqlite3'
 import { open } from 'sqlite';
 import { GoogleGenerativeAI } from '@google/generative-ai';
+import pkg from 'pg';
 
 
 
-
-
+//CONNECTING TO POSTGRESQL
+const { Pool } = pkg;
+const pool = new Pool({
+  host: process.env.PG_HOST,
+  port: process.env.PG_PORT,
+  database: process.env.PG_DATABASE,
+  user: process.env.PG_USER,
+  password: process.env.PG_PASSWORD,
+});
+pool.connect()
+  .then(() => console.log('Connected to PostgreSQL'))
+  .catch(err => console.error('Error connecting to PostgreSQL:', err));
 
 
 
@@ -51,53 +62,6 @@ let cryptoCache = {
 
 //DATA WITHIN THE CACHE DISAPPEARS AFTER 5 MINUTES
 const CACHE_EXPIRATION_TIME = 5 * 60 * 1000;
-
-// OPEN THE DATABASE
-
-const messagedb = await open({
-  filename: 'messages.db',
-  driver: sqlite3.Database
-
-})
-
-
-//DATABASE FOR SAVING USERS
-const usersdb = await open({
-  filename: 'users.db',
-  driver: sqlite3.Database
-});
-
-
-/**
- * CREATE THE TABLE OF MESSAGES USING SQLITE AS A DATABASE
- * GIVES AN ID TO EACH MESSAGE IN ORDER TO RETRIEVE THESE MESSAGES
- * BY ID NUMBER
- */
-
-
-await messagedb.exec(`
-  CREATE TABLE IF NOT EXISTS messages (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    content TEXT,
-    user TEXT,
-    timeSent TEXT
-  );
-`);
-
-/**
- * HOLDS ALL USERNAMES AND PASSWORDS (HASHED) OF ALL USERS ON SITE
- */
-await usersdb.exec(`
-  CREATE TABLE IF NOT EXISTS users (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    username TEXT UNIQUE,
-    password TEXT
-  );
-  `);
-
-
-
-
 
 
 
@@ -143,6 +107,33 @@ app.get('/', (req, res) => {
   res.sendFile(join(__dirname, 'index.html'));
   
 });
+
+
+//FETCHING MESSAGES FROM POSTGRESQL
+
+app.get('/messages', async (req, res) => {
+  try{
+    const result = await pool.query('SELECT content, username, timesent FROM messages ORDER BY id ASC')
+    res.status(200).json(result);
+  }
+  catch(e){
+    console.error('Error retrieving messages: ', e);
+    res.status(500).json({message: 'Internal server error.'})
+  }
+
+})
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 // FETCHING CRYPTO DATA USING AXIOS
@@ -236,37 +227,50 @@ app.post('/register', async (req, res) => {
 
     //HASH THE PASSWORD
     const hashedPassword = bcrypt.hashSync(password, 10);
-    await usersdb.run('INSERT INTO users (username, password) VALUES (?, ?)', [username, hashedPassword]);
+    await pool.query('INSERT INTO users (username, password) VALUES ($1, $2)', [username, hashedPassword]);
     res.status(200).json({ message: 'User registered successfully' });
   } 
   catch (error) {
-    if (error.code === 'SQLITE_CONSTRAINT') {
+
+    //VIOLATION OF UNIQUE CONSTRAINT
+    if (error.code === '23505') {
       return res.status(400).json({ message: 'Username already exists' });
     }
     res.status(500).json({ message: 'Internal server error' });
   }
 });
 
-//LOGIN POST REQUEST
+
+//SIGNIN REQUEST
 app.post('/signin', async (req, res) => {
   const { username, password } = req.body;
 
   if (!username || !password) {
-    return res.status(402).json({ message: 'Username and password are required' });
+    return res.status(400).json({ message: 'Username and password are required' });
   }
 
   try {
-    const user = await usersdb.get('SELECT * FROM users WHERE username = ?', [username]);
-    if (user && bcrypt.compareSync(password, user.password)) {
-      const token = jwt.sign({ username: user.username }, `${process.env.JWT_SECRET}`, { expiresIn: '1h' });
-      res.json({ token });
+    const query = 'SELECT * FROM users WHERE username = $1';
+    const values = [username];
+    const result = await pool.query(query, values);
+
+    if (result.rows.length > 0) {
+      const user = result.rows[0];
+
+      if (bcrypt.compareSync(password, user.password)) {
+        const token = jwt.sign({ username: user.username }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        return res.json({ token });
+      } 
+      else {
+        return res.status(401).json({ message: 'Invalid username or password' });
+      }
     } 
     else {
-      res.status(401).json({ message: 'Invalid username or password' });
+      return res.status(401).json({ message: 'Invalid username or password' });
     }
-  } 
-  catch (error) {
-    res.status(500).json({ message: 'Internal server error' });
+  } catch (error) {
+    console.error('Login error:', error);
+    return res.status(500).json({ message: 'Internal server error' });
   }
 });
 
@@ -291,7 +295,7 @@ io.on('connection', async (socket) => {
     const {content, user, timeSent } = msg;
     let result;
     try{
-      result = await messagedb.run('INSERT INTO messages (content, user, timeSent) VALUES (?, ?, ?)', [content, user, timeSent]);
+      result = await pool.query('INSERT INTO messages (content, username, timesent) VALUES ($1, $2, $3) RETURNING id', [content, user, timeSent])
     }
     catch(e){
       return;
@@ -304,12 +308,10 @@ io.on('connection', async (socket) => {
     //IF CANT RECOVER THE CONNECTION STATE
 
     try{
-      await messagedb.each('SELECT id, content, user, timeSent FROM messages WHERE id > ?', 
-        [socket.handshake.auth.serverOffset || 0],
-        (_err, row) => {
-          socket.emit('message', { content: row.content, user: row.user, timeSent: row.timeSent}, row.id);
-        }
-      )
+      const { rows } = await pool.query('SELECT id, content, username, timesent FROM messages WHERE id > $1', [socket.handshake.auth.serverOffset || 0]);
+      rows.forEach(row => {
+        socket.emit('message', { content: row.content, user: row.user, timeSent: row.timeSent }, row.id);
+      });
     }
     catch (e){
       console.error(e);
