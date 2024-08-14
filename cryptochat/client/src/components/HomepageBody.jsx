@@ -117,8 +117,12 @@ function HomepageBody(){
 
     return () => {
       socket.disconnect();
-      sendbutton.removeEventListener('click', sendMessage)
-      inputRef.current.removeEventListener('keydown', handleKeyDown);
+      if (sendbutton) {
+        sendbutton.removeEventListener('click', sendMessage);
+      }
+      if (inputRef.current) {
+        inputRef.current.removeEventListener('keydown', handleKeyDown);
+      }
     }
 
 
@@ -145,31 +149,12 @@ function HomepageBody(){
 
   //FORMAT THE TIME CORRECTLY
   const formatTimeForDisplay = (timeSent) => {
-    
-    const [datePart, timePart, period] = timeSent.split(' ');
   
-    
+    const [datePart, timePart, period, dayOrNight] = timeSent.split(' ');
+  
     const [day, month, year] = datePart.split('/');
-
-    let [hours, minutes] = period.split(':');
-    hours = parseInt(hours, 10);
-
-    let timePeriod = 'AM';
-    if (hours >= 12) {
-      timePeriod = 'PM';
-    }
-    
-    
-    if (hours > 12) {
-      hours = hours - 12;
-    } else if (hours === 0) {
-      hours = 12;
-    }
-
-    const formattedTime = `${hours}:${minutes.padStart(2, '0')}`;
-
-    
-    return `${month}/${day}/${year} ${formattedTime} ${timePeriod}`;
+  
+    return `${month}/${day}/${year} ${timePart} ${period} ${dayOrNight}`;
   };
 
 
