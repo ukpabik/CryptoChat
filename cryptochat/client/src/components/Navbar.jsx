@@ -156,9 +156,9 @@ function Navbar(){
   return(
     
     <header>
-      <div class = "header-container">
-        <nav class = "flexbox header-div">
-          <div class = "flex-item headerTitle"><a class = "header" href = "/">CryptoChat</a></div>
+      <div className = "header-container">
+        <nav className = "flexbox header-div">
+          <div className = "flex-item headerTitle"><a class = "header" href = "/">CryptoChat</a></div>
           <form onSubmit={(e) => e.preventDefault()} className="flex-item search-container">
             <input 
               value={inputValue}
@@ -173,8 +173,8 @@ function Navbar(){
             />
           </form>
           {chatMenuOpen && currentlyChatting ? 
-            <div ref = {aiRef} class="ai-chatbox">
-              <div ref = {aiOutputRef} class = "ai-chatbox-output">
+            <div ref = {aiRef} className="ai-chatbox">
+              <div ref = {aiOutputRef} className = "ai-chatbox-output">
 
               </div>
             </div>
@@ -185,10 +185,10 @@ function Navbar(){
           }
 
 
-          <div class = "flex-item dropdown-container">
-            <div class = "dropdown" ref = {dropdownRef}>
-              <button class = "dropbutton" onClick = {toggleDropdown}>
-                <img class = "dropdown-icon" src = {dropdownIcon} alt = "dropdown-icon" />
+          <div className = "flex-item dropdown-container">
+            <div className = "dropdown" ref = {dropdownRef}>
+              <button className = "dropbutton" onClick = {toggleDropdown}>
+                <img className = "dropdown-icon" src = {dropdownIcon} alt = "dropdown-icon" />
               </button>
               <div className={`dropdown-content ${dropdownOpen ? 'open' : ''}`}>
                 {isLoggedIn ? (
@@ -196,7 +196,7 @@ function Navbar(){
                 ) : (
                   <a href="/signin">Sign In</a>
                 )}
-                <a href="#">About</a>
+                <a href="/about">About</a>
                 <a href="#">Contact Us</a>
               </div>
             </div>

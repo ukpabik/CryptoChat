@@ -307,7 +307,7 @@ textarea::-webkit-scrollbar-thumb{
   opacity: 0;
   transition: opacity 0.4s ease, transform 0.4s ease;
   pointer-events: none;
-  font-size: 1rem;
+  font-size: 0.9rem;
   
 }
 .dropdown-content.open {
@@ -329,7 +329,7 @@ textarea::-webkit-scrollbar-thumb{
   transition-duration: 0.3s;
   color: gray;
   font-weight:bold;
-  font-size: 1.05rem;
+  font-size: 0.92rem;
 }
 
 
@@ -404,8 +404,8 @@ textarea::-webkit-scrollbar-thumb{
   justify-content: center;
   align-items: center;
   height: 50vh;
-  box-shadow: 0px -4px 12px 1px rgba(0, 0, 0, 0.123), /* Top shadow */
-              0px 4px 12px 1px rgba(0, 0, 0, 0.651);   /* Bottom shadow */
+  box-shadow: 0px -4px 12px 1px rgba(0, 0, 0, 0.123), 
+              0px 4px 12px 1px rgba(0, 0, 0, 0.651);   
 }
 
 .login-box{
@@ -602,7 +602,7 @@ footer, header, .login-container{
   min-width: 500px; 
 }
 
-.homepage-body, .chatarea, .crypto-list-container {
+.homepage-body, .chatarea, .crypto-list-container, .aboutme-container {
   width: 100%;
   max-width: 100vw;
   box-sizing: border-box;
@@ -714,7 +714,7 @@ ul{
     flex-direction: column;
   }
 
-  .chatarea, .crypto-list-container {
+  .chatarea, .crypto-list-container, .aboutme-container{
     width: 100vw;
     max-width: 100%;
     margin-left: 0;
@@ -776,11 +776,22 @@ ul{
   .inputbox {
     max-height: 6rem;
   }
-  .content-container{
+  .content-container, .login-container, .aboutme-container{
     height: 80vh;
   }
-  .login-container {
-    height:80vh;
+
+
+
+  .aboutme-text-container{
+    max-width: 35rem;
+    max-height: 35rem;
+  }
+  
+  .aboutme-title{
+    font-size: 2.2rem;
+  }
+  .aboutme-text{
+    line-height: 1.2rem;
   }
 }
 
@@ -806,7 +817,39 @@ ul{
 .homepage-body,
 .chatarea,
 .crypto-list-container,
-.content-container {
+.content-container,
+.aboutme-container {
   width: 100%;
   max-width: 100vw;
+}
+
+.aboutme-container {
+  display: flex;
+  width: 100vw;
+  min-height: 80vh; 
+  justify-content: center;
+  align-items: center; 
+  margin: 0;
+  background-image: linear-gradient(to right, rgb(22, 22, 22), rgb(122, 122, 122));
+  box-shadow: 0px -4px 12px 5px rgba(95, 94, 94, 0.2), 
+              0px 4px 12px 1px rgba(95, 94, 94, 1);   
+}
+
+.aboutme-text-container {
+  display: flex;
+  flex-direction: column;
+  width: 80vw;
+  max-width: 50rem; 
+  color: #c0c0c0;
+}
+
+.aboutme-title{
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.8rem;
+}
+.aboutme-text {
+  line-height: 1.5rem;
+  font-size: 1.2rem;
+  word-wrap: break-word;
 }
