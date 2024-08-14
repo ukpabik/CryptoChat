@@ -143,17 +143,16 @@ function HomepageBody(){
 
   //FORMAT THE TIME CORRECTLY
   const formatTimeForDisplay = (timeSent) => {
-   
+    
     const date = new Date(timeSent);
   
-
-    const year = date.getUTCFullYear();
-    const month = String(date.getUTCMonth() + 1).padStart(2, '0'); 
-    const day = String(date.getUTCDate()).padStart(2, '0');
+    
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
   
-    let hours = date.getUTCHours();
-    const minutes = String(date.getUTCMinutes()).padStart(2, '0');
-    const seconds = String(date.getUTCSeconds()).padStart(2, '0');
+    let hours = date.getHours();
+    const minutes = String(date.getMinutes()).padStart(2, '0');
   
     
     let period = 'AM';
