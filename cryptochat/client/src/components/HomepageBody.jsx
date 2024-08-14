@@ -72,6 +72,13 @@ function HomepageBody(){
       return `${currentTime.getDate()}/${currentTime.getMonth() + 1}/${currentTime.getFullYear()}  ${hours}:${minutes} ${period}`
     }
     
+
+
+
+
+
+
+    
     //SENDS MESSAGE GLOBALLY
     const sendMessage = () => {
       const inputbox = inputRef.current;
@@ -82,7 +89,12 @@ function HomepageBody(){
         inputbox.value = ''
       }
     }
-    
+    const handleKeyDown = (e) => {
+      if (e.key === 'Enter' && !e.shiftKey) { 
+        e.preventDefault();
+        sendMessage();
+      }
+    }
     
   
     
@@ -90,7 +102,7 @@ function HomepageBody(){
     
     const sendbutton = buttonRef.current;
     sendbutton.addEventListener('click', sendMessage)
-    
+    inputRef.current.addEventListener('keydown', handleKeyDown);
 
     //HANDLING MESSAGES ON SITE BY MAKING NEW LIST ELEMENTS
     socket.on('message', (msg, serverOffset) => {
@@ -106,6 +118,7 @@ function HomepageBody(){
     return () => {
       socket.disconnect();
       sendbutton.removeEventListener('click', sendMessage)
+      inputRef.current.removeEventListener('keydown', handleKeyDown);
     }
 
 
@@ -129,6 +142,38 @@ function HomepageBody(){
     fetchCryptoData();
   }, []);
 
+
+  //FORMAT THE TIME CORRECTLY
+  const formatTimeForDisplay = (timeSent) => {
+    
+    const [datePart, timePart, period] = timeSent.split(' ');
+  
+    
+    const [day, month, year] = datePart.split('/');
+
+    let [hours, minutes] = period.split(':');
+    hours = parseInt(hours, 10);
+
+    let timePeriod = 'AM';
+    if (hours >= 12) {
+      timePeriod = 'PM';
+    }
+    
+    
+    if (hours > 12) {
+      hours = hours - 12;
+    } else if (hours === 0) {
+      hours = 12;
+    }
+
+    const formattedTime = `${hours}:${minutes.padStart(2, '0')}`;
+
+    
+    return `${month}/${day}/${year} ${formattedTime} ${timePeriod}`;
+  };
+
+
+
   const printMessage = (content, username, timeSent) => {
     if (username || timeSent){
       const outputList = outputRef.current;
@@ -150,8 +195,9 @@ function HomepageBody(){
       nameSpan.style.fontSize = '16px'; 
   
       
+      const formattedTime = formatTimeForDisplay(timeSent);
       const timeSpan = document.createElement('span');
-      timeSpan.textContent = `  ${timeSent}`;
+      timeSpan.textContent = `  ${formattedTime}`;
       timeSpan.style.fontSize = '12px';
       
   
@@ -203,7 +249,7 @@ function HomepageBody(){
   }, [messages]);
 
   
-
+  
   
   
 
@@ -232,9 +278,9 @@ function HomepageBody(){
             <div class = "input">
               <div class = "inputbox">
                 {isLoggedIn ? 
-                <textarea ref = {inputRef} id = "resize-textbox" class = "inputbox-text" placeholder = "Type something..." />
+                <textarea  ref = {inputRef} id = "resize-textbox" class = "inputbox-text" placeholder = "Type something..." />
                   :
-                  <textarea ref = {inputRef} id = "resize-textbox" class = "inputbox-text" disabled= {!isLoggedIn} placeholder = "Must be logged in" />
+                  <textarea  ref = {inputRef} id = "resize-textbox" class = "inputbox-text" disabled= {!isLoggedIn} placeholder = "Must be logged in" />
                 }
               
                 <button ref = {buttonRef} id = "sendbutton" class = "enterbutton">
