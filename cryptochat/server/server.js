@@ -8,8 +8,6 @@ import { createServer } from 'node:http'
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 import { Server } from "socket.io"
-import sqlite3 from 'sqlite3'
-import { open } from 'sqlite';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import pkg from 'pg';
 
@@ -28,32 +26,34 @@ pool.connect()
   .then(() => console.log('Connected to PostgreSQL'))
   .catch(err => console.error('Error connecting to PostgreSQL:', err));
 
-  (async () => {
-    try {
-      // Create the users table
-      await pool.query(`
-        CREATE TABLE IF NOT EXISTS users (
-          id SERIAL PRIMARY KEY,
-          username VARCHAR(100) UNIQUE NOT NULL,
-          password VARCHAR(100) NOT NULL
-        )
-      `);
-  
-      // Create the messages table
-      await pool.query(`
-        CREATE TABLE IF NOT EXISTS messages (
-          id SERIAL PRIMARY KEY,
-          content TEXT NOT NULL,
-          username VARCHAR(100) NOT NULL,
-          timesent TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-        )
-      `);
-  
-      console.log("Tables created successfully.");
-    } catch (error) {
-      console.error("Error creating tables:", error);
-    }
-  })();
+
+//CREATE TABLES
+(async () => {
+  try {
+    
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS users (
+        id SERIAL PRIMARY KEY,
+        username VARCHAR(100) UNIQUE NOT NULL,
+        password VARCHAR(100) NOT NULL
+      )
+    `);
+
+    
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS messages (
+        id SERIAL PRIMARY KEY,
+        content TEXT NOT NULL,
+        username VARCHAR(100) NOT NULL,
+        timesent TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      )
+    `);
+
+    console.log("Tables created successfully.");
+  } catch (error) {
+    console.error("Error creating tables:", error);
+  }
+})();
 
 
 
@@ -320,7 +320,12 @@ io.on('connection', async (socket) => {
     const {content, user, timeSent } = msg;
     let result;
     try{
-      result = await pool.query('INSERT INTO messages (content, username, timesent) VALUES ($1, $2, $3) RETURNING id', [content, user, timeSent])
+      result = await pool.query(
+        `INSERT INTO messages (content, username, timesent) 
+         VALUES ($1, $2, TO_TIMESTAMP($3, 'DD/MM/YYYY HH:MI PM')) 
+         RETURNING id`, 
+        [content, user, timeSent]
+      );
     }
     catch(e){
       return;
