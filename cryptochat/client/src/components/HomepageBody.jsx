@@ -231,9 +231,12 @@ function HomepageBody(){
 
             <div class = "input">
               <div class = "inputbox">
-                <textarea ref = {inputRef} id = "resize-textbox" class = "inputbox-text" placeholder = "Type something...">
-
-                </textarea>
+                {isLoggedIn ? 
+                <textarea ref = {inputRef} id = "resize-textbox" class = "inputbox-text" placeholder = "Type something..." />
+                  :
+                  <textarea ref = {inputRef} id = "resize-textbox" class = "inputbox-text" disabled= {!isLoggedIn} placeholder = "Must be logged in" />
+                }
+              
                 <button ref = {buttonRef} id = "sendbutton" class = "enterbutton">
                   <img src = {sendImage} alt = "send-image" />
                 </button>
