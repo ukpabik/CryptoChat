@@ -198,6 +198,7 @@ function HomepageBody(){
   }
 
   
+  //GETS ALL OF THE MESSAGES THAT HAVE BEEN SENT
   useEffect(() => {
     const fetchMessages = async () => {
       try {
@@ -220,6 +221,8 @@ function HomepageBody(){
     fetchMessages();
   }, []);
   
+
+  //DISPLAYS ALL MESSAGES TO THE OUTPUT BOX
   useEffect(() => {
     
     outputRef.current.innerHTML = '';

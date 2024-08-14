@@ -38,7 +38,7 @@ function Navbar(){
       e.preventDefault();
       setCurrentlyChatting(true);
 
-      // Add the user's input to chat history
+      //ADD USERS INPUT TO HISTORY
       setChatHistory((prevHistory) => [
         ...prevHistory,
         { type: 'You: ', text: inputValue },
