@@ -77,7 +77,8 @@ function HomepageBody(){
     const sendMessage = () => {
       const inputbox = inputRef.current;
       if (inputbox.value){
-        socket.emit('message', { content: inputbox.value, user: username, timeSent: getCurrentTime()});
+        const timeSent = new Date().toISOString();
+        socket.emit('message', { content: inputbox.value, user: username, timeSent: timeSent});
         console.log('Message sent')
 
         inputbox.value = ''
