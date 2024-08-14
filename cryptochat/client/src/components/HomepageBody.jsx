@@ -143,13 +143,32 @@ function HomepageBody(){
 
   //FORMAT THE TIME CORRECTLY
   const formatTimeForDisplay = (timeSent) => {
-  
+   
     const date = new Date(timeSent);
+  
 
-    const day = String(date.getUTCDate()).padStart(2, '0'); 
-
+    const year = date.getUTCFullYear();
+    const month = String(date.getUTCMonth() + 1).padStart(2, '0'); 
+    const day = String(date.getUTCDate()).padStart(2, '0');
+  
+    let hours = date.getUTCHours();
+    const minutes = String(date.getUTCMinutes()).padStart(2, '0');
+    const seconds = String(date.getUTCSeconds()).padStart(2, '0');
+  
     
-    return `${day}`;
+    let period = 'AM';
+    if (hours >= 12) {
+      period = 'PM';
+      if (hours > 12) hours -= 12;
+    } else if (hours === 0) {
+      hours = 12;
+    }
+  
+    
+    const formattedTime = `${hours}:${minutes} ${period}`;
+  
+    
+    return `${month}/${day}/${year} ${formattedTime}`;
   };
 
 
