@@ -151,7 +151,8 @@ function HomepageBody(){
     const [space, currentTime, period] = time.split(' ');
 
     const [hours, minutes, seconds] = currentTime.split(':')
-  
+    const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    console.log(`Current Timezone: ${timezone}`);
     return `${day} ${hours}:${minutes} ${period}`;
   };
 
