@@ -151,8 +151,6 @@ function HomepageBody(){
     const [space, currentTime, period] = time.split(' ');
 
     const [hours, minutes, seconds] = currentTime.split(':')
-    const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-    console.log(`Current Timezone: ${timezone}`);
     return `${day} ${hours}:${minutes} ${period}`;
   };
 
@@ -213,7 +211,7 @@ function HomepageBody(){
           timeSent: message.timesent || 'No time'
         }));
   
-        
+        console.log(formattedMessages);
         setMessages(formattedMessages);
       } catch (error) {
         console.error('Error fetching messages:', error);
@@ -228,6 +226,7 @@ function HomepageBody(){
     outputRef.current.innerHTML = '';
   
     messages.forEach((message) => {
+      console.log(message.timeSent);
       printMessage(message.content, message.username, message.timeSent);
     });
   }, [messages]);
