@@ -79,7 +79,7 @@ function HomepageBody(){
       if (inputbox.value){
         const timeSent = new Date().toISOString();
         socket.emit('message', { content: inputbox.value, user: username, timeSent: timeSent});
-        console.log('Message sent')
+        
 
         inputbox.value = ''
       }
@@ -211,7 +211,6 @@ function HomepageBody(){
           timeSent: message.timesent || 'No time'
         }));
   
-        console.log(formattedMessages);
         setMessages(formattedMessages);
       } catch (error) {
         console.error('Error fetching messages:', error);
@@ -226,7 +225,6 @@ function HomepageBody(){
     outputRef.current.innerHTML = '';
   
     messages.forEach((message) => {
-      console.log(message.timeSent);
       printMessage(message.content, message.username, message.timeSent);
     });
   }, [messages]);

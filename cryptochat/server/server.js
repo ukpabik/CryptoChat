@@ -47,7 +47,7 @@ pool.connect()
         id SERIAL PRIMARY KEY,
         content TEXT NOT NULL,
         username VARCHAR(100) NOT NULL,
-        timesent TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        timesent TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
       )
     `);
 
