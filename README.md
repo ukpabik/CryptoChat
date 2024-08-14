@@ -11,7 +11,6 @@ Welcome to **CryptoChat**! This is a real-time cryptocurrency chat application b
 - [API Endpoints](#api-endpoints)
 - [Socket Events](#socket-events)
 - [Dependencies](#dependencies)
-- [Contributing](#contributing)
 - [Contact](#contact)
 
 ## Overview
@@ -115,10 +114,7 @@ To set up the project, follow these steps:
 - **Database**: PostgreSQL
 - **Hosting**: Render
 
-## Contributing
-
-Contributions are welcome! Please fork this repository and submit a pull request with any improvements or bug fixes.
-
+  
 ## Contact
 
 For questions or feedback, you can contact me via:
