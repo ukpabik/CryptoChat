@@ -51,26 +51,20 @@ function HomepageBody(){
 
     //RETURNS CURRENT TIME
     const getCurrentTime = () => {
-      const currentTime = new Date()
-      let minutes = ''; 
-      if (currentTime.getMinutes() < 10) {
-        minutes = '0' + currentTime.getMinutes();
-      } 
-      else {
-        minutes = currentTime.getMinutes(); 
-      }
-      let hours = currentTime.getHours();
-      let period = '';
+      const currentTime = new Date();
+    
       
-      if (hours >= 12){
-        period = 'PM';
-      }
-      else{
-        period = 'AM';
-      }
-      hours = hours % 12 || 12;
-      return `${currentTime.getDate()}/${currentTime.getMonth() + 1}/${currentTime.getFullYear()}  ${hours}:${minutes} ${period}`
-    }
+      const year = currentTime.getFullYear();
+      const month = String(currentTime.getMonth() + 1).padStart(2, '0'); 
+      const day = String(currentTime.getDate()).padStart(2, '0');
+    
+      
+      const hours = String(currentTime.getHours()).padStart(2, '0');
+      const minutes = String(currentTime.getMinutes()).padStart(2, '0');
+      const seconds = String(currentTime.getSeconds()).padStart(2, '0');
+    
+      return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+    };
     
 
 
