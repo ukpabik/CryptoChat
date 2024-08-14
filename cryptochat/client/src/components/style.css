@@ -1,5 +1,7 @@
 
-
+.loading{
+  color:white;
+}
 
 
 body {
@@ -166,6 +168,7 @@ body {
 
 .chatarea{
   display: flex;
+  position: relative;
   flex-direction: column;
   width: 50vw;
   height: 100%;
@@ -179,6 +182,7 @@ body {
 
 
 .outputbox{
+  position:relative;
   height: 100%;
   max-height: 100vh;
   overflow-y: auto;
@@ -434,24 +438,30 @@ textarea::-webkit-scrollbar-thumb{
 }
 
 .login-username{
-  border: 1px solid black;
-  background-color:gray;
+  border: none;
+  border-bottom: 1px solid black;
+  background-color:transparent;
   display: block;
+  padding: 0.4rem;
   margin-bottom: 1rem;
-  box-shadow: 4px 2px 4px rgba(0, 0, 0, 0.26);
+  font-size: 1rem;
 }
 
 .submit-button{
-  border: 1px solid black;
+  border: none;
   padding: 0.5rem;
-  border-radius: 15%;
-  box-shadow: 4px 2px 4px rgba(0, 0, 0, 0.26);
+  border-radius: 8%;
+  box-shadow:  3px 2px 5px rgba(0, 0, 0, 0.26);
   margin-right: 3px;
+  transition-duration: 0.5s;
+  background-color: transparent;
+  font-size: 1rem;
 }
 
 .submit-button:hover{
+  transition-duration: 0.5s;
   cursor: pointer;
-  background-color:rgb(182, 182, 182);
+  background-color:rgb(211, 209, 209);
 }
 .submit-button:active{
   cursor: pointer;
@@ -490,11 +500,6 @@ input:focus{
 }
 
 
-@media (max-width: 650px){
-  #dropdown-search{
-    display: block;
-  }
-}
 
 
 footer, header, .login-container{
@@ -710,6 +715,12 @@ ul{
 
 
 @media (max-width: 719px) {
+  
+
+  .ai-chatbox{
+    left: 20%;
+  }
+
   .homepage-body {
     flex-direction: column;
   }
@@ -852,4 +863,53 @@ ul{
   line-height: 1.5rem;
   font-size: 1.2rem;
   word-wrap: break-word;
+}
+
+
+.blur{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  backdrop-filter: blur(6px) saturate(70%);
+  min-width: 100%;
+  min-height: 100%;
+  z-index: 1;
+}
+.blurtext{
+  text-align: center;
+  color: white;
+  font-weight: bold;
+  font-size: 1.5rem;
+  background-color:transparent;
+  border:none;
+  transition-duration: 0.5s;
+  border-radius: 5px;
+  max-width: 50%;
+  padding: 1rem;
+
+  
+}
+.blurtext:hover{
+  transition-duration: 0.5s;
+  background-color: rgba(185, 185, 185, 0.3);
+  cursor: pointer;
+}
+
+
+.blursignin:hover {
+  transition-duration: 0.5s;
+  animation: gradient 10s linear infinite;
+}
+
+.blursignin{
+  background: linear-gradient(to left, rgb(202, 201, 201), rgba(0, 0, 0, 0.842), rgb(202, 201, 201));
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  background-size: 500% 500%; 
+  transition-duration: 0.5s;
 }
