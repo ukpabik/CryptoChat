@@ -143,12 +143,24 @@ function HomepageBody(){
 
   //FORMAT THE TIME CORRECTLY
   const formatTimeForDisplay = (timeSent) => {
+    
+    console.log(timeSent);
   
-    const [datePart, timePart, period, dayOrNight] = timeSent.split(' ');
+    
+    const [datePart, timePart] = timeSent.split(' ');
   
-    const [day, month, year] = datePart.split('/');
+    
+    const [year, month, day] = datePart.split('-');
   
-    return `${month}/${day}/${year} ${timePart} ${period} ${dayOrNight}`;
+    
+    let [hours, minutes, seconds] = timePart.split(':');
+  
+  
+    
+    const formattedTime = `${hours}:${minutes.padStart(2, '0')} ${period}`;
+  
+    
+    return `${month}/${day}/${year} ${formattedTime}`;
   };
 
 
