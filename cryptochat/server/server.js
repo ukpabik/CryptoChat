@@ -322,8 +322,8 @@ io.on('connection', async (socket) => {
     try{
       result = await pool.query(
         `INSERT INTO messages (content, username, timesent) 
-         VALUES ($1, $2, TO_TIMESTAMP($3, 'DD/MM/YYYY HH:MI PM')) 
-         RETURNING id`, 
+        VALUES ($1, $2, $3) 
+        RETURNING id`, 
         [content, user, timeSent]
       );
     }
