@@ -60,11 +60,7 @@ To set up the project, follow these steps:
     Create a `.env` file in the `server` directory with the following variables:
 
     ```plaintext
-    PG_HOST=your_postgresql_host
-    PG_PORT=your_postgresql_port
-    PG_DATABASE=your_database_name
-    PG_USER=your_database_user
-    PG_PASSWORD=your_database_password
+    DATABASE_URL=your_database_url
     JWT_SECRET=your_jwt_secret
     GEMINI_API_KEY=your_google_generative_ai_api_key
     COINMARKET_API_KEY=your_coinmarketcap_api_key
