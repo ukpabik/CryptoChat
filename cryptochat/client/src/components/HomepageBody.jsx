@@ -144,11 +144,12 @@ function HomepageBody(){
   //FORMAT THE TIME CORRECTLY
   const formatTimeForDisplay = (timeSent) => {
   
-    const [datePart, timePart, period, dayOrNight] = timeSent.split(' ');
-  
-    const [day, month, year] = datePart.split('/');
-  
-    return `${month}/${day}/${year} ${timePart} ${period} ${dayOrNight}`;
+    const date = new Date(timeSent);
+
+    const day = String(date.getUTCDate()).padStart(2, '0'); 
+
+    
+    return `${day}`;
   };
 
 
