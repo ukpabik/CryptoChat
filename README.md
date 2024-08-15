@@ -17,6 +17,8 @@ Welcome to **CryptoChat**! This is a real-time cryptocurrency chat application b
 
 **CryptoChat** combines real-time communication with live cryptocurrency data and AI-powered responses. The application is designed to be scalable and efficient, using a PostgreSQL database for persistent storage and Google Generative AI for advanced crypto-related queries.
 
+You can access the live application here: [CryptoChat](https://cryptochat-frontend.vercel.app).
+
 ## Features
 
 - **Real-Time Chat**: Users can send and receive messages instantly.
@@ -24,7 +26,7 @@ Welcome to **CryptoChat**! This is a real-time cryptocurrency chat application b
 - **AI Responses**: Provides detailed answers to crypto questions using a generative AI model.
 - **User Authentication**: Secure user registration and login with JWT and bcrypt.
 - **Persistent Storage**: Stores chat messages and user data in PostgreSQL.
-- **Scalable Architecture**: Built using Node.js and Express, with real-time features powered by Socket.IO.
+- **Scalable Architecture**: Built using Node.js and Express, with real-time features powered by Socket.IO and Ably.
 
 ## Installation
 
@@ -65,6 +67,7 @@ To set up the project, follow these steps:
     GEMINI_API_KEY=your_google_generative_ai_api_key
     COINMARKET_API_KEY=your_coinmarketcap_api_key
     FRONTEND_URL=http://localhost:5173
+    ABLY_API_KEY=your_ably_api_key
     ```
 
 ## Running the Application
@@ -106,9 +109,9 @@ To set up the project, follow these steps:
 ## Dependencies
 
 - **Frontend**: React, Vite, Axios, Socket.IO-client
-- **Backend**: Node.js, Express, Socket.IO, PostgreSQL, bcrypt, JWT, Google Generative AI
+- **Backend**: Node.js, Express, Socket.IO, PostgreSQL, bcrypt, JWT, Google Generative AI, Ably
 - **Database**: PostgreSQL
-- **Hosting**: Render
+- **Hosting**: Vercel
 
   
 ## Contact
