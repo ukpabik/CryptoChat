@@ -100,11 +100,8 @@ const io = new Server(server, {
   
   cors: {
     origin: `${process.env.FRONTEND_URL}`,
-    methods: ["GET", "POST"],
-    credentials: true
+    methods: ["GET", "POST"]
   },
-  transports: ["websocket", "polling"],
-  
 
   //FOR RECOVERY OF MESSAGES
   connectionStateRecovery: {}
@@ -118,8 +115,6 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 app.use(cors({
   origin: `${process.env.FRONTEND_URL}`,
   methods: ["GET", "POST"],
-  credentials: true,
-  allowedHeaders: ["Access-Control-Allow-Origin"]
 }));
 
 
@@ -132,12 +127,10 @@ app.use(express.json())
 //SERVING STATIC FILES FROM REACT
 app.use(express.static(join(__dirname, 'client', 'dist')));
 
-app.get('/', (req, res) => {
-  res.sendFile(join(__dirname, 'client', 'dist', 'index.html'));
-});
 
-app.get('*', (req, res) => {
-  res.sendFile(join(__dirname, 'client', 'dist', 'index.html'));
+app.get('/', (req, res) => {
+  res.sendFile(join(__dirname, 'index.html'));
+  
 });
 
 

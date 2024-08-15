@@ -28,7 +28,7 @@ function SignInBody() {
     const successMessage = successMessageRef.current;
     try {
       //MAKE POST REQUEST
-      const response = await axios.post(`${import.meta.env.VITE_API_URL}${action}`, {
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/${action}`, {
         username,
         password
       });
