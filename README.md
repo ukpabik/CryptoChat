@@ -68,6 +68,8 @@ To set up the project, follow these steps:
     COINMARKET_API_KEY=your_coinmarketcap_api_key
     FRONTEND_URL=http://localhost:5173
     ABLY_API_KEY=your_ably_api_key
+    EMAIL_RECEIVER=your_email@gmail.com
+    EMAIL_PASSWORD=your_app_password
     ```
 
 ## Running the Application
@@ -99,6 +101,7 @@ To set up the project, follow these steps:
 - **POST `/signin`**: Authenticate an existing user and return a JWT.
 - **GET `/cryptodata`**: Fetch the latest cryptocurrency data.
 - **POST `/ai`**: Submit a request to the AI and receive generated content.
+- **POST `/send-email`**: Sends an email to the specified receiver with the form data.
 
 ## Socket Events
 
