@@ -92,13 +92,7 @@ const CACHE_EXPIRATION_TIME = 5 * 60 * 1000;
 
 
 
-//FOR VERCEL
-const allowedOrigins = [
-  'https://cryptochat-frontend.vercel.app', // The main frontend domain
-  'https://cryptochat-frontend-98q3re2j2-ukpabiks-projects.vercel.app', // The deployment domain
-  'https://crypto-web-app-blond.vercel.app', // The backend domain
-  'https://cryptochat-backend-k4cifm6wk-ukpabiks-projects.vercel.app', // The backend deployment domain
-];
+
 
 
 
@@ -124,14 +118,8 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 
 
 app.use(cors({
-  origin: (origin, callback) => {
-    if (allowedOrigins.includes(origin) || !origin) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-  methods: ["GET", "POST"]
+  origin: process.env.FRONTEND_URL,
+  methods: ["GET", "POST"],
 }));
 
 //FOR LOGIN and REGISTERING
