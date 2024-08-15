@@ -100,8 +100,7 @@ const io = new Server(server, {
   
   cors: {
     origin: `${process.env.FRONTEND_URL}`,
-    methods: ["GET", "POST"],
-    credentials: true
+    methods: ["GET", "POST"]
   },
 
   //FOR RECOVERY OF MESSAGES
@@ -112,16 +111,11 @@ const port = process.env.PORT || 3000;
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 
-const corsOptions = {
-  origin: process.env.FRONTEND_URL, // Your frontend URL
-  methods: ['GET', 'POST'], // Allowed methods
-  allowedHeaders: ['Content-Type', 'Authorization'], // Allowed headers
-  credentials: true, // Allow cookies to be sent
-  optionsSuccessStatus: 200 // For legacy browser support
-};
-
 //CORS CONFIG
-app.use(cors(corsOptions));
+app.use(cors({
+  origin: `${process.env.FRONTEND_URL}`,
+  methods: ["GET", "POST"],
+}));
 
 
 

@@ -144,7 +144,7 @@ function HomepageBody(){
 
   //FORMAT THE TIME CORRECTLY
   const formatTimeForDisplay = (timeSent) => {
-    //GET THE DATE
+    
     const date = new Date(timeSent);
     const localTime = date.toLocaleString(); 
     const [day, time] = localTime.split(',');
