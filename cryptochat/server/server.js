@@ -308,7 +308,7 @@ app.get('*', (req, res) => {
   res.sendFile(join(__dirname, 'client', 'dist', 'index.html'));
 });
 
-const ablyRest = new Ably.Rest(process.env.ABLY_API_KEY);
+const channel = ably.channels.get('chat-channel');
 
   /**
    * An async function to allow for messages to be sent and received, as well as recovered
@@ -323,9 +323,8 @@ const ablyRest = new Ably.Rest(process.env.ABLY_API_KEY);
         RETURNING id`, 
         [content, user, timeSent]
       );
-
-      const channel = ablyRest.channels.get('chat-channel');
-      channel.publish('message', { content, user, timeSent });
+      
+      await channel.publish('message', { content, user, timeSent });
       res.status(200).json({ success: true });
     } catch (e) {
       res.status(500).json({ success: false });
