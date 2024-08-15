@@ -4,7 +4,7 @@
   width: 100vw;
   display:flex;
   flex-direction: column;
-  background-color:rgba(0, 0, 0, 0.123);
+  background-color:rgba(0, 0, 0, 0);
   font-family:sans-serif;
 }
 

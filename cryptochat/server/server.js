@@ -11,7 +11,7 @@ import { Server } from "socket.io"
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import pkg from 'pg';
 import Ably from 'ably';
-
+import nodemailer from 'nodemailer'
 
 
 //CONNECTING TO POSTGRESQL
@@ -235,6 +235,37 @@ app.post('/ai', async (req, res) => {
   }
 })
 
+
+//POST REQUEST FOR SENDING EMAILS
+app.post('/send-email', async (req, res) => {
+  try {
+    const { name, email, message } = req.body;
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: process.env.EMAIL_RECEIVER,
+        pass: process.env.EMAIL_PASSWORD,
+      },
+    });
+
+    const mailOptions = {
+      from: process.env.EMAIL_RECEIVER,
+      to: process.env.EMAIL_RECEIVER,
+      subject: `Message from ${name}`,
+      text: `You have a new message from ${name} (${email}):\n\n${message}`,
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        return res.status(500).send(error.toString());
+      }
+      res.status(200).send('Email sent sucessfully');
+    });
+
+  } catch (error) {
+    res.status(400).json({ message: 'Could not send email.' });
+  }
+});
 
 
 

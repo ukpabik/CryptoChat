@@ -5,6 +5,7 @@ import Navbar from './components/Navbar.jsx';
 import Footer from './components/Footer.jsx';  
 import SignIn from './routes/SignIn.jsx';  
 import About from './routes/About.jsx';
+import Contact from './routes/Contact.jsx'
 import './index.css';
 
 function App() {
@@ -38,6 +39,7 @@ function App() {
             <Route path="/" element={<Homepage />} />
             <Route path="/signin" element={<SignIn />} />
             <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
           </Routes>
         </main>
         <Footer />

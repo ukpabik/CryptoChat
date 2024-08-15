@@ -68,16 +68,17 @@ function SignInBody() {
   }
 
   return (
-    <div class = "login-container">
+    
+    <div className = "login-container">
       <div className="login-flexbody">
         <div className="login-box">
 
           <form onSubmit={handleLogin} className="login-form">
             <div className="login-field">
               <label htmlFor="username">Enter Username: </label>
-              <input name="username" type="text" className="login-username" required />
+              <input name="username" type="text" className="text-for-form" required />
               <label htmlFor="password">Enter Password: </label>
-              <input name="password" type="password" className="login-username" required />
+              <input name="password" type="password" className="text-for-form" required />
             </div>
             <div className="submit-button-div">
               <div class = "button-container">

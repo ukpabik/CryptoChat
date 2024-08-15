@@ -158,7 +158,10 @@ function Navbar(){
     <header>
       <div className = "header-container">
         <nav className = "flexbox header-div">
-          <div className = "flex-item headerTitle"><a class = "header" href = "/">CryptoChat</a></div>
+          <div className = "flex-item headerTitle">
+            <a class = "header" href = "/">CryptoChat</a>
+            <img className='logo-image' src='/cryptochat-64x64.png' />
+          </div>
           <form onSubmit={(e) => e.preventDefault()} className="flex-item search-container">
             <input 
               value={inputValue}
@@ -197,7 +200,7 @@ function Navbar(){
                   <a href="/signin">Sign In</a>
                 )}
                 <a href="/about">About</a>
-                <a href="#">Contact Us</a>
+                <a href="/contact">Contact Us</a>
               </div>
             </div>
           </div>

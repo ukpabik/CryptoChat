@@ -140,15 +140,11 @@ body {
   background-color: rgba(0, 0, 0, 0.81);
 }
 
-/* .headerTitle{
-  transition-duration: 2s;
-  transform: rotate(0deg);
+.headerTitle{
+  display: flex;
+  align-items:center;
+  justify-content: center;
 }
-.headerTitle:hover{
-  transition-duration: 2s;
-  transform: rotate(-360deg);
-} */
-
 
 
 
@@ -398,9 +394,9 @@ textarea::-webkit-scrollbar-thumb{
   justify-content:center;
   align-items:center;
   border-radius: 10%;
-  margin: auto;
   width: 25rem;
   max-width: 25rem;
+  margin: 0;
   
 }
 .login-container {
@@ -408,8 +404,8 @@ textarea::-webkit-scrollbar-thumb{
   justify-content: center;
   align-items: center;
   height: 50vh;
-  box-shadow: 0px -4px 12px 1px rgba(0, 0, 0, 0.123), 
-              0px 4px 12px 1px rgba(0, 0, 0, 0.651);   
+  box-shadow: 0px -4px 8px 1px rgba(0, 0, 0, 0.123), 
+              0px 4px 8px 1px rgba(0, 0, 0, 0.089);   
 }
 
 .login-box{
@@ -437,7 +433,7 @@ textarea::-webkit-scrollbar-thumb{
   font-style: italic;
 }
 
-.login-username{
+.text-for-form{
   border: none;
   border-bottom: 1px solid black;
   background-color:transparent;
@@ -502,8 +498,8 @@ input:focus{
 
 
 
-footer, header, .login-container{
-  background-image: linear-gradient(to right, rgba(0, 0, 0, 0.897), gray)
+footer, header, .login-container, .email-form-container, .aboutme-container{
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0.918), rgba(128, 128, 128, 0.733))
 }
 
 
@@ -714,113 +710,6 @@ ul{
 }
 
 
-@media (max-width: 719px) {
-  
-
-  .ai-chatbox{
-    left: 20%;
-  }
-
-  .homepage-body {
-    flex-direction: column;
-  }
-
-  .chatarea, .crypto-list-container, .aboutme-container{
-    width: 100vw;
-    max-width: 100%;
-    margin-left: 0;
-    height: 50%;
-  }
-
-  .cryptoLabel {
-    left: 0;
-    width: 100%;
-  }
-
-  .flexbox {
-    flex-direction: column;
-  }
-
-  .inputbox{
-    max-height: 5rem;
-  }
-  .inputbox-text{
-    margin-bottom: 1rem;
-  }
-
-  .search-container{
-    width: 100%;
-    padding: 0;
-
-  }
-  .search-bar{
-    width: 80%;
-  }
-}
-
-@media (min-width: 720px){
-
-  .homepage-body{
-    flex-direction: row;
-  }
-  .content-container{
-    flex-direction: row;
-  }
-  .flexbox{
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .header {
-    font-size: 3rem; 
-    transition-duration: 0.3s;
-    
-  }
-
-  .header:hover {
-    font-size: 3.4rem;
-  }
-  .search-bar{
-    font-size: 1.1rem;
-  }
-
-  .inputbox {
-    max-height: 6rem;
-  }
-  .content-container, .login-container, .aboutme-container{
-    height: 80vh;
-  }
-
-
-
-  .aboutme-text-container{
-    max-width: 35rem;
-    max-height: 35rem;
-  }
-  
-  .aboutme-title{
-    font-size: 2.2rem;
-  }
-  .aboutme-text{
-    line-height: 1.2rem;
-  }
-}
-
-@media (min-width: 1200px) {
-
-
-
-  .flexbox {
-    justify-content: space-around;
-  }
-}
-
-
-
-
-
-
-
 
 
 
@@ -841,9 +730,8 @@ ul{
   justify-content: center;
   align-items: center; 
   margin: 0;
-  background-image: linear-gradient(to right, rgb(22, 22, 22), rgb(122, 122, 122));
-  box-shadow: 0px -4px 12px 5px rgba(95, 94, 94, 0.2), 
-              0px 4px 12px 1px rgba(95, 94, 94, 1);   
+  box-shadow: 0px -4px 8px 1px rgba(0, 0, 0, 0.123), 
+  0px 4px 8px 1px rgba(0, 0, 0, 0.089); 
 }
 
 .aboutme-text-container {
@@ -914,3 +802,246 @@ ul{
   background-size: 500% 500%; 
   transition-duration: 0.5s;
 }
+
+.email-form-container{
+  width: 100%;
+  height: 59vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0px -4px 8px 1px rgba(0, 0, 0, 0.123), 
+              0px 4px 8px 1px rgba(0, 0, 0, 0.089); 
+  
+  
+}
+.email-form-body{
+  width: 80%;
+  display: flex;
+  justify-content: center;
+  align-items:center;
+  height: 100%;
+  border-radius: 10px;
+  margin: auto;
+  
+}
+
+.email-box{
+  display: flex;
+  align-items:center;
+  height: 100%;
+  width: 50%;
+  
+}
+
+.email-form{
+  display: flex;
+  flex-direction: column;
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.74);
+}
+
+.text-for-email-form{
+  color: rgba(255, 255, 255, 0.74);
+  border: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.74);
+  background-color:transparent;
+  display: block;
+  padding: 0.4rem;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+}
+
+.message-for-form{
+  border: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.74);
+  color: rgba(255, 255, 255, 0.74);
+  background-color:transparent;
+  display: block;
+  padding: 0.4rem;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  resize:none;
+  max-width: 100%;
+  height: 6rem;
+}
+
+.message-for-form:focus{
+  outline: none;
+}
+
+.email-button{
+  margin-top: 0.5rem;
+  border-radius: 100px;
+  border: none;
+  padding: 1rem;
+  background-color: rgba(255, 255, 255, 0.164);
+  transition: background-color 0.5s ease, transform 30ms ease;
+}
+
+.email-button:hover{
+  cursor: pointer;
+  transition: background-color 0.5s ease;
+  background-color: rgba(255, 255, 255, 0.384);
+}
+
+.email-button:active{
+  transform: translate(3px, 3px);
+  transition: transform 30ms;
+}
+
+
+.logo-image{
+  margin: 0;
+}
+
+.contact-container{
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.74);
+}
+.center-text{
+  text-align:center;
+}
+.contact-header{
+  font-style: italic;
+  font-weight: normal;
+  margin: 0;
+}
+.center-wrap{
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  flex-direction:column;
+}
+.icon{
+  width: 2rem;
+  height: 2rem;
+  margin: auto;
+}
+.link{
+  margin: auto;
+}
+
+
+@media (max-width: 719px) {
+  
+  .email-box{
+    justify-content: center;
+  }
+
+  .email-form-body{
+    flex-direction: column;
+    padding: 1rem 0;
+  }
+  .ai-chatbox{
+    left: 20%;
+  }
+
+  .homepage-body {
+    flex-direction: column;
+  }
+
+  .chatarea, .crypto-list-container, .aboutme-container{
+    width: 100vw;
+    max-width: 100%;
+    margin-left: 0;
+    height: 50%;
+  }
+
+  .cryptoLabel {
+    left: 0;
+    width: 100%;
+  }
+
+  .flexbox {
+    flex-direction: column;
+  }
+
+  .inputbox{
+    max-height: 5rem;
+  }
+  .inputbox-text{
+    margin-bottom: 1rem;
+  }
+
+  .search-container{
+    width: 100%;
+    padding: 0;
+
+  }
+  .search-bar{
+    width: 80%;
+  }
+}
+
+@media (min-width: 720px){
+
+
+  .email-form-body{
+    max-width: 50rem;
+  }
+  .email-form-body{
+    flex-direction: row;
+    
+  }
+  .homepage-body{
+    flex-direction: row;
+  }
+  .content-container{
+    flex-direction: row;
+  }
+  .flexbox{
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .header {
+    font-size: 3rem; 
+    transition-duration: 0.3s;
+    
+  }
+
+  .header:hover {
+    font-size: 3.4rem;
+  }
+  .search-bar{
+    font-size: 1.1rem;
+  }
+
+  .inputbox {
+    max-height: 6rem;
+  }
+  .content-container, .login-container, .aboutme-container, .email-form-container{
+    height: 80vh;
+  }
+
+
+  .aboutme-text-container{
+    max-width: 35rem;
+    max-height: 35rem;
+  }
+  
+  .aboutme-title{
+    font-size: 2.2rem;
+  }
+  .aboutme-text{
+    line-height: 1.2rem;
+  }
+}
+
+@media (min-width: 1200px) {
+
+
+
+  .flexbox {
+    justify-content: space-around;
+  }
+}
+
+
+
+
+

@@ -7,7 +7,7 @@ function Footer(){
       <div className = "flexbox footer-div">
         <div className = "flex-item footer-item">&copy; {new Date().getFullYear()} - CryptoChat </div>
         <div className = "flex-item footer-item"><a href = "/about">What is CryptoChat?</a></div>
-        <div className = "flex-item footer-item"><a href = "#">Contact Me</a></div>
+        <div className = "flex-item footer-item"><a href = "/contact">Contact Me</a></div>
       </div>
       
     </footer>
