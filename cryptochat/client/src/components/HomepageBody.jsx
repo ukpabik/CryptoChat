@@ -130,7 +130,7 @@ function HomepageBody(){
     //FETCH CRYPTO DATA
     const fetchCryptoData = async () => {
       try {
-        const response = await axios.get(`${import.meta.env.VITE_API_URL}/cryptodata`);
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}cryptodata`);
         
         setCryptoData(response.data); 
       } 
@@ -203,7 +203,7 @@ function HomepageBody(){
   useEffect(() => {
     const fetchMessages = async () => {
       try {
-        const response = await axios.get(`${import.meta.env.VITE_API_URL}/messages`);
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}messages`);
         const fetchedMessages = response.data.rows;
   
         
