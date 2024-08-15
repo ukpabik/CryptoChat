@@ -100,8 +100,7 @@ const io = new Server(server, {
   
   cors: {
     origin: `${process.env.FRONTEND_URL}`,
-    methods: ["GET", "POST"],
-    credentials: true
+    methods: ["GET", "POST"]
   },
 
   //FOR RECOVERY OF MESSAGES
@@ -111,17 +110,16 @@ const io = new Server(server, {
 const port = process.env.PORT || 3000;
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-
-app.use((req, res, next) => {
-  console.log(`Request from ${req.headers.origin} to ${req.url}`);
-  next();
-});
-
-app.use(cors({
-  origin: process.env.FRONTEND_URL, 
+const corsOptions = {
+  origin: 'https://cryptochat-frontend.vercel.app',
+  optionsSuccessStatus: 200,
   methods: ["GET", "POST"],
-  credentials: true 
-}));
+};
+
+app.use(cors(corsOptions));
+
+
+
 
 //FOR LOGIN and REGISTERING
 app.use(express.json())
