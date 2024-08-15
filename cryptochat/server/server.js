@@ -110,13 +110,12 @@ const io = new Server(server, {
 const port = process.env.PORT || 3000;
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-const corsOptions = {
-  origin: 'https://cryptochat-frontend.vercel.app',
-  optionsSuccessStatus: 200,
-  methods: ["GET", "POST"],
-};
 
-app.use(cors(corsOptions));
+
+app.use(cors({
+  origin: `${process.env.FRONTEND_URL}`,
+  methods: ["GET", "POST"],
+}));
 
 
 
