@@ -254,7 +254,11 @@ function HomepageBody(){
         
       
           <div className = "chatarea">
+            {!isLoggedIn ? 
             <div className='blur'><button className='blurtext'><a className='blursignin' href='/signin'>Click here to sign in and join the chat.</a></button></div>
+            :
+            <></>
+            }
             <div ref = {outputBoxRef} id = "output" className = "outputbox">
               
               <ul ref = {outputRef}>
