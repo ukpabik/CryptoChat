@@ -40,7 +40,8 @@ function HomepageBody(){
     const socket = io(`${import.meta.env.VITE_API_URL}`, {
       auth: {
         username: username || 'Guest',
-        serverOffset: 0
+        serverOffset: 0,
+        transports: ['polling'],
       },
       
     })
