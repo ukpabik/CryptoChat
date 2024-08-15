@@ -132,16 +132,18 @@ app.use(express.json())
 //SERVING STATIC FILES FROM REACT
 app.use(express.static(join(__dirname, 'client', 'dist')));
 
-
 app.get('/', (req, res) => {
-  res.sendFile(join(__dirname, 'index.html'));
-  
+  res.sendFile(join(__dirname, 'client', 'dist', 'index.html'));
+});
+
+app.get('*', (req, res) => {
+  res.sendFile(join(__dirname, 'client', 'dist', 'index.html'));
 });
 
 
 //FETCHING MESSAGES FROM POSTGRESQL
 
-app.get('/messages', async (req, res) => {
+app.get('messages', async (req, res) => {
   try{
     const result = await pool.query('SELECT content, username, timesent FROM messages ORDER BY id ASC')
     res.status(200).json(result);
@@ -167,7 +169,7 @@ app.get('/messages', async (req, res) => {
 
 
 // FETCHING CRYPTO DATA USING AXIOS
-app.get('/cryptodata', async (req, res) => {
+app.get('cryptodata', async (req, res) => {
   const currentTime = new Date().getTime();
 
   //CHECK IF THE CACHE IS NOT NULL
@@ -220,7 +222,7 @@ app.get('/cryptodata', async (req, res) => {
 
 
 //REQUESTS FOR GEMINI API
-app.post('/ai', async (req, res) => {
+app.post('ai', async (req, res) => {
   try{
     const { body } = req.body;
     
@@ -245,7 +247,7 @@ app.post('/ai', async (req, res) => {
 
 
 //REGISTER POST REQUEST
-app.post('/register', async (req, res) => {
+app.post('register', async (req, res) => {
   const { username, password } = req.body;
 
   if (!username || !password) {
@@ -272,7 +274,7 @@ app.post('/register', async (req, res) => {
 
 
 //SIGNIN REQUEST
-app.post('/signin', async (req, res) => {
+app.post('signin', async (req, res) => {
   const { username, password } = req.body;
 
   if (!username || !password) {
