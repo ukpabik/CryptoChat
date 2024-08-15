@@ -35,9 +35,9 @@ function App() {
         <Navbar />
         <main>
           <Routes>
-            <Route path="" element={<Homepage />} />
-            <Route path="signin" element={<SignIn />} />
-            <Route path="about" element={<About />} />
+            <Route path="/" element={<Homepage />} />
+            <Route path="/signin" element={<SignIn />} />
+            <Route path="/about" element={<About />} />
           </Routes>
         </main>
         <Footer />
