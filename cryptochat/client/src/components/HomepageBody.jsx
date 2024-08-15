@@ -155,7 +155,7 @@ function HomepageBody(){
   };
 
 
-
+  //PRINTS EACH MESSAGE
   const printMessage = (content, username, timeSent) => {
     if (username || timeSent){
       const outputList = outputRef.current;

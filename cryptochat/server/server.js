@@ -111,7 +111,7 @@ const port = process.env.PORT || 3000;
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 
-
+//CORS CONFIG
 app.use(cors({
   origin: `${process.env.FRONTEND_URL}`,
   methods: ["GET", "POST"],
