@@ -42,6 +42,7 @@ function HomepageBody(){
         username: username || 'Guest',
         serverOffset: 0
       },
+      transports: ["websocket", "polling"],
       
     })
   
