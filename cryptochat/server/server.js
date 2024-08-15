@@ -10,6 +10,7 @@ import { dirname, join } from 'node:path';
 import { Server } from "socket.io"
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import pkg from 'pg';
+import Ably from 'ably';
 
 
 
@@ -94,6 +95,8 @@ const CACHE_EXPIRATION_TIME = 5 * 60 * 1000;
 
 const app = express()
 const server = createServer(app)
+
+const ably = new Ably.Realtime(process.env.ABLY_API_KEY);
 
 //GET AND POST REQUESTS FOR SOCKET IO SERVER
 const io = new Server(server, {
@@ -305,53 +308,36 @@ app.get('*', (req, res) => {
   res.sendFile(join(__dirname, 'client', 'dist', 'index.html'));
 });
 
-
-
-// SOCKETS FOR CHAT ROOM
-io.on('connection', async (socket) => {
-  console.log('a user connected')
-
+const channel = ably.channels.get('chat-channel');
 
   /**
    * An async function to allow for messages to be sent and received, as well as recovered
    * when a user disconnects.
    */
-  socket.on('message', async (msg) => {
-    const {content, user, timeSent } = msg;
-    let result;
-    try{
-      result = await pool.query(
+  app.post('/send-message', async (req, res) => {
+    const { content, user, timeSent } = req.body;
+    try {
+      const result = await pool.query(
         `INSERT INTO messages (content, username, timesent) 
         VALUES ($1, $2, $3) 
         RETURNING id`, 
         [content, user, timeSent]
       );
+      await channel.publish('message', { content, user, timeSent });
+      res.status(200).json({ success: true });
+    } catch (e) {
+      res.status(500).json({ success: false });
     }
-    catch(e){
-      return;
-    }
-
-    io.emit('message', {content, user, timeSent}, result.lastID)
-  })
-
-  if (!socket.recovered){
-    //IF CANT RECOVER THE CONNECTION STATE
-
-    try{
-      const { rows } = await pool.query('SELECT id, content, username, timesent FROM messages WHERE id > $1', [socket.handshake.auth.serverOffset || 0]);
-      rows.forEach(row => {
-        socket.emit('message', { content: row.content, user: row.user, timeSent: row.timeSent }, row.id);
-      });
-    }
-    catch (e){
-      console.error(e);
-    }
-  }
-
-  socket.on('disconnect', () => {
-    console.log('user disconnected');
   });
-})
+  
+  app.post('/messages', async (req, res) => {
+    try {
+      const { rows } = await pool.query('SELECT id, content, username, timesent FROM messages ORDER BY id ASC');
+      res.status(200).json(rows);
+    } catch (e) {
+      res.status(500).json({ message: 'Error fetching messages' });
+    }
+  });
 
 
 

@@ -4,6 +4,7 @@ import { React, useEffect, useRef, useContext, useState } from 'react';
 import io from 'socket.io-client'
 import { AuthContext } from '../Auth';
 import axios from 'axios'
+import Ably from 'ably';
 
 
 
@@ -27,6 +28,8 @@ function HomepageBody(){
   const cryptoRef = useRef(null);
   
 
+  const ably = new Ably.Realtime({ key: import.meta.env.VITE_ABLY_API_KEY });
+  const channel = ably.channels.get('chat-channel');
 
   useEffect( () => {
 
@@ -77,12 +80,14 @@ function HomepageBody(){
     //SENDS MESSAGE GLOBALLY
     const sendMessage = () => {
       const inputbox = inputRef.current;
-      if (inputbox.value){
+      if (inputbox.value) {
         const timeSent = new Date().toISOString();
-        socket.emit('message', { content: inputbox.value, user: username, timeSent: timeSent});
-        
-
-        inputbox.value = ''
+        axios.post(`${import.meta.env.VITE_API_URL}/send-message`, { 
+          content: inputbox.value, 
+          user: username, 
+          timeSent 
+        });
+        inputbox.value = '';
       }
     }
     const handleKeyDown = (e) => {
@@ -101,30 +106,22 @@ function HomepageBody(){
     inputRef.current.addEventListener('keydown', handleKeyDown);
 
     //HANDLING MESSAGES ON SITE BY MAKING NEW LIST ELEMENTS
-    socket.on('message', (msg, serverOffset) => {
-
-      
-
-      //EXTRACTS CONTENT OF MESSAGE AND THE USER FROM THE MSG
-      const { content, user, timeSent } = msg;
-      printMessage(content, user, timeSent)
-      socket.auth.serverOffset = serverOffset;
-    })
+    channel.subscribe('message', (msg) => {
+      const { content, user, timeSent } = msg.data;
+      printMessage(content, user, timeSent);
+    });
 
     return () => {
-      socket.disconnect();
+      channel.unsubscribe();
       if (sendbutton) {
         sendbutton.removeEventListener('click', sendMessage);
       }
       if (inputRef.current) {
         inputRef.current.removeEventListener('keydown', handleKeyDown);
       }
-    }
+    };
 
-
-
-    
-  }, [username])
+  }, [username]);
 
   useEffect(() => {
     //FETCH CRYPTO DATA
@@ -205,14 +202,11 @@ function HomepageBody(){
       try {
         const response = await axios.get(`${import.meta.env.VITE_API_URL}/messages`);
         const fetchedMessages = response.data.rows;
-  
-        
         const formattedMessages = fetchedMessages.map(message => ({
           content: message.content || 'No content',
           username: message.username || 'Guest',
           timeSent: message.timesent || 'No time'
         }));
-  
         setMessages(formattedMessages);
       } catch (error) {
         console.error('Error fetching messages:', error);
