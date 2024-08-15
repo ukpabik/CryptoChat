@@ -41,7 +41,7 @@ function HomepageBody(){
       auth: {
         username: username || 'Guest',
         serverOffset: 0,
-        transports: ['polling', 'websocket'],
+        transports: [ 'websocket'],
       },
       
     })
