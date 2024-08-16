@@ -748,7 +748,7 @@ ul{
   font-size: 1.8rem;
 }
 .aboutme-text {
-  line-height: 1.5rem;
+  line-height: 2rem;
   font-size: 1.2rem;
   word-wrap: break-word;
 }
@@ -1028,7 +1028,7 @@ ul{
     font-size: 2.2rem;
   }
   .aboutme-text{
-    line-height: 1.2rem;
+    line-height: 1.5rem;
   }
 }
 

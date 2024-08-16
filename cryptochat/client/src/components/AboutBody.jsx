@@ -8,14 +8,10 @@ function AboutBody(){
         <div className = "aboutme-text-container">
           <h1 className='aboutme-title'>About CryptoChat</h1>
           <p className='aboutme-text'>
-            Welcome to CryptoChat, a project created out of my own passion for cryptocurrency. 
-            I'm Kelechi, a college student interested in technology and the exciting world of 
-            digital currency. CryptoChat is my way of bringing people together to discuss 
-            everything cryptocurrency—whether it's the latest market trends, new developments, 
-            or simply sharing ideas with others who share my passion. 
+          Welcome to CryptoChat! I’m a college student with a strong interest in technology and digital currencies. I created CryptoChat because I’m passionate about cryptocurrency and wanted a space where people can come together to talk about it. Whether you’re here to chat about the latest market trends, explore new developments, or just share ideas with others who love crypto, I hope you find CryptoChat to be a welcoming and engaging place. Let’s explore the world of cryptocurrency together!
           </p>
           <p className='aboutme-text'>
-            This app isn't just a tool;
+            CryptoChat is more than a personal project;
             it's a community space where you can chat in real time, stay up-to-date with the 
             top cryptocurrencies, and even get AI-powered answers to your crypto questions. 
             I built CryptoChat to make it easier for everyone, from beginners to seasoned 
