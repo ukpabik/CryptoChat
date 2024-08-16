@@ -7,7 +7,6 @@ import axios from 'axios';
 import { createServer } from 'node:http'
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
-import { Server } from "socket.io"
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import pkg from 'pg';
 import Ably from 'ably';
@@ -98,18 +97,6 @@ const server = createServer(app)
 
 const ably = new Ably.Realtime(process.env.ABLY_API_KEY);
 
-//GET AND POST REQUESTS FOR SOCKET IO SERVER
-const io = new Server(server, {
-  
-  cors: {
-    origin: `${process.env.FRONTEND_URL}`,
-    methods: ["GET", "POST"]
-  },
-
-  //FOR RECOVERY OF MESSAGES
-  connectionStateRecovery: {}
-
-})
 const port = process.env.PORT || 3000;
 const __dirname = dirname(fileURLToPath(import.meta.url));
 

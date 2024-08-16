@@ -159,7 +159,7 @@ function Navbar(){
       <div className = "header-container">
         <nav className = "flexbox header-div">
           <div className = "flex-item headerTitle">
-            <a class = "header" href = "/">CryptoChat</a>
+            <a className = "header" href = "/">CryptoChat</a>
             <img className='logo-image' src='/cryptochat-64x64.png' />
           </div>
           <form onSubmit={(e) => e.preventDefault()} className="flex-item search-container">

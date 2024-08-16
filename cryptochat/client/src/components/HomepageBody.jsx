@@ -1,7 +1,6 @@
 import './style.css';
 import sendImage from "../assets/sendicon.png"
 import { React, useEffect, useRef, useContext, useState } from 'react';
-import io from 'socket.io-client'
 import { AuthContext } from '../Auth';
 import axios from 'axios'
 import Ably from 'ably';
@@ -37,21 +36,6 @@ function HomepageBody(){
 
 
 
-
-    
-    //CONNECT TO SERVER FIRST
-    const socket = io(`${import.meta.env.VITE_API_URL}`, {
-      auth: {
-        username: username || 'Guest',
-        serverOffset: 0,
-        transports: [ 'websocket'],
-      },
-      
-    })
-  
-    socket.on('connect', () => {
-      console.log('Connected to server')
-    })
 
     //RETURNS CURRENT TIME
     const getCurrentTime = () => {
@@ -290,9 +274,9 @@ function HomepageBody(){
                 {cryptoData.length > 0 ? cryptoData.map((crypto, count) => (
                   <div key={crypto.id} className="cryptoListElement">
                     <span className="cryptoRank">{`${1 + count++} `}</span>
-                    <img src={crypto.logo} alt={`${crypto.name} logo`} class="cryptoIcon" />
-                    <li class="cryptoTitle">
-                      <span className="nameSpan"><a class="cryptoURL">{crypto.name}</a></span>
+                    <img src={crypto.logo} alt={`${crypto.name} logo`} className="cryptoIcon" />
+                    <li className="cryptoTitle">
+                      <span className="nameSpan"><a className="cryptoURL">{crypto.name}</a></span>
                       <span className="priceSpan">${crypto.price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                       {crypto.percent_change_24h > 0 ? 
                         <span className="changeSpan green">{crypto.percent_change_24h.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}%</span>
