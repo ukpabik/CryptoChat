@@ -255,6 +255,8 @@ app.post('/send-email', async (req, res) => {
       text: `You have a new message from ${name} (${email}):\n\n${message}`,
     };
 
+
+    //SENDING THE EMAIL
     transporter.sendMail(mailOptions, (error, info) => {
       if (error) {
         return res.status(500).send(error.toString());
