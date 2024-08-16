@@ -51,7 +51,7 @@ function ContactBody(){
           <div className="contact-container">
             <h2 className="contact-header">Contact</h2>
             <div className="center-wrap">
-              <p className="center-text">kelechiukp@gmail.com</p>
+              <p className="center-text">officialcryptochat@gmail.com</p>
               <a className='link' href="https://github.com/ukpabik" target="_blank" rel="noopener noreferrer">
                 <img className='icon' src='/github-mark.png' alt='github-icon'/>
               </a>
