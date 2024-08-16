@@ -121,5 +121,5 @@ To set up the project, follow these steps:
 
 For questions or feedback, you can contact me via:
 
-- **Email**: kuolingou1@gmail.com
+- **Email**: officialcryptochat@gmail.com
 - **GitHub**: [ukpabik](https://github.com/ukpabik)
