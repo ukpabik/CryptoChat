@@ -484,6 +484,14 @@ textarea::-webkit-scrollbar-thumb{
   
 }
 
+.button-container{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0.5rem 0;
+}
+
 
 a{
   text-decoration:none;
