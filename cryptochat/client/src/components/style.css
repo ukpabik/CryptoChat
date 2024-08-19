@@ -476,9 +476,11 @@ textarea::-webkit-scrollbar-thumb{
 
 .submit-button-div{
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
   width: 100%;
   padding: 0.5rem 0;
+  gap: 1rem;
   
 }
 
