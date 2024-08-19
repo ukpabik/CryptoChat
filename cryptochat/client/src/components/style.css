@@ -1084,17 +1084,17 @@ ul{
 
 @media (max-width: 600px) {
   .aboutme-text-container {
-    width: 90vw; /* Make container wider on smaller screens */
-    padding: 0.5rem; /* Adjust padding for small screens */
+    width: 90vw; 
+    padding: 0.5rem; 
   }
   
   .aboutme-title {
-    font-size: 1.8rem; /* Smaller title font size on small screens */
+    font-size: 1.8rem; 
   }
 
   .aboutme-text {
-    font-size: 1rem; /* Smaller text font size on small screens */
-    line-height: 1.4rem; /* Adjust line height for readability */
+    font-size: 1rem; 
+    line-height: 1.4rem; 
   }
 }
 
