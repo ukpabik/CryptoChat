@@ -390,26 +390,32 @@ textarea::-webkit-scrollbar-thumb{
   display: flex;
   flex-direction:column;
   background-color:black;
-  height: 25rem;
+  height: 50%;
+  min-height: 20rem;
   justify-content:center;
   align-items:center;
   border-radius: 10%;
   width: 25rem;
   max-width: 25rem;
   margin: 0;
+  overflow: hidden;
   
 }
 .login-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 50vh;
+  height: 100vh; 
+  width: 100%; 
   box-shadow: 0px -4px 8px 1px rgba(0, 0, 0, 0.123), 
-              0px 4px 8px 1px rgba(0, 0, 0, 0.089);   
+              0px 4px 8px 1px rgba(0, 0, 0, 0.089);
+  overflow: auto;   
+  
 }
 
 .login-box{
   display: flex;
+  flex-direction: column;
   align-items:center;
   justify-content: center;
   background-color:rgba(255, 255, 255, 0.651);
@@ -417,6 +423,9 @@ textarea::-webkit-scrollbar-thumb{
   height: 99%;
   border-radius: 10%;
   position:relative;
+  padding: 1rem;
+  box-sizing: border-box;
+  
 }
 .login-form{
   display: flex;
@@ -424,7 +433,7 @@ textarea::-webkit-scrollbar-thumb{
   width: 90%;
   justify-content: space-evenly;
   align-items: center;
-  max-width: 300px;
+  max-width: 10rem;
   
 }
 .login-field{
@@ -452,6 +461,7 @@ textarea::-webkit-scrollbar-thumb{
   transition-duration: 0.5s;
   background-color: transparent;
   font-size: 1rem;
+  flex: 1;
 }
 
 .submit-button:hover{
@@ -465,9 +475,10 @@ textarea::-webkit-scrollbar-thumb{
 }
 
 .submit-button-div{
-  display:flex;
-  flex-direction:column;
-  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0.5rem 0;
   
 }
 
@@ -732,6 +743,7 @@ ul{
   margin: 0;
   box-shadow: 0px -4px 8px 1px rgba(0, 0, 0, 0.123), 
   0px 4px 8px 1px rgba(0, 0, 0, 0.089); 
+  overflow: auto;
 }
 
 .aboutme-text-container {
@@ -740,17 +752,24 @@ ul{
   width: 80vw;
   max-width: 50rem; 
   color: #c0c0c0;
+  padding: 1rem;
+  box-sizing: border-box;
+  font-size: 1.2vw;
+  overflow-wrap: break-word;
 }
 
 .aboutme-title{
   text-align: center;
   font-weight: bold;
-  font-size: 1.8rem;
+  font-size: 2.5vw;
+  margin-bottom: 1rem;
 }
 .aboutme-text {
-  line-height: 2rem;
-  font-size: 1.2rem;
+  line-height: 1.5; 
+  font-size: 1.2rem; 
   word-wrap: break-word;
+  max-width: 100%;
+  padding: 0;
 }
 
 
@@ -977,6 +996,19 @@ ul{
   }
 }
 
+@media (max-height: 700px){
+  .content-container, .login-container, .aboutme-container, .email-form-container{
+    height: 100vh;
+  }
+
+
+  .aboutme-text-container{
+    max-width: 100%;
+    max-height: 100vh;
+  }
+}
+
+
 @media (min-width: 720px){
 
 
@@ -1020,8 +1052,7 @@ ul{
 
 
   .aboutme-text-container{
-    max-width: 35rem;
-    max-height: 35rem;
+    
   }
   
   .aboutme-title{
@@ -1041,7 +1072,21 @@ ul{
   }
 }
 
+@media (max-width: 600px) {
+  .aboutme-text-container {
+    width: 90vw; /* Make container wider on smaller screens */
+    padding: 0.5rem; /* Adjust padding for small screens */
+  }
+  
+  .aboutme-title {
+    font-size: 1.8rem; /* Smaller title font size on small screens */
+  }
 
+  .aboutme-text {
+    font-size: 1rem; /* Smaller text font size on small screens */
+    line-height: 1.4rem; /* Adjust line height for readability */
+  }
+}
 
 
 
