@@ -3,11 +3,11 @@ import { useParams } from 'react-router-dom';
 import { useCryptoData } from './useCryptoData';
 
 function CryptoDetails() {
-  const { fullName } = useParams(); 
+  const { name } = useParams(); 
   const cryptoData = useCryptoData(); 
 
   
-  const crypto = cryptoData.find((crypto) => crypto.fullName === fullName);
+  const crypto = cryptoData.find((crypto) => crypto.name === name);
 
   if (!crypto) {
     return <p>Loading...</p>;
