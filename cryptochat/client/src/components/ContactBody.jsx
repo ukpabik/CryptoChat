@@ -43,7 +43,7 @@ function ContactBody(){
               <input name='email' type='email' className="text-for-email-form" required />
               <label htmlFor="message">Message:</label>
               <textarea name='message' className="message-for-form" required />
-              <button type='submit' className="email-button">Submit</button>
+              <button title='Click to submit.' type='submit' className="email-button">Submit</button>
             </form>
             
           </div>
@@ -52,7 +52,7 @@ function ContactBody(){
             <h2 className="contact-header">Contact</h2>
             <div className="center-wrap">
               <p className="center-text">officialcryptochat@gmail.com</p>
-              <a className='link' href="https://github.com/ukpabik" target="_blank" rel="noopener noreferrer">
+              <a title='GitHub' className='link' href="https://github.com/ukpabik" target="_blank" rel="noopener noreferrer">
                 <img className='icon' src='/github-mark.png' alt='github-icon'/>
               </a>
             </div>

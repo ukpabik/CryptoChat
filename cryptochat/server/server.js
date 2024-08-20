@@ -183,6 +183,7 @@ app.get('/cryptodata', async (req, res) => {
       return {
         id: crypto.id,
         name: crypto.symbol,
+        fullName: crypto.name,
         price: crypto.quote.USD.price,
         logo: infoResponse.data.data[crypto.id].logo,
         percent_change_24h: crypto.quote.USD.percent_change_24h

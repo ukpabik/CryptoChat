@@ -82,8 +82,8 @@ function SignInBody() {
             </div>
             <div className="submit-button-div">
               <div class = "button-container">
-                <input name="register" className="submit-button" type="submit" value="Register" />
-                <input name="signin" className="submit-button" type="submit" value="Sign In" />
+                <input title='Register' name="register" className="submit-button" type="submit" value="Register" />
+                <input title='Sign In' name="signin" className="submit-button" type="submit" value="Sign In" />
               </div>
               
               

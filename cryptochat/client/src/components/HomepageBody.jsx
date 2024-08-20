@@ -4,6 +4,7 @@ import { React, useEffect, useRef, useContext, useState } from 'react';
 import { AuthContext } from '../Auth';
 import axios from 'axios'
 import Ably from 'ably';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -25,7 +26,7 @@ function HomepageBody(){
   const outputRef = useRef(null);
   const outputBoxRef = useRef(null);
   const cryptoRef = useRef(null);
-  
+  const navigate = useNavigate();
 
   const ably = new Ably.Realtime({ key: import.meta.env.VITE_ABLY_API_KEY });
   const channel = ably.channels.get('chat-channel');
@@ -216,7 +217,9 @@ function HomepageBody(){
   
   
 
-
+  const navigateSignin = () => {
+      navigate('/signin')
+  }
   
 
 
@@ -233,7 +236,7 @@ function HomepageBody(){
       
           <div className = "chatarea">
             {!isLoggedIn ? 
-            <div className='blur'><button className='blurtext'><a className='blursignin' href='/signin'>Click here to sign in and join the chat.</a></button></div>
+            <div className='blur'><button onClick={navigateSignin} title='Sign in here!' className='blurtext'><a className='blursignin'>Click here to sign in and join the chat.</a></button></div>
             :
             <></>
             }
@@ -276,7 +279,7 @@ function HomepageBody(){
                     <span className="cryptoRank">{`${1 + count++} `}</span>
                     <img src={crypto.logo} alt={`${crypto.name} logo`} className="cryptoIcon" />
                     <li className="cryptoTitle">
-                      <span className="nameSpan"><a className="cryptoURL">{crypto.name}</a></span>
+                      <span className="nameSpan"><a title={crypto.fullName} className="cryptoURL">{crypto.name}</a></span>
                       <span className="priceSpan">${crypto.price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                       {crypto.percent_change_24h > 0 ? 
                         <span className="changeSpan green">{crypto.percent_change_24h.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}%</span>

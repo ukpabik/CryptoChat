@@ -159,7 +159,7 @@ function Navbar(){
       <div className = "header-container">
         <nav className = "flexbox header-div">
           <div className = "flex-item headerTitle">
-            <a className = "header" href = "/">CryptoChat</a>
+            <a title='Main Page' className = "header" href = "/">CryptoChat</a>
             <img className='logo-image' src='/cryptochat-64x64.png' />
           </div>
           <form onSubmit={(e) => e.preventDefault()} className="flex-item search-container">
@@ -190,7 +190,7 @@ function Navbar(){
 
           <div className = "flex-item dropdown-container">
             <div className = "dropdown" ref = {dropdownRef}>
-              <button className = "dropbutton" onClick = {toggleDropdown}>
+              <button title='Menu' className = "dropbutton" onClick = {toggleDropdown}>
                 <img className = "dropdown-icon" src = {dropdownIcon} alt = "dropdown-icon" />
               </button>
               <div className={`dropdown-content ${dropdownOpen ? 'open' : ''}`}>
