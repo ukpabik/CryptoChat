@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Homepage from './routes/Homepage.jsx';  
 import Navbar from './components/Navbar.jsx';  
 import Footer from './components/Footer.jsx';  
+import CryptoDetails from './components/CryptoDetails';
 import SignIn from './routes/SignIn.jsx';  
 import About from './routes/About.jsx';
 import Contact from './routes/Contact.jsx'
@@ -40,6 +41,7 @@ function App() {
             <Route path="/signin" element={<SignIn />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/crypto/:fullName" element={<CryptoDetails />} />
           </Routes>
         </main>
         <Footer />

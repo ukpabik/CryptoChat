@@ -5,6 +5,7 @@ import { AuthContext } from '../Auth';
 import axios from 'axios'
 import Ably from 'ably';
 import { useNavigate } from 'react-router-dom';
+import { useCryptoData } from './useCryptoData';
 
 
 
@@ -19,7 +20,7 @@ function HomepageBody(){
 
 
   const { isLoggedIn, username } = useContext(AuthContext)
-  const [cryptoData, setCryptoData] = useState([])
+  const cryptoData = useCryptoData();
   const [messages, setMessages] = useState([])
   const inputRef = useRef(null);
   const buttonRef = useRef(null);
@@ -108,21 +109,6 @@ function HomepageBody(){
 
   }, [username]);
 
-  useEffect(() => {
-    //FETCH CRYPTO DATA
-    const fetchCryptoData = async () => {
-      try {
-        const response = await axios.get(`${import.meta.env.VITE_API_URL}/cryptodata`);
-        
-        setCryptoData(response.data); 
-      } 
-      catch (error) {
-        console.error('Error fetching crypto data:', error);
-      }
-    };
-
-    fetchCryptoData();
-  }, []);
 
 
   //FORMAT THE TIME CORRECTLY
@@ -279,7 +265,7 @@ function HomepageBody(){
                     <span className="cryptoRank">{`${1 + count++} `}</span>
                     <img src={crypto.logo} alt={`${crypto.name} logo`} className="cryptoIcon" />
                     <li className="cryptoTitle">
-                      <span className="nameSpan"><a title={crypto.fullName} className="cryptoURL">{crypto.name}</a></span>
+                      <span className="nameSpan"><a href={`/crypto/${crypto.fullName}`}  title={crypto.fullName} className="cryptoURL">{crypto.name}</a></span>
                       <span className="priceSpan">${crypto.price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                       {crypto.percent_change_24h > 0 ? 
                         <span className="changeSpan green">{crypto.percent_change_24h.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}%</span>
