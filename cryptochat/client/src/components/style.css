@@ -92,9 +92,6 @@ body {
   display: flex;
 }
 
-.header-div .headerTitle{
-  flex: 1;
-}
 .header-div .search-container{
   flex: 2;
 }
