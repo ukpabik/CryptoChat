@@ -11,7 +11,6 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 import pkg from 'pg';
 import Ably from 'ably';
 import nodemailer from 'nodemailer'
-import { info } from 'node:console';
 
 
 //CONNECTING TO POSTGRESQL
@@ -190,7 +189,9 @@ app.get('/cryptodata', async (req, res) => {
         percent_change_24h: crypto.quote.USD.percent_change_24h,
         description: infoResponse.data.data[crypto.id].description,
         date_launched: infoResponse.data.data[crypto.id].date_launched,
-        websites: infoResponse.data.data[crypto.id].urls.website
+        websites: infoResponse.data.data[crypto.id].urls.website,
+        twitter: infoResponse.data.data[crypto.id].urls.twitter,
+        reddit: infoResponse.data.data[crypto.id].urls.reddit
 
       };
     });
