@@ -683,6 +683,7 @@ footer, header, .login-container, .email-form-container, .aboutme-container, .cr
 .nameSpan{
   position: absolute;
   margin-left: 6.5rem;
+  text-decoration: underline;
 }
 
 .nameSpan:hover{

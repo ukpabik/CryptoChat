@@ -265,6 +265,7 @@ function HomepageBody(){
                     <span className="cryptoRank">{`${1 + count++} `}</span>
                     <img src={crypto.logo} alt={`${crypto.name} logo`} className="cryptoIcon" />
                     <li className="cryptoTitle">
+                      
                       <span className="nameSpan"><a href={`/crypto/${crypto.name}`}  title={crypto.fullName} className="cryptoURL">{crypto.name}</a></span>
                       <span className="priceSpan">${crypto.price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                       {crypto.percent_change_24h > 0 ? 
