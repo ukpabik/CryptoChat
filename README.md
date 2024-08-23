@@ -109,6 +109,21 @@ To set up the project, follow these steps:
 - **Message**: Send and receive messages in real-time.
 - **Disconnect**: Handles disconnection events.
 
+## Application Routes
+
+The application is built using React Router and has the following routes:
+
+- **`/` (Homepage)**: Renders the `Homepage` component which displays the main page of the application.
+- **`/signin` (Sign In)**: Renders the `SignIn` component for user authentication.
+- **`/about` (About)**: Renders the `About` component which provides information about the application.
+- **`/contact` (Contact)**: Renders the `Contact` component where users can get in touch.
+- **`/crypto/:name` (Crypto Details by Name)**: Renders the `CryptoDetails` component for a specific cryptocurrency identified by its short name (e.g., BTC for Bitcoin).
+- **`/crypto/:fullName` (Crypto Details by Full Name)**: Renders the `CryptoDetails` component for a specific cryptocurrency identified by its full name (e.g., Bitcoin).
+
+### Example:
+- Visiting `/crypto/BTC` will render the details for Bitcoin using the short name `BTC`.
+- Visiting `/crypto/Bitcoin` will render the details for Bitcoin using the full name `Bitcoin`.
+
 ## Dependencies
 
 - **Frontend**: React, Vite, Axios, Socket.IO-client
