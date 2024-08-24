@@ -6,6 +6,7 @@ import axios from 'axios'
 import Ably from 'ably';
 import { useNavigate } from 'react-router-dom';
 import { useCryptoData } from './useCryptoData';
+import { getCryptoNews } from './getCryptoNews'; 
 
 
 
@@ -21,13 +22,17 @@ function HomepageBody(){
 
   const { isLoggedIn, username } = useContext(AuthContext)
   const cryptoData = useCryptoData();
+  const cryptoNews = getCryptoNews();
   const [messages, setMessages] = useState([])
+  
   const inputRef = useRef(null);
   const buttonRef = useRef(null);
   const outputRef = useRef(null);
   const outputBoxRef = useRef(null);
   const cryptoRef = useRef(null);
+  const tickerRef = useRef(null);
   const navigate = useNavigate();
+  
 
   const ably = new Ably.Realtime({ key: import.meta.env.VITE_ABLY_API_KEY });
   const channel = ably.channels.get('chat-channel');
@@ -198,6 +203,19 @@ function HomepageBody(){
     });
   }, [messages]);
 
+  useEffect(() => {
+    //STOPPING EFFECT ON TICKER
+    if (cryptoNews){
+      const ticker = tickerRef.current;
+      ticker.addEventListener('mouseenter', () => {
+        ticker.style.animationPlayState = 'paused';
+      })
+      ticker.addEventListener('mouseleave', () => {
+        ticker.style.animationPlayState = 'running';
+      })
+    }
+    
+  })
   
   
   
@@ -211,13 +229,36 @@ function HomepageBody(){
 
 
 
-
   
   return(
     <div>
-      <div className = "homepage-body">
-        <div className = "content-container">
+      <div aria-live='polite' className='ticker'>
+        <div className='breaking-news'>
+          NEWS
+        </div>
+        {cryptoNews ? 
+          <div ref={tickerRef} className='ticker-text'>
+            
+            {cryptoNews.map((newsItem, index) => (
+              <span key={index}>
+                <a href={newsItem.link}>{newsItem.title}...</a>
+              </span>
+              
+            ))}
+          </div>
 
+          :
+          <p>
+            Loading News....
+          </p>
+      
+      
+        }
+      </div>
+      <div className = "homepage-body">
+          
+        <div className = "content-container">
+          
         
       
           <div className = "chatarea">

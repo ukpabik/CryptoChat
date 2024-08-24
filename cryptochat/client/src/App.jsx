@@ -43,6 +43,7 @@ function App() {
             <Route path="/contact" element={<Contact />} />
             <Route path="/crypto/:name" element={<CryptoDetails />} />
             <Route path="/crypto/:fullName" element={<CryptoDetails />} />
+            
           </Routes>
         </main>
         <Footer />

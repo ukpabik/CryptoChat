@@ -11,6 +11,7 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 import pkg from 'pg';
 import Ably from 'ably';
 import nodemailer from 'nodemailer'
+import xml2js from 'xml2js'
 
 
 //CONNECTING TO POSTGRESQL
@@ -85,7 +86,14 @@ let cryptoCache = {
 //DATA WITHIN THE CACHE DISAPPEARS AFTER 5 MINUTES
 const CACHE_EXPIRATION_TIME = 5 * 60 * 1000;
 
+//CACHE FOR NEWS DATA
+let newsCache = {
+  data: null,
+  timestamp: null
+};
 
+//DATA EXPIRES EVERY 5 MINUTES
+const NEWS_CACHE_EXPIRATION_TIME = 5 * 60 * 1000;
 
 
 
@@ -138,6 +146,39 @@ app.get('/messages', async (req, res) => {
 
 })
 
+
+
+//FOR CRYPTO NEWS
+app.get('/get-news', async (req, res) => {
+  const currentTime = new Date().getTime();
+
+  // Check if cached data is still valid
+  if (newsCache.data && (currentTime - newsCache.timestamp < NEWS_CACHE_EXPIRATION_TIME)) {
+    return res.status(200).json(newsCache.data);
+  }
+
+  try {
+    const result = await axios.get('https://cryptopanic.com/news/rss/');
+    // Convert RSS feed to JSON
+    const parsedData = await xml2js.parseStringPromise(result.data, { mergeAttrs: true });
+
+    const newsItems = parsedData.rss.channel[0].item.map(item => ({
+      title: item.title[0],
+      link: item.link[0]
+    }));
+
+    // Update cache
+    newsCache = {
+      data: newsItems,
+      timestamp: currentTime
+    };
+
+    res.status(200).json(newsItems);
+  } catch (e) {
+    console.error('Could not get news: ', e);
+    res.status(500).json({ message: 'Cannot retrieve news from API' });
+  }
+})
 
 
 
