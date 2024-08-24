@@ -1,6 +1,6 @@
 # CryptoChat Web Application
 
-Welcome to **CryptoChat**! This is a real-time cryptocurrency chat application built using modern web technologies. The application allows users to communicate in real-time via a chat room, provides live cryptocurrency data, and integrates a generative AI model for answering crypto-related queries. This project is entirely my work, and I welcome any feedback or suggestions for improvement.
+Welcome to **CryptoChat**! This is a real-time cryptocurrency chat application built using modern web technologies. The application allows users to get breaking news about cryptocurrency, communicate via a real-time chat room, provide live cryptocurrency data, and integrate a generative AI model for answering crypto-related queries. This project is entirely my work, and I welcome any feedback or suggestions for improvement.
 
 ## Table of Contents
 
@@ -10,12 +10,18 @@ Welcome to **CryptoChat**! This is a real-time cryptocurrency chat application b
 - [Running the Application](#running-the-application)
 - [API Endpoints](#api-endpoints)
 - [Socket Events](#socket-events)
+- [Application Routes](#application-routes)
 - [Dependencies](#dependencies)
 - [Contact](#contact)
 
 ## Overview
 
-**CryptoChat** combines real-time communication with live cryptocurrency data and AI-powered responses. The application is designed to be scalable and efficient, using a PostgreSQL database for persistent storage and Google Generative AI for advanced crypto-related queries.
+**CryptoChat** combines real-time communication with live cryptocurrency data and AI-powered responses. The application leverages several APIs to provide up-to-date information and advanced capabilities:
+
+- **CoinMarketCap API**: For fetching live cryptocurrency data, including prices and trends of the top 100 cryptocurrencies.
+- **CryptoPanic API**: For delivering the latest breaking news and updates about cryptocurrencies.
+- **Google Generative AI (Gemini 1.5)**: For generating detailed answers and insights related to crypto queries through an advanced AI model.
+
 
 You can access the live application here: [CryptoChat](https://cryptochat-frontend.vercel.app).
 
@@ -26,7 +32,7 @@ You can access the live application here: [CryptoChat](https://cryptochat-fronte
 - **AI Responses**: Provides detailed answers to crypto questions using a generative AI model.
 - **User Authentication**: Secure user registration and login with JWT and bcrypt.
 - **Persistent Storage**: Stores chat messages and user data in PostgreSQL.
-- **Scalable Architecture**: Built using Node.js and Express, with real-time features powered by Socket.IO and Ably.
+- **Scalable Architecture**: Built using Node.js and Express, with real-time features powered by Ably.
 
 ## Installation
 
@@ -72,6 +78,13 @@ To set up the project, follow these steps:
     EMAIL_PASSWORD=your_app_password
     ```
 
+    Also, create a `.env` file in the `client` directory with the following variables:
+
+    ```plaintext
+    VITE_API_URL=http://localhost:3000
+    VITE_ABLY_API_KEY=your_ably_api_key
+    ```
+
 ## Running the Application
 
 1. **Start the Server**:
@@ -97,11 +110,14 @@ To set up the project, follow these steps:
 ## API Endpoints
 
 - **GET `/messages`**: Retrieve all chat messages from the database.
+- **GET `/cryptodata`**: Fetch the latest cryptocurrency data from the **CoinMarketCap API**.
+- **GET `/get-news`**: Gets daily breaking news about cryptocurrency from the **CryptoPanic API**.
 - **POST `/register`**: Register a new user.
 - **POST `/signin`**: Authenticate an existing user and return a JWT.
-- **GET `/cryptodata`**: Fetch the latest cryptocurrency data.
-- **POST `/ai`**: Submit a request to the AI and receive generated content.
+- **POST `/ai`**: Submit a request to the **Google Generative AI (Gemini 1.5)** and receive generated content.
 - **POST `/send-email`**: Sends an email to the specified receiver with the form data.
+
+
 
 ## Socket Events
 
@@ -126,8 +142,12 @@ The application is built using React Router and has the following routes:
 
 ## Dependencies
 
-- **Frontend**: React, Vite, Axios, Socket.IO-client
-- **Backend**: Node.js, Express, Socket.IO, PostgreSQL, bcrypt, JWT, Google Generative AI, Ably
+- **APIs Used**:
+  - **CoinMarketCap API**: Provides live cryptocurrency market data.
+  - **CryptoPanic API**: Supplies breaking news and updates about cryptocurrencies.
+  - **Google Generative AI (Gemini 1.5)**: Offers AI-generated responses for crypto-related queries.
+- **Frontend**: React, Vite, Axios
+- **Backend**: Node.js, Express, PostgreSQL, bcrypt, JWT, Ably
 - **Database**: PostgreSQL
 - **Hosting**: Vercel
 
