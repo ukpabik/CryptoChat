@@ -17,7 +17,7 @@ import xml2js from 'xml2js'
 //CONNECTING TO POSTGRESQL
 const { Pool } = pkg;
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
+  connectionString: process.env.SUPABASE_DATABASE_URL,
   ssl: {
     rejectUnauthorized: false
   }
