@@ -81,15 +81,15 @@ function SignInBody() {
               <input name="password" type="password" className="text-for-form" required />
             </div>
             <div className="submit-button-div">
-              <div class = "button-container">
+              <div className= "button-container">
                 <input title='Register' name="register" className="submit-button" type="submit" value="Register" />
                 <input title='Sign In' name="signin" className="submit-button" type="submit" value="Sign In" />
               </div>
               
               
             </div>
-            <p class = "error-text" ref = {errorMessageRef}></p>
-            <p class = "success-text" ref = {successMessageRef}></p>
+            <p className= "error-text" ref = {errorMessageRef}></p>
+            <p className= "success-text" ref = {successMessageRef}></p>
           </form>
 
         </div>
