@@ -18,7 +18,9 @@ import xml2js from 'xml2js'
 const { Pool } = pkg;
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
-  ssl: true
+  ssl: {
+    rejectUnauthorized: false
+  }
 });
 pool.connect()
   .then(() => console.log('Connected to PostgreSQL'))
