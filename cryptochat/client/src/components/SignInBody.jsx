@@ -42,7 +42,6 @@ function SignInBody() {
         } 
         else {
           successMessage.textContent = 'Successfully Logged In';
-          console.log("Token: ", data.token);
         }
 
         login(username, data.token)
