@@ -1,16 +1,11 @@
-import CryptoNews from '../components/getCryptoNews.jsx'
+import CryptoNews from "../components/getCryptoNews.jsx";
 
-
-
-function News(){
-
+function News() {
   return (
-
     <>
       <CryptoNews />
     </>
-    
-  )
+  );
 }
 
-export default News
+export default News;

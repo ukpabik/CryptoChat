@@ -7,10 +7,12 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "pretty": "prettier --write \"./**/*.{js,jsx,mjs,cjs,ts,tsx,json}\""
   },
   "dependencies": {
     "@google/generative-ai": "^0.16.0",
+    "@vercel/analytics": "^1.3.1",
     "ably": "^2.3.1",
     "axios": "^1.7.3",
     "bcryptjs": "^2.4.3",
@@ -39,6 +41,7 @@
     "eslint-plugin-react-hooks": "^5.1.0-rc.0",
     "eslint-plugin-react-refresh": "^0.4.9",
     "globals": "^15.9.0",
+    "prettier": "^3.3.3",
     "vite": "^5.4.0"
   }
 }

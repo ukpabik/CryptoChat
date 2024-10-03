@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import axios from 'axios';
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 export const useCryptoData = () => {
   const [cryptoData, setCryptoData] = useState([]);
@@ -7,10 +7,12 @@ export const useCryptoData = () => {
   useEffect(() => {
     const fetchCryptoData = async () => {
       try {
-        const response = await axios.get(`${import.meta.env.VITE_API_URL}/cryptodata`);
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_URL}/cryptodata`,
+        );
         setCryptoData(response.data);
       } catch (error) {
-        console.error('Error fetching crypto data:', error);
+        console.error("Error fetching crypto data:", error);
       }
     };
 

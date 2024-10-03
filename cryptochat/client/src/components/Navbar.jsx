@@ -1,16 +1,13 @@
-import React, { useContext, useState, useEffect, useRef} from 'react';
-import { AuthContext } from '../Auth';
-import dropdownIcon from '../assets/menuicon.png'
-import './style.css'
-import axios from 'axios'
-import { marked } from 'marked';
+import React, { useContext, useState, useEffect, useRef } from "react";
+import { AuthContext } from "../Auth";
+import dropdownIcon from "../assets/menuicon.png";
+import "./style.css";
+import axios from "axios";
+import { marked } from "marked";
 
-
-function Navbar(){
-
+function Navbar() {
   //FOR TRACKING LOGINS AND LOGOUTS
-  const { isLoggedIn, logout } = useContext(AuthContext)
-
+  const { isLoggedIn, logout } = useContext(AuthContext);
 
   //FOR DROPDOWN MENU USE USESTATE
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -23,25 +20,23 @@ function Navbar(){
   const aiRef = useRef(null);
   const aiOutputRef = useRef(null);
   const inputRef = useRef(null);
-  
 
   //TRACKS INPUT OF WHAT YOU ASK THE AI
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState("");
 
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
-  }
-
+  };
 
   const handleKeyPress = (e) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       e.preventDefault();
       setCurrentlyChatting(true);
 
       //ADD USERS INPUT TO HISTORY
       setChatHistory((prevHistory) => [
         ...prevHistory,
-        { type: 'You: ', text: inputValue },
+        { type: "You: ", text: inputValue },
       ]);
 
       axios
@@ -49,7 +44,7 @@ function Navbar(){
           body: inputValue,
         })
         .then((response) => {
-          setInputValue('');
+          setInputValue("");
 
           //CONVERT FROM MARKDOWN CODE
           const htmlContent = marked(response.data.data);
@@ -57,7 +52,7 @@ function Navbar(){
           //ADD RESPONSE TO HISTORY
           setChatHistory((prevHistory) => [
             ...prevHistory,
-            { type: 'CryptoAI: ', html: htmlContent },
+            { type: "CryptoAI: ", html: htmlContent },
           ]);
         })
         .catch((error) => {
@@ -65,7 +60,6 @@ function Navbar(){
         });
     }
   };
-    
 
   useEffect(() => {
     if (chatHistory.length > 0) {
@@ -73,16 +67,16 @@ function Navbar(){
       const aiOutputBox = aiOutputRef.current;
 
       // CLEAR CHATBOX
-      aiOutputBox.innerHTML = '';
+      aiOutputBox.innerHTML = "";
 
       chatHistory.forEach((chat) => {
-        const newChat = document.createElement('div');
-        const newChatText = document.createElement('li');
-        const newChatTitle = document.createElement('span');
+        const newChat = document.createElement("div");
+        const newChatText = document.createElement("li");
+        const newChatTitle = document.createElement("span");
 
-        newChat.className = 'newChat';
-        newChatText.className = 'newChatText';
-        newChatTitle.className = 'newChatTitle';
+        newChat.className = "newChat";
+        newChatText.className = "newChatText";
+        newChatTitle.className = "newChatTitle";
 
         newChatText.innerHTML = chat.html || chat.text;
         newChatTitle.textContent = chat.type;
@@ -96,23 +90,21 @@ function Navbar(){
     }
   }, [chatHistory]);
 
-
-
-  
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
   };
 
-
   const openChatMenu = () => {
-    setChatMenuOpen(true)
-  }
+    setChatMenuOpen(true);
+  };
 
   //CLOSES THE AI CHATBOX IF CLICKED OUTSIDE OF IT
   const handleClickOutsideChat = (event) => {
     if (
-      aiRef.current && !aiRef.current.contains(event.target) &&
-      inputRef.current && !inputRef.current.contains(event.target)
+      aiRef.current &&
+      !aiRef.current.contains(event.target) &&
+      inputRef.current &&
+      !inputRef.current.contains(event.target)
     ) {
       setChatMenuOpen(false);
       setCurrentlyChatting(false);
@@ -121,17 +113,15 @@ function Navbar(){
 
   useEffect(() => {
     if (chatMenuOpen) {
-      document.addEventListener('mousedown', handleClickOutsideChat);
+      document.addEventListener("mousedown", handleClickOutsideChat);
     } else {
-      document.removeEventListener('mousedown', handleClickOutsideChat);
+      document.removeEventListener("mousedown", handleClickOutsideChat);
     }
 
     return () => {
-      document.removeEventListener('mousedown', handleClickOutsideChat);
+      document.removeEventListener("mousedown", handleClickOutsideChat);
     };
   }, [chatMenuOpen]);
-
-
 
   //CLOSES THE DROPDOWN MENU IF YOU CLICK OFF OF IT
   const handleClickOutsideDropdown = (event) => {
@@ -142,60 +132,68 @@ function Navbar(){
 
   useEffect(() => {
     if (dropdownOpen) {
-      document.addEventListener('mousedown', handleClickOutsideDropdown);
+      document.addEventListener("mousedown", handleClickOutsideDropdown);
     } else {
-      document.removeEventListener('mousedown', handleClickOutsideDropdown);
+      document.removeEventListener("mousedown", handleClickOutsideDropdown);
     }
 
     return () => {
-      document.removeEventListener('mousedown', handleClickOutsideDropdown);
+      document.removeEventListener("mousedown", handleClickOutsideDropdown);
     };
   }, [dropdownOpen]);
 
-
-  return(
-    
+  return (
     <header>
-      <div className = "header-container">
-        <nav className = "flexbox header-div">
-          <div className = "flex-item headerTitle">
-            <a title='Main Page' className = "header" href = "/">CryptoChat</a>
-            <img className='logo-image' src='/cryptochat-64x64.png' />
+      <div className="header-container">
+        <nav className="flexbox header-div">
+          <div className="flex-item headerTitle">
+            <a title="Main Page" className="header" href="/">
+              CryptoChat
+            </a>
+            <img className="logo-image" src="/cryptochat-64x64.png" />
           </div>
-          <form onSubmit={(e) => e.preventDefault()} className="flex-item search-container">
-            <input 
+          <form
+            onSubmit={(e) => e.preventDefault()}
+            className="flex-item search-container"
+          >
+            <input
               value={inputValue}
               ref={inputRef}
-              onFocus={openChatMenu} 
-              onChange= {handleInputChange}  
-              onKeyDown = {handleKeyPress} 
-              type="text" 
-              className="search-bar" 
-              placeholder="Type to CryptoAI..." 
-              required 
+              onFocus={openChatMenu}
+              onChange={handleInputChange}
+              onKeyDown={handleKeyPress}
+              type="text"
+              className="search-bar"
+              placeholder="Type to CryptoAI..."
+              required
             />
           </form>
-          {chatMenuOpen && currentlyChatting ? 
-            <div ref = {aiRef} className="ai-chatbox">
-              <div ref = {aiOutputRef} className = "ai-chatbox-output">
-
-              </div>
+          {chatMenuOpen && currentlyChatting ? (
+            <div ref={aiRef} className="ai-chatbox">
+              <div ref={aiOutputRef} className="ai-chatbox-output"></div>
             </div>
-            :
-            <div>
-              
-            </div>
-          }
+          ) : (
+            <div></div>
+          )}
 
-
-          <div className = "flex-item dropdown-container">
-            <div className = "dropdown" ref = {dropdownRef}>
-              <button title='Menu' className = "dropbutton" onClick = {toggleDropdown}>
-                <img className = "dropdown-icon" src = {dropdownIcon} alt = "dropdown-icon" />
+          <div className="flex-item dropdown-container">
+            <div className="dropdown" ref={dropdownRef}>
+              <button
+                title="Menu"
+                className="dropbutton"
+                onClick={toggleDropdown}
+              >
+                <img
+                  className="dropdown-icon"
+                  src={dropdownIcon}
+                  alt="dropdown-icon"
+                />
               </button>
-              <div className={`dropdown-content ${dropdownOpen ? 'open' : ''}`}>
+              <div className={`dropdown-content ${dropdownOpen ? "open" : ""}`}>
                 {isLoggedIn ? (
-                  <a onClick={logout} href="/signin">Log Out</a>
+                  <a onClick={logout} href="/signin">
+                    Log Out
+                  </a>
                 ) : (
                   <a href="/signin">Sign In</a>
                 )}
@@ -207,18 +205,7 @@ function Navbar(){
         </nav>
       </div>
     </header>
-    
-  )
-
+  );
 }
 
-
-
-
-
-
-
-
-
-
-export default Navbar
+export default Navbar;

@@ -1,20 +1,12 @@
-import HomepageBody from '../components/HomepageBody.jsx'
-
+import HomepageBody from "../components/HomepageBody.jsx";
 
 function Homepage() {
-
-
-  return(
+  return (
     //Fragment element holds all of the components
     <>
-      
-      <HomepageBody>
-      
-      </HomepageBody>
-      
+      <HomepageBody></HomepageBody>
     </>
-    
-  )
+  );
 }
 
-export default Homepage
+export default Homepage;

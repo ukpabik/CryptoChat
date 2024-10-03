@@ -1,20 +1,21 @@
-
-#root{
+#root {
   height: 100vh;
   width: 100vw;
-  display:flex;
+  display: flex;
   flex-direction: column;
-  background-color:rgba(0, 0, 0, 0);
-  font-family:sans-serif;
+  background-color: rgba(0, 0, 0, 0);
+  font-family: sans-serif;
 }
 
-#root footer{
+#root footer {
   margin-top: auto;
   height: 50%;
-  
+
 }
 
-html, body, #root {
+html,
+body,
+#root {
   height: 100%;
   width: 100%;
   margin: 0;
@@ -25,7 +26,7 @@ html, body, #root {
 
 
 *::-webkit-scrollbar {
-  background-color: rgba(46, 46, 46, 0.637); 
+  background-color: rgba(46, 46, 46, 0.637);
 }
 
 *::-webkit-scrollbar-thumb {
@@ -36,20 +37,20 @@ html, body, #root {
 
 
 *::-webkit-scrollbar-corner {
-  background-color: rgba(46, 46, 46, 0.829); 
+  background-color: rgba(46, 46, 46, 0.829);
   opacity: 1%;
-  
+
 }
 
 *::-webkit-scrollbar-track {
-  background-color: rgba(7, 7, 7, 0.637); 
+  background-color: rgba(7, 7, 7, 0.637);
 }
 
 
 
 
-@media (min-width: 720px){
-  #root footer{
+@media (min-width: 720px) {
+  #root footer {
     max-height: 9rem;
   }
 }

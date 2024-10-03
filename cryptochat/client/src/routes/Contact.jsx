@@ -1,16 +1,11 @@
-import ContactBody from '../components/ContactBody.jsx'
+import ContactBody from "../components/ContactBody.jsx";
 
-
-
-function Contact(){
+function Contact() {
   return (
-
-
     <>
       <ContactBody />
     </>
-
-  )
+  );
 }
 
-export default Contact
+export default Contact;

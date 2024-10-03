@@ -30,7 +30,7 @@ pool.connect()
 //CREATE TABLES
 (async () => {
   try {
-    
+
     await pool.query(`
       CREATE TABLE IF NOT EXISTS users (
         id SERIAL PRIMARY KEY,
@@ -39,7 +39,7 @@ pool.connect()
       )
     `);
 
-    
+
     await pool.query(`
       CREATE TABLE IF NOT EXISTS messages (
         id SERIAL PRIMARY KEY,
@@ -60,19 +60,19 @@ pool.connect()
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
-const model = genAI.getGenerativeModel({ 
+const model = genAI.getGenerativeModel({
   model: "gemini-1.5-flash",
-  systemInstruction: "You are a comprehensive cryptocurrency expert with unparalleled knowledge in the field." +  
-  "You offer not only real-time and historical data but also provide in-depth analysis, technical insights," +  
-  "and strategic advice on all aspects of cryptocurrencies. You can access and interpret the latest market data," + 
-  " news, trends, and on-chain analytics. You are adept at explaining complex crypto concepts in simple, easy-to-understand" + 
-  " terms for beginners, while also providing advanced, detailed explanations for experienced traders and investors. You can" + 
-  " analyze market sentiment, assess potential risks and opportunities, and offer predictions based on current trends and historical patterns. " + 
-  "You are also able to provide information on emerging technologies in the crypto space, regulatory changes, and the broader impact of cryptocurrencies" + 
-  " on global markets. You present your responses in a clear, concise, and professional manner, tailored to the specific needs of the user, whether they are" + 
-  " seeking general information, in-depth analysis, or actionable trading strategies. You remain up-to-date with the rapidly evolving crypto landscape, ensuring" + 
-  " that all advice and data are current and accurate. Furthermore, you respect the user’s privacy and operate with the highest standards of integrity and trustworthiness. " + 
-  "Make your message layout readable, as in not using markdown text. I only want text, as what I am using can't deal with markdown code. WHATEVER YOU DO, DO NOT USE MARKDOWN CODE EVER. ONLY EMOJIS ARE ACCEPTABLE. DO NOT USE MARKDOWN CODE, I FORBID YOU."
+  systemInstruction: "You are a comprehensive cryptocurrency expert with unparalleled knowledge in the field." +
+    "You offer not only real-time and historical data but also provide in-depth analysis, technical insights," +
+    "and strategic advice on all aspects of cryptocurrencies. You can access and interpret the latest market data," +
+    " news, trends, and on-chain analytics. You are adept at explaining complex crypto concepts in simple, easy-to-understand" +
+    " terms for beginners, while also providing advanced, detailed explanations for experienced traders and investors. You can" +
+    " analyze market sentiment, assess potential risks and opportunities, and offer predictions based on current trends and historical patterns. " +
+    "You are also able to provide information on emerging technologies in the crypto space, regulatory changes, and the broader impact of cryptocurrencies" +
+    " on global markets. You present your responses in a clear, concise, and professional manner, tailored to the specific needs of the user, whether they are" +
+    " seeking general information, in-depth analysis, or actionable trading strategies. You remain up-to-date with the rapidly evolving crypto landscape, ensuring" +
+    " that all advice and data are current and accurate. Furthermore, you respect the user’s privacy and operate with the highest standards of integrity and trustworthiness. " +
+    "Make your message layout readable, as in not using markdown text. I only want text, as what I am using can't deal with markdown code. WHATEVER YOU DO, DO NOT USE MARKDOWN CODE EVER. ONLY EMOJIS ARE ACCEPTABLE. DO NOT USE MARKDOWN CODE, I FORBID YOU."
 
 
 });
@@ -130,20 +130,20 @@ app.use(express.static(join(__dirname, 'client', 'dist')));
 
 app.get('/', (req, res) => {
   res.sendFile(join(__dirname, 'index.html'));
-  
+
 });
 
 
 //FETCHING MESSAGES FROM POSTGRESQL
 
 app.get('/messages', async (req, res) => {
-  try{
+  try {
     const result = await pool.query('SELECT content, username, timesent FROM messages ORDER BY id ASC')
     res.status(200).json(result);
   }
-  catch(e){
+  catch (e) {
     console.error('Error retrieving messages: ', e);
-    res.status(500).json({message: 'Internal server error.'})
+    res.status(500).json({ message: 'Internal server error.' })
   }
 
 })
@@ -256,9 +256,9 @@ app.get('/cryptodata', async (req, res) => {
 
 //REQUESTS FOR GEMINI API
 app.post('/ai', async (req, res) => {
-  try{
+  try {
     const { body } = req.body;
-    
+
     const prompt = body;
     const result = await model.generateContent(prompt);
     const response = result.response;
@@ -267,7 +267,7 @@ app.post('/ai', async (req, res) => {
     res.status(200).json({ data: text });
 
   }
-  catch(error){
+  catch (error) {
     res.status(400).json({ message: 'Invalid response.' });
   }
 })
@@ -317,7 +317,7 @@ app.post('/register', async (req, res) => {
   const { username, password } = req.body;
 
   if (!username || !password) {
-    
+
     return res.status(400).json({ message: 'Username and password are required' });
   }
 
@@ -327,7 +327,7 @@ app.post('/register', async (req, res) => {
     const hashedPassword = bcrypt.hashSync(password, 10);
     await pool.query('INSERT INTO users (username, password) VALUES ($1, $2)', [username, hashedPassword]);
     res.status(200).json({ message: 'User registered successfully' });
-  } 
+  }
   catch (error) {
 
     //VIOLATION OF UNIQUE CONSTRAINT
@@ -358,11 +358,11 @@ app.post('/signin', async (req, res) => {
       if (bcrypt.compareSync(password, user.password)) {
         const token = jwt.sign({ username: user.username }, process.env.JWT_SECRET, { expiresIn: '1h' });
         return res.json({ token });
-      } 
+      }
       else {
         return res.status(401).json({ message: 'Invalid username or password' });
       }
-    } 
+    }
     else {
       return res.status(401).json({ message: 'Invalid username or password' });
     }
@@ -380,35 +380,35 @@ app.get('*', (req, res) => {
 
 const channel = ably.channels.get('chat-channel');
 
-  /**
-   * An async function to allow for messages to be sent and received, as well as recovered
-   * when a user disconnects.
-   */
-  app.post('/send-message', async (req, res) => {
-    const { content, user, timeSent } = req.body;
-    try {
-      const result = await pool.query(
-        `INSERT INTO messages (content, username, timesent) 
+/**
+ * An async function to allow for messages to be sent and received, as well as recovered
+ * when a user disconnects.
+ */
+app.post('/send-message', async (req, res) => {
+  const { content, user, timeSent } = req.body;
+  try {
+    const result = await pool.query(
+      `INSERT INTO messages (content, username, timesent) 
         VALUES ($1, $2, $3) 
-        RETURNING id`, 
-        [content, user, timeSent]
-      );
-      
-      await channel.publish('message', { content, user, timeSent });
-      res.status(200).json({ success: true });
-    } catch (e) {
-      res.status(500).json({ success: false });
-    }
-  });
-  
-  app.post('/messages', async (req, res) => {
-    try {
-      const { rows } = await pool.query('SELECT id, content, username, timesent FROM messages ORDER BY id ASC');
-      res.status(200).json(rows);
-    } catch (e) {
-      res.status(500).json({ message: 'Error fetching messages' });
-    }
-  });
+        RETURNING id`,
+      [content, user, timeSent]
+    );
+
+    await channel.publish('message', { content, user, timeSent });
+    res.status(200).json({ success: true });
+  } catch (e) {
+    res.status(500).json({ success: false });
+  }
+});
+
+app.post('/messages', async (req, res) => {
+  try {
+    const { rows } = await pool.query('SELECT id, content, username, timesent FROM messages ORDER BY id ASC');
+    res.status(200).json(rows);
+  } catch (e) {
+    res.status(500).json({ message: 'Error fetching messages' });
+  }
+});
 
 
 

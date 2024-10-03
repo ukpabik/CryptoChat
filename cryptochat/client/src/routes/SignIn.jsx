@@ -1,15 +1,12 @@
-import SignInBody from '../components/SignInBody.jsx';
+import SignInBody from "../components/SignInBody.jsx";
 
 function SignIn() {
-
-
-  return(
+  return (
     //Fragment element holds all of the components
     <>
       <SignInBody />
     </>
-    
-  )
+  );
 }
 
-export default SignIn
+export default SignIn;
