@@ -41,7 +41,7 @@ To set up the project, follow these steps:
 1. **Clone the Repository**:
 
     ```sh
-    git clone https://github.com/yourusername/cryptochat.git
+    git clone https://github.com/ukpabik/cryptochat.git
     cd cryptochat
     ```
 
